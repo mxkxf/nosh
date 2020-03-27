@@ -1,17 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 import Header from "./Header";
 import ItemList from "./ItemList";
 import ItemView from "./ItemView";
 import Onboarding from "./Onboarding";
+import { AnalyticsContext } from "./AnalyticsProvider";
 import SubscribeFeedModal from "./SubscribeFeedModal";
 import { retrieveFeeds } from "../state/actions";
-import { Dispatch } from "redux";
 import { InitialState } from "../state/reducers";
 
 interface Props {
-  feeds: Feed[];
   isLoading: boolean;
   isSubscribeFeedModalOpen: boolean;
   retrieveFeeds: () => {};
@@ -19,7 +19,6 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({
-  feeds,
   isLoading,
   isSubscribeFeedModalOpen,
   retrieveFeeds,
@@ -28,6 +27,12 @@ const App: React.FC<Props> = ({
   React.useEffect(() => {
     retrieveFeeds();
   }, [retrieveFeeds]);
+
+  const { track } = React.useContext(AnalyticsContext);
+
+  React.useEffect(() => {
+    track();
+  }, [track]);
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -55,7 +60,6 @@ const App: React.FC<Props> = ({
 
 const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
-  feeds: state.feeds,
   isLoading: state.ui.isLoading,
   isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
 });
