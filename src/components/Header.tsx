@@ -3,11 +3,16 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { InitialState } from "../state/reducers";
-import { selectFeed, setSubscribeFeedModalVisibility } from "../state/actions";
+import {
+  selectFeed,
+  setSubscribeFeedModalVisibility,
+  setAboutModalVisibility,
+} from "../state/actions";
 import useKeyPress from "./useKeyPress";
 
 interface Props {
   feeds: Feed[];
+  openAboutModal: () => {};
   openSubscribeModal: () => {};
   selectedFeed: number | null;
   selectFeed: (i: number | null) => {};
@@ -17,6 +22,7 @@ const KEY_CODE_N = 78;
 
 const Header: React.FC<Props> = ({
   feeds,
+  openAboutModal,
   openSubscribeModal,
   selectedFeed,
   selectFeed,
@@ -67,9 +73,12 @@ const Header: React.FC<Props> = ({
             </>
           )}
         </nav>
-        <button className="hover:bg-blue-800 text-center leading-none p-4 text-2xl">
-          <span role="img" aria-label="User">
-            👤
+        <button
+          onClick={() => openAboutModal()}
+          className="hover:bg-blue-800 text-center leading-none p-4 text-2xl"
+        >
+          <span role="img" aria-label="Information">
+            ℹ️
           </span>
         </button>
       </div>
@@ -83,8 +92,9 @@ const mapStateToProps = (state: InitialState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  selectFeed: (i: number | null) => dispatch(selectFeed(i)),
+  openAboutModal: () => dispatch(setAboutModalVisibility(true)),
   openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
+  selectFeed: (i: number | null) => dispatch(selectFeed(i)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

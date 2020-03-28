@@ -95,9 +95,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
           disabled={isLoading}
           type="submit"
         >
-          <span className="-mr-1" role="img" aria-label="Subscribe">
-            ➡️
-          </span>
+          {isLoading ? "Loading..." : "Subscribe"}
         </button>
       </form>
       {error && (

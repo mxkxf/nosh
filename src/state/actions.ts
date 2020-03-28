@@ -73,6 +73,12 @@ export const setUnsubscribeFeedModalVisibility = (isOpen: boolean) => ({
   isOpen,
 });
 
+export const SET_ABOUT_MODAL_VISIBILITY = "SET_ABOUT_MODAL_VISIBILITY";
+export const setAboutModalVisibility = (isOpen: boolean) => ({
+  type: SET_ABOUT_MODAL_VISIBILITY,
+  isOpen,
+});
+
 export const ADD_FEED = "ADD_FEED";
 export const addFeed = (feed: Feed) => ({
   type: ADD_FEED,
