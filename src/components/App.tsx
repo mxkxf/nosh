@@ -12,14 +12,12 @@ import { retrieveFeeds } from "../state/actions";
 import { InitialState } from "../state/reducers";
 
 interface Props {
-  isLoading: boolean;
   isSubscribeFeedModalOpen: boolean;
   retrieveFeeds: () => {};
   selectedFeed: number | null;
 }
 
 const App: React.FC<Props> = ({
-  isLoading,
   isSubscribeFeedModalOpen,
   retrieveFeeds,
   selectedFeed,
@@ -35,10 +33,6 @@ const App: React.FC<Props> = ({
       trackPage();
     }
   }, [isLoaded, trackPage]);
-
-  if (isLoading) {
-    return <div>loading...</div>;
-  }
 
   return (
     <>
@@ -62,7 +56,6 @@ const App: React.FC<Props> = ({
 
 const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
-  isLoading: state.ui.isLoading,
   isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
 });
 
