@@ -11,6 +11,7 @@ export interface InitialState {
     isLoading: boolean;
     isSubscribeFeedModalOpen: boolean;
     isUnsubscribeFeedModalOpen: boolean;
+    isAboutModalOpen: boolean;
   };
 }
 
@@ -23,6 +24,7 @@ const initialState: InitialState = {
     isLoading: false,
     isSubscribeFeedModalOpen: false,
     isUnsubscribeFeedModalOpen: false,
+    isAboutModalOpen: false,
   },
 };
 
@@ -106,6 +108,12 @@ const ui = (state = initialState.ui, action: actions.ActionTypes) => {
       return {
         ...state,
         isUnsubscribeFeedModalOpen: action.isOpen,
+      };
+
+    case actions.SET_ABOUT_MODAL_VISIBILITY:
+      return {
+        ...state,
+        isAboutModalOpen: action.isOpen,
       };
 
     default:

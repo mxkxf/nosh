@@ -10,14 +10,17 @@ import { AnalyticsContext } from "./AnalyticsProvider";
 import SubscribeFeedModal from "./SubscribeFeedModal";
 import { retrieveFeeds } from "../state/actions";
 import { InitialState } from "../state/reducers";
+import AboutModal from "./AboutModal";
 
 interface Props {
+  isAboutModalOpen: boolean;
   isSubscribeFeedModalOpen: boolean;
   retrieveFeeds: () => {};
   selectedFeed: number | null;
 }
 
 const App: React.FC<Props> = ({
+  isAboutModalOpen,
   isSubscribeFeedModalOpen,
   retrieveFeeds,
   selectedFeed,
@@ -49,6 +52,7 @@ const App: React.FC<Props> = ({
           )}
         </main>
       </div>
+      {isAboutModalOpen && <AboutModal />}
       {isSubscribeFeedModalOpen && <SubscribeFeedModal />}
     </>
   );
@@ -56,6 +60,7 @@ const App: React.FC<Props> = ({
 
 const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
+  isAboutModalOpen: state.ui.isAboutModalOpen,
   isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
 });
 
