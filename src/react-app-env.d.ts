@@ -1,5 +1,7 @@
 /// <reference types="react-scripts" />
 
+declare module "colorthief";
+
 declare type FeedItem = {
   title: string;
   description: string;

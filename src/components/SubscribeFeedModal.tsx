@@ -37,8 +37,10 @@ const SubscribeFeedModal: React.FC<Props> = ({
 }) => {
   const [url, setUrl] = React.useState("");
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = (event?: FormEvent) => {
+    if (event) {
+      event.preventDefault();
+    }
 
     subscribeFeed(url);
   };
@@ -57,11 +59,14 @@ const SubscribeFeedModal: React.FC<Props> = ({
             Looking for some examples to get you started?
           </p>
           <ul>
-            {examples.map((example) => (
-              <li>
+            {examples.map((example, i) => (
+              <li key={`example-${i}`}>
                 <button
                   className="text-blue-700 hover:text-blue-900 underline"
-                  onClick={() => setUrl(example.url)}
+                  onClick={() => {
+                    setUrl(example.url);
+                    subscribeFeed(example.url);
+                  }}
                 >
                   {example.text}
                 </button>

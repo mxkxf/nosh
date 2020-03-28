@@ -46,7 +46,7 @@ const Header: React.FC<Props> = ({
               {feeds.map((feed, i) => {
                 return (
                   <button
-                    className={`bg-green-500 text-white leading-none rounded block w-full p-4 my-2 ${
+                    className={`bg-blue-700 rounded leading-none block w-full my-2 h-12 flex ${
                       selectedFeed === i
                         ? "opacity-100"
                         : "opacity-50 hover:opacity-75"
@@ -55,9 +55,15 @@ const Header: React.FC<Props> = ({
                     key={`select-feed-${i}`}
                   >
                     {feed.icon ? (
-                      <img src={feed.icon} alt={feed.title} />
+                      <img
+                        className="m-auto rounded"
+                        src={feed.icon}
+                        alt={feed.title}
+                      />
                     ) : (
-                      feed.title[0]
+                      <span className="bg-green-500 text-white">
+                        {feed.title[0]}
+                      </span>
                     )}
                   </button>
                 );
