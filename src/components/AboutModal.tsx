@@ -19,7 +19,7 @@ const AboutModal: React.FC<Props> = ({ closeModal }) => (
         </span>
         nosh
       </h2>
-      <p className="text-sm">Version {version}</p>
+      <p className="text-sm text-gray-600">Version {version}</p>
     </div>
     <div className="mb-10">
       <p className="mb-3">Hey there!</p>
@@ -31,9 +31,24 @@ const AboutModal: React.FC<Props> = ({ closeModal }) => (
         That's why I made <strong>nosh</strong>, here's hoping you find this
         useful.
       </p>
+      <p>
+        <em>
+          Why{" "}
+          <a
+            className="text-blue-700 hover:text-blue-900 underline"
+            href="https://www.dictionary.com/browse/nosh"
+          >
+            nosh
+          </a>
+          ?
+        </em>{" "}
+        It's a slang word for eating/food.
+      </p>
     </div>
     <div className="flex text-sm">
-      <span className="flex-1">© Mike Francis {new Date().getFullYear()}</span>
+      <span className="flex-1 text-gray-600">
+        © Mike Francis {new Date().getFullYear()}
+      </span>
       <a
         className="text-blue-700 hover:text-blue-900 underline"
         href="https://twitter.com/_mikefrancis"
