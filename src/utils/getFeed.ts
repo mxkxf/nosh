@@ -9,10 +9,12 @@ export default async function getFeed(url: string) {
   const parser = new Parser();
   const feed = await parser.parseString(response.data);
 
+  const urlParts = new URL(url);
+
   return {
     url,
     title: feed.title,
-    icon: feed.image ? feed.image.url : null,
+    icon: `${urlParts.protocol}//${urlParts.hostname}/favicon.ico`,
     description: feed.description,
     link: feed.link,
     items: feed.items

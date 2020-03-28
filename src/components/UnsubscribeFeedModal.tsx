@@ -69,7 +69,10 @@ const mapStateToProps = (state: InitialState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeModal: () => dispatch(setUnsubscribeFeedModalVisibility(false)),
   unselectFeed: () => dispatch(selectFeed(null)),
-  unsubscribeFeed: (i: number) => dispatch(unSubscribeFeed(i)),
+  unsubscribeFeed: (i: number) => {
+    dispatch(setUnsubscribeFeedModalVisibility(false));
+    return dispatch(unSubscribeFeed(i));
+  },
 });
 
 export default connect(
