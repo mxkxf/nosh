@@ -11,14 +11,27 @@ import { InitialState } from "../state/reducers";
 
 interface Props {
   closeModal: () => {};
-  subscribeFeed: (url: string) => {};
-  isLoading: boolean;
   error: Error | null;
+  feeds: Feed[];
+  isLoading: boolean;
+  subscribeFeed: (url: string) => {};
 }
+
+const examples = [
+  {
+    url: "http://smashingmagazine.com/feed",
+    text: "Smashing Magazine",
+  },
+  {
+    url: "http://news.ycombinator.com/rss",
+    text: "Hacker News",
+  },
+];
 
 const SubscribeFeedModal: React.FC<Props> = ({
   closeModal,
   error,
+  feeds,
   isLoading,
   subscribeFeed,
 }) => {
@@ -35,6 +48,28 @@ const SubscribeFeedModal: React.FC<Props> = ({
       <div className="text-center text-2xl mb-8">
         <h2>Subscribe to a new feed</h2>
       </div>
+      {feeds.length === 0 && (
+        <div className="bg-green-200 border border-green-300 px-6 py-4 rounded text-sm mb-6">
+          <p className="mb-2">
+            <span className="mr-1" role="img" aria-label="Eyes">
+              👀
+            </span>
+            Looking for some examples to get you started?
+          </p>
+          <ul>
+            {examples.map((example) => (
+              <li>
+                <button
+                  className="text-blue-700 hover:text-blue-900 underline"
+                  onClick={() => setUrl(example.url)}
+                >
+                  {example.text}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <form className="flex" method="POST" onSubmit={handleSubmit}>
         <label className="hidden" htmlFor="url">
           Feed URL
@@ -81,6 +116,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
 
 const mapStateToProps = (state: InitialState) => ({
   error: state.ui.error,
+  feeds: state.feeds,
   isLoading: state.ui.isLoading,
 });
 
