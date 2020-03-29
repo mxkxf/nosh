@@ -40,8 +40,8 @@ const ItemList: React.FC<Props> = ({
 
   return (
     <>
-      <section className="md:sticky md:top-0 md:w-1/3 md:max-h-screen md:overflow-scroll">
-        <div className="bg-gray-600 text-white md:sticky md:top-0 px-3 py-1 flex">
+      <section className="sticky top-0 w-1/3 max-h-screen overflow-scroll">
+        <div className="bg-gray-600 text-white sticky top-0 px-3 py-1 flex">
           <h2 className="flex-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
           </h2>
@@ -86,7 +86,7 @@ const ItemList: React.FC<Props> = ({
                 <p className="max-lines text-gray-700">{item.description}</p>
               </article>
             ))}
-            <div className="bg-gray-600 text-white md:sticky md:bottom-0 px-3 py-1 flex">
+            <div className="bg-gray-600 text-white sticky bottom-0 px-3 py-1 flex">
               <p className="flex-1 uppercase font-bold text-xs tracking-wide">
                 {items.length} items
               </p>

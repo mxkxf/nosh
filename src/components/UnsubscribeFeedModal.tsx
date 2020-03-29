@@ -31,7 +31,7 @@ const UnsubscribeFeedModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal closeModal={() => closeModal()}>
+    <Modal closeModalFunc={() => closeModal()}>
       <div className="text-center">
         <h2 className="font-light text-2xl mb-8">Unsubscribe from feed</h2>
         <form method="POST" onSubmit={handleSubmit}>
