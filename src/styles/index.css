@@ -10943,6 +10943,12 @@ video {
   transition-duration: 1000ms;
 }
 
+:root {
+  color: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .fade-in {
   animation-duration: 300ms;
   animation-name: fade-in;
