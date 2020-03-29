@@ -102,17 +102,23 @@ const ui = (state = initialState.ui, action: actions.ActionTypes) => {
       return {
         ...state,
         isSubscribeFeedModalOpen: action.isOpen,
+        isUnsubscribeFeedModalOpen: false,
+        isAboutModalOpen: false,
       };
 
     case actions.SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY:
       return {
         ...state,
+        isSubscribeFeedModalOpen: false,
         isUnsubscribeFeedModalOpen: action.isOpen,
+        isAboutModalOpen: false,
       };
 
     case actions.SET_ABOUT_MODAL_VISIBILITY:
       return {
         ...state,
+        isSubscribeFeedModalOpen: false,
+        isUnsubscribeFeedModalOpen: false,
         isAboutModalOpen: action.isOpen,
       };
 

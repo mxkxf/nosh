@@ -39,9 +39,9 @@ const App: React.FC<Props> = ({
 
   return (
     <>
-      <div className="min-h-screen text-black antialiased md:flex">
+      <div className="min-h-screen text-black antialiased flex">
         <Header />
-        <main className="flex-1 md:flex bg-gray-100">
+        <main className="flex-1 flex bg-gray-100">
           {selectedFeed !== null ? (
             <>
               <ItemList />

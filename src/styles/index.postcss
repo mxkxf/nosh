@@ -12,6 +12,34 @@
 
 @tailwind utilities;
 
+.fade-in {
+  animation-duration: 300ms;
+  animation-name: fade-in;
+}
+
+.fade-out {
+  animation-duration: 300ms;
+  animation-name: fade-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 100;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 .max-lines {
   overflow: hidden;
   text-overflow: ellipsis;

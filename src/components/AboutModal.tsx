@@ -11,7 +11,7 @@ interface Props {
 }
 
 const AboutModal: React.FC<Props> = ({ closeModal }) => (
-  <Modal closeModal={() => closeModal()}>
+  <Modal closeModalFunc={() => closeModal()}>
     <div className="text-center mb-10">
       <h2 className="text-4xl font-light mb-2">
         <span className="mr-3" role="img" aria-label="Nosh">
