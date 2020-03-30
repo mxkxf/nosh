@@ -14,7 +14,7 @@ export default async function getFeed(url: string) {
   return {
     url,
     title: feed.title,
-    icon: `${urlParts.protocol}//${urlParts.hostname}/favicon.ico`,
+    icon: `https://${urlParts.hostname}/favicon.ico`,
     description: feed.description,
     link: feed.link,
     items: feed.items
