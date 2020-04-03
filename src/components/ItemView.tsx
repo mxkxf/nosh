@@ -3,15 +3,26 @@ import React from "react";
 import { connect } from "react-redux";
 
 import { InitialState } from "../state/reducers";
+import { Dispatch } from "redux";
+import { selectItem } from "../state/actions";
 
 interface Props {
   item: FeedItem | null;
+  unselectItem: () => {};
 }
 
-const ItemView: React.FC<Props> = ({ item }) => (
+const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
   <section className="flex-1 flex bg-white border-l border-gray-400">
     {item ? (
       <article className="flex-1 px-10 py-6">
+        <button
+          className="absolute top-0 right-0 px-3 py-2"
+          onClick={unselectItem}
+        >
+          <span className="-mr-1" role="img" aria-label="Close">
+            ✖️
+          </span>
+        </button>
         <h1 className="text-4xl leading-tight font-light mb-6">{item.title}</h1>
         <div className="flex mb-6 text-sm text-gray-700">
           <div className="pr-6">
@@ -60,4 +71,8 @@ const mapStateToProps = (state: InitialState) => ({
       : null,
 });
 
-export default connect(mapStateToProps)(ItemView);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  unselectItem: () => dispatch(selectItem(null)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ItemView);
