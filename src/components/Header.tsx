@@ -30,7 +30,7 @@ const Header: React.FC<Props> = ({
   useKeyPress(KEY_CODE_N, openSubscribeModal);
 
   return (
-    <header className="w-16 bg-blue-900 text-white sticky top-0 max-h-screen">
+    <header className="w-16 bg-blue-800 text-white sticky top-0 max-h-screen">
       <div className="h-full flex flex-col">
         <button
           className="block mb-10 hover:bg-blue-800 text-center leading-none p-4 text-2xl"

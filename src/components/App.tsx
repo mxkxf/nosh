@@ -41,7 +41,7 @@ const App: React.FC<Props> = ({
     <>
       <div className="min-h-screen flex">
         <Header />
-        <main className="flex-1 flex bg-gray-100">
+        <main className="flex-1 flex">
           {selectedFeed !== null ? (
             <>
               <ItemList />

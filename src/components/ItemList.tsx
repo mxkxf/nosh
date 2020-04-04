@@ -10,6 +10,7 @@ import {
 } from "../state/actions";
 import UnsubscribeFeedModal from "./UnsubscribeFeedModal";
 import { InitialState } from "../state/reducers";
+import useClickOutside from "./useClickOutside";
 
 interface Props {
   feeds: Feed[];
@@ -31,7 +32,11 @@ const ItemList: React.FC<Props> = ({
   selectedItem,
   viewItem,
 }) => {
+  const [isMenuVisible, setMenuVisible] = React.useState(false);
+  const dropdownMenuRef = React.createRef<HTMLDivElement>();
   const feed = feeds[selectedFeed];
+
+  useClickOutside(dropdownMenuRef, () => setMenuVisible(false));
 
   // TODO: Display something useful
   if (!feed) {
@@ -41,28 +46,47 @@ const ItemList: React.FC<Props> = ({
   return (
     <>
       <section className="sticky top-0 w-1/3 max-h-screen overflow-scroll">
-        <div className="bg-gray-600 text-white sticky top-0 px-3 py-1 flex">
-          <h2 className="flex-1 uppercase font-bold text-xs tracking-wide truncate">
+        <div className="bg-gray-300 border-b border-gray-400 sticky top-0 flex items-center">
+          <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
           </h2>
-          <a
-            className="uppercase font-bold text-xs tracking-wide ml-4"
-            href={feed.link}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span role="img" aria-label="Link">
-              🔗
-            </span>
-          </a>
-          <button
-            onClick={() => openUnsubscribeModal()}
-            className="uppercase font-bold text-xs tracking-wide ml-4"
-          >
-            <span role="img" aria-label="Filter">
-              🗑
-            </span>
-          </button>
+          <div className="relative ml-4">
+            <button
+              onClick={() => setMenuVisible((isMenuVisible) => !isMenuVisible)}
+              className=" px-3 py-1 uppercase font-bold text-xs tracking-wide ml-4"
+            >
+              <span className="-mr-1" role="img" aria-label="Settings">
+                ⚙️
+              </span>
+            </button>
+            {isMenuVisible && (
+              <div
+                ref={dropdownMenuRef}
+                className="absolute shadow py-1 text-xs right-0 bg-white -mr-px border border-gray-400"
+              >
+                <a
+                  className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
+                  href={feed.link}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <span className="pr-1" role="img" aria-label="Link">
+                    🔗
+                  </span>
+                  Permalink
+                </a>
+                <button
+                  onClick={() => openUnsubscribeModal()}
+                  className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
+                >
+                  <span className="pr-1" role="img" aria-label="Filter">
+                    🗑
+                  </span>
+                  Unsubscribe
+                </button>
+              </div>
+            )}
+          </div>
         </div>
         {items.length > 0 ? (
           <>
@@ -70,7 +94,9 @@ const ItemList: React.FC<Props> = ({
               <article
                 onClick={() => viewItem(i)}
                 className={`${
-                  selectedItem === i ? "bg-gray-300" : "hover:bg-gray-200"
+                  selectedItem === i
+                    ? "bg-indigo-600 text-white"
+                    : "hover:bg-blue-100"
                 } cursor-pointer w-full text-left py-2 px-3 ${
                   i > 0 ? "border-t border-gray-400" : ""
                 } text-xs`}
@@ -78,19 +104,24 @@ const ItemList: React.FC<Props> = ({
               >
                 <div className="flex">
                   <h4 className="flex-1 truncate">{item.author}</h4>
-                  <p className="pl-4 text-gray-700">
+                  <p
+                    className={`pl-4 ${
+                      selectedItem === i ? "text-gray-400" : "text-gray-600"
+                    }`}
+                  >
                     {dayjs(item.pubDate).format("DD/MM/YYYY")}
                   </p>
                 </div>
                 <h3 className="text-sm font-bold truncate">{item.title}</h3>
-                <p className="max-lines text-gray-700">{item.description}</p>
+                <p
+                  className={`max-lines ${
+                    selectedItem === i ? "text-gray-400" : "text-gray-600"
+                  }`}
+                >
+                  {item.description}
+                </p>
               </article>
             ))}
-            <div className="bg-gray-600 text-white sticky bottom-0 px-3 py-1 flex">
-              <p className="flex-1 uppercase font-bold text-xs tracking-wide">
-                {items.length} items
-              </p>
-            </div>
           </>
         ) : (
           <div className="p-3 text-center text-sm">
