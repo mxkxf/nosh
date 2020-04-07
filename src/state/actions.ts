@@ -79,6 +79,12 @@ export const setAboutModalVisibility = (isOpen: boolean) => ({
   isOpen,
 });
 
+export const SET_HEADER_COLLAPSE = "SET_HEADER_COLLAPSE";
+export const setHeaderCollapse = (isCollapsed: boolean) => ({
+  type: SET_HEADER_COLLAPSE,
+  isCollapsed,
+});
+
 export const ADD_FEED = "ADD_FEED";
 export const addFeed = (feed: Feed) => ({
   type: ADD_FEED,

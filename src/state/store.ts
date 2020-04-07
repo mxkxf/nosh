@@ -3,9 +3,9 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 import reducers from "./reducers";
-import { persistFeedsToLocalStorage } from "./middleware";
+import { persistLocalStorage } from "./middleware";
 
-const middleware: Middleware[] = [thunk, persistFeedsToLocalStorage];
+const middleware: Middleware[] = [thunk, persistLocalStorage];
 
 if (process.env.NODE_ENV !== "production") {
   middleware.push(logger);

@@ -12,6 +12,7 @@ export interface InitialState {
     isSubscribeFeedModalOpen: boolean;
     isUnsubscribeFeedModalOpen: boolean;
     isAboutModalOpen: boolean;
+    isHeaderCollapsed: boolean;
   };
 }
 
@@ -25,6 +26,7 @@ const initialState: InitialState = {
     isSubscribeFeedModalOpen: false,
     isUnsubscribeFeedModalOpen: false,
     isAboutModalOpen: false,
+    isHeaderCollapsed: true,
   },
 };
 
@@ -120,6 +122,12 @@ const ui = (state = initialState.ui, action: actions.ActionTypes) => {
         isSubscribeFeedModalOpen: false,
         isUnsubscribeFeedModalOpen: false,
         isAboutModalOpen: action.isOpen,
+      };
+
+    case actions.SET_HEADER_COLLAPSE:
+      return {
+        ...state,
+        isHeaderCollapsed: action.isCollapsed,
       };
 
     default:

@@ -7,6 +7,7 @@ import {
   selectFeed,
   setSubscribeFeedModalVisibility,
   setAboutModalVisibility,
+  setHeaderCollapse,
 } from "../state/actions";
 import useKeyPress from "./useKeyPress";
 
@@ -18,9 +19,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
   const classes = [
     "flex",
     "items-center",
-    // "font-bold",
     "text-left",
-    // "text-sm",
     "text-gray-700",
     "block",
     "rounded",
@@ -42,25 +41,46 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
 
 interface Props {
   feeds: Feed[];
+  isCollapsed: boolean;
+  isSubscribeFeedModalOpen: boolean;
   openAboutModal: () => {};
   openSubscribeModal: () => {};
   selectedFeed: number | null;
   selectFeed: (i: number | null) => {};
+  toggleHeaderCollapse: (isCollapsed: boolean) => {};
 }
 
 const KEY_CODE_N = 78;
+const KEY_CODE_S = 83;
 
 const Header: React.FC<Props> = ({
   feeds,
+  isCollapsed,
+  isSubscribeFeedModalOpen,
   openAboutModal,
   openSubscribeModal,
   selectedFeed,
   selectFeed,
+  toggleHeaderCollapse,
 }) => {
-  useKeyPress(KEY_CODE_N, openSubscribeModal);
+  useKeyPress(KEY_CODE_N, () => {
+    if (!isSubscribeFeedModalOpen) {
+      openSubscribeModal();
+    }
+  });
+
+  useKeyPress(KEY_CODE_S, () => {
+    if (!isSubscribeFeedModalOpen) {
+      toggleHeaderCollapse(!isCollapsed);
+    }
+  });
 
   return (
-    <header className="w-64 bg-purple-100 border-r border-gray-400 sticky top-0 max-h-screen">
+    <header
+      className={`${
+        isCollapsed ? "w-16" : "w-1/5"
+      } bg-purple-100 border-r border-gray-400 sticky top-0 max-h-screen`}
+    >
       <div className="h-full flex flex-col p-2">
         <nav className="flex-1">
           {feeds && feeds.length > 0 && (
@@ -78,7 +98,9 @@ const Header: React.FC<Props> = ({
                         src={feed.icon}
                         alt={feed.title}
                       />
-                      <span className="max-lines">{feed.title}</span>
+                      {!isCollapsed && (
+                        <span className="max-lines">{feed.title}</span>
+                      )}
                     </HeaderLink>
                   </button>
                 );
@@ -88,10 +110,14 @@ const Header: React.FC<Props> = ({
                 onClick={() => openSubscribeModal()}
               >
                 <HeaderLink>
-                  <span className="w-4 mr-3" role="img" aria-label="Add">
+                  <span
+                    className="opacity-50 w-4 mr-3"
+                    role="img"
+                    aria-label="Add"
+                  >
                     ➕
                   </span>
-                  Add feed
+                  {!isCollapsed && "Add feed"}
                 </HeaderLink>
               </button>
             </>
@@ -99,10 +125,22 @@ const Header: React.FC<Props> = ({
         </nav>
         <button onClick={() => openAboutModal()}>
           <HeaderLink>
-            <span className="text-2xl mr-3" role="img" aria-label="About nosh">
+            <span className="w-4 mr-3" role="img" aria-label="About nosh">
               🍜
             </span>
-            nosh
+            {!isCollapsed && "nosh"}
+          </HeaderLink>
+        </button>
+        <button onClick={() => toggleHeaderCollapse(!isCollapsed)}>
+          <HeaderLink>
+            <span
+              className="w-4 mr-3"
+              role="img"
+              aria-label={isCollapsed ? "Expand" : "Collapse"}
+            >
+              {isCollapsed ? "➡️" : "⬅️"}
+            </span>
+            {!isCollapsed && "Collapse sidebar"}
           </HeaderLink>
         </button>
       </div>
@@ -113,11 +151,15 @@ const Header: React.FC<Props> = ({
 const mapStateToProps = (state: InitialState) => ({
   feeds: state.feeds,
   selectedFeed: state.selectedFeed,
+  isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
+  isCollapsed: state.ui.isHeaderCollapsed,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openAboutModal: () => dispatch(setAboutModalVisibility(true)),
   openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
+  toggleHeaderCollapse: (isCollapsed: boolean) =>
+    dispatch(setHeaderCollapse(isCollapsed)),
   selectFeed: (i: number | null) => dispatch(selectFeed(i)),
 });
 
