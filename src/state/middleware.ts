@@ -8,17 +8,24 @@ export const persistLocalStorage: Middleware<{}, InitialState> = (store) => (
 ) => (action) => {
   const result = next(action);
 
-  if (action.type === SET_HEADER_COLLAPSE) {
-    const isHeaderCollapsed = store.getState().ui.isHeaderCollapsed;
+  try {
+    if (action.type === SET_HEADER_COLLAPSE) {
+      const isHeaderCollapsed = store.getState().ui.isHeaderCollapsed;
 
-    window.localStorage.setItem("isHeaderCollapsed", String(isHeaderCollapsed));
+      window.localStorage.setItem(
+        "isHeaderCollapsed",
+        String(isHeaderCollapsed),
+      );
+    }
+
+    if (action.type === ADD_FEED || action.type === UNSUBSCRIBE_FEED) {
+      const feedUrls = store.getState().feeds.map((feed: Feed) => feed.url);
+
+      window.localStorage.setItem("feedUrls", JSON.stringify(feedUrls));
+    }
+
+    return result;
+  } catch (e) {
+    return result;
   }
-
-  if (action.type === ADD_FEED || action.type === UNSUBSCRIBE_FEED) {
-    const feedUrls = store.getState().feeds.map((feed: Feed) => feed.url);
-
-    window.localStorage.setItem("feedUrls", JSON.stringify(feedUrls));
-  }
-
-  return result;
 };

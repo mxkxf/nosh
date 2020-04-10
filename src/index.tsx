@@ -4,16 +4,13 @@ import { Provider } from "react-redux";
 
 import "./styles/index.css";
 import App from "./components/App";
-import AnalyticsProvider from "./components/AnalyticsProvider";
 import store from "./state/store";
 import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <AnalyticsProvider>
-        <App />
-      </AnalyticsProvider>
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root"),
