@@ -33,29 +33,16 @@ const UnsubscribeFeedModal: React.FC<Props> = ({
   return (
     <Modal closeModalFunc={() => closeModal()}>
       <div className="text-center">
-        <h2 className="font-light text-2xl mb-8">Unsubscribe from feed</h2>
+        <h2 className="font-light text-2xl mb-8">Are you sure?</h2>
         <form method="POST" onSubmit={handleSubmit}>
-          <p className="mb-8">
-            Are you sure you wish to unsubscribe from this feed?
+          <p className="text-center">
+            <button
+              className="rounded inline-block bg-red-500 hover:bg-red-600 border border-red-500 px-3 py-2 text-white"
+              type="submit"
+            >
+              Yup, unsubscribe
+            </button>
           </p>
-          <div className="flex">
-            <div className="flex-1 mr-4">
-              <button
-                className="rounded block bg-red-500 hover:bg-red-600 border border-red-500 px-3 py-2 text-white w-full"
-                type="submit"
-              >
-                Yup, unsubscribe
-              </button>
-            </div>
-            <div className="flex-1 mr-4">
-              <button
-                className="rounded block bg-white-500 hover:bg-gray-100 border px-3 py-2 w-full"
-                onClick={() => closeModal()}
-              >
-                No, take me back
-              </button>
-            </div>
-          </div>
         </form>
       </div>
     </Modal>

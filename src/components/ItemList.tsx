@@ -45,7 +45,7 @@ const ItemList: React.FC<Props> = ({
 
   return (
     <>
-      <section className="sticky top-0 w-1/3 max-h-screen overflow-scroll">
+      <section className="sticky top-0 w-2/5 max-h-screen overflow-scroll">
         <div className="bg-gray-300 border-b border-gray-400 sticky top-0 flex items-center">
           <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
@@ -53,7 +53,7 @@ const ItemList: React.FC<Props> = ({
           <div className="relative ml-4">
             <button
               onClick={() => setMenuVisible((isMenuVisible) => !isMenuVisible)}
-              className=" px-3 py-1 uppercase font-bold text-xs tracking-wide ml-4"
+              className="px-3 py-1 uppercase font-bold text-xs tracking-wide ml-4"
             >
               <span className="-mr-1" role="img" aria-label="Settings">
                 ⚙️
@@ -62,7 +62,7 @@ const ItemList: React.FC<Props> = ({
             {isMenuVisible && (
               <div
                 ref={dropdownMenuRef}
-                className="absolute shadow py-1 text-xs right-0 bg-white -mr-px border border-gray-400"
+                className="absolute shadow py-2 text-xs right-0 bg-white -mr-px border border-gray-400"
               >
                 <a
                   className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
@@ -96,7 +96,7 @@ const ItemList: React.FC<Props> = ({
                 className={`${
                   selectedItem === i
                     ? "bg-indigo-600 text-white"
-                    : "hover:bg-blue-100"
+                    : "hover:bg-gray-100"
                 } cursor-pointer w-full text-left py-2 px-3 ${
                   i > 0 ? "border-t border-gray-400" : ""
                 } text-xs`}
