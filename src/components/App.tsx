@@ -2,14 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import { retrieveFeeds } from "../state/actions";
+import { InitialState } from "../state/reducers";
 import Header from "./Header";
 import ItemList from "./ItemList";
 import ItemView from "./ItemView";
 import Onboarding from "./Onboarding";
-import { AnalyticsContext } from "./AnalyticsProvider";
 import SubscribeFeedModal from "./SubscribeFeedModal";
-import { retrieveFeeds } from "../state/actions";
-import { InitialState } from "../state/reducers";
 import AboutModal from "./AboutModal";
 
 interface Props {
@@ -29,13 +28,21 @@ const App: React.FC<Props> = ({
     retrieveFeeds();
   }, [retrieveFeeds]);
 
-  const { isLoaded, trackPage } = React.useContext(AnalyticsContext);
-
   React.useEffect(() => {
-    if (isLoaded) {
-      trackPage();
-    }
-  }, [isLoaded, trackPage]);
+    const script = document.createElement("script");
+    script.src = "https://unpkg.com/@mikefrancis/strata.js";
+    script.async = true;
+    script.onload = () => {
+      (window as any).Strata.init(process.env.REACT_APP_STRATA_KEY);
+      (window as any).Strata.page();
+    };
+
+    document.body.append(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
     <>
