@@ -24,9 +24,9 @@ const App: React.FC<Props> = ({
   retrieveFeeds,
   selectedFeed,
 }) => {
-  React.useEffect(() => {
-    retrieveFeeds();
-  }, [retrieveFeeds]);
+  // React.useEffect(() => {
+  //   retrieveFeeds();
+  // }, [retrieveFeeds]);
 
   React.useEffect(() => {
     const script = document.createElement("script");
