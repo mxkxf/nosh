@@ -79,7 +79,7 @@ const Header: React.FC<Props> = ({
     <header
       className={`${
         isCollapsed ? "w-16" : "w-1/5"
-      } bg-purple-100 border-r border-gray-400 sticky top-0 max-h-screen`}
+      } bg-purple-100 border-r border-gray-400 sticky top-0 max-h-screen transition`}
     >
       <div className="h-full flex flex-col p-2">
         <nav className="flex-1">

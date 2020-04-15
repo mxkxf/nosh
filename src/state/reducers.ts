@@ -16,7 +16,7 @@ export interface InitialState {
   };
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   selectedFeed: null,
   selectedItem: null,
   feeds: [],

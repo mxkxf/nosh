@@ -10949,6 +10949,12 @@ video {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.fade-in,
+.fade-out,
+.transition {
+  will-change: auto;
+}
+
 .fade-in {
   animation-duration: 300ms;
   animation-name: fade-in;
@@ -10977,6 +10983,10 @@ video {
   to {
     opacity: 0;
   }
+}
+
+.transition {
+  transition: all 300ms ease;
 }
 
 .max-lines {
