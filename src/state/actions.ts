@@ -6,23 +6,27 @@ import { InitialState } from "./reducers";
 
 export const RETRIEVE_FEEDS = "RETRIEVE_FEEDS";
 export const retrieveFeeds = (): any => async (dispatch: Dispatch) => {
-  const feedUrls: string[] = JSON.parse(
-    window.localStorage.getItem("feedUrls") || "[]",
-  );
+  try {
+    const feedUrls: string[] = JSON.parse(
+      window.localStorage.getItem("feedUrls") as string,
+    );
 
-  if (!feedUrls.length) {
-    return;
+    if (!feedUrls.length) {
+      return;
+    }
+
+    dispatch(setLoading(true));
+
+    const feeds = await Promise.all(feedUrls.map(getFeed));
+
+    batchActions([
+      dispatch(setLoading(false)),
+      dispatch(setFeeds(feeds)),
+      dispatch(selectFeed(0)),
+    ]);
+  } catch (error) {
+    //
   }
-
-  dispatch(setLoading(true));
-
-  const feeds = await Promise.all(feedUrls.map(getFeed));
-
-  batchActions([
-    dispatch(setLoading(false)),
-    dispatch(setFeeds(feeds)),
-    dispatch(selectFeed(0)),
-  ]);
 };
 
 export const SET_FEEDS = "SET_FEEDS";
