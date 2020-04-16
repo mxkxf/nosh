@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { retrieveFeeds } from "../state/actions";
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 import Header from "./Header";
 import ItemList from "./ItemList";
 import ItemView from "./ItemView";
@@ -11,6 +11,7 @@ import Onboarding from "./Onboarding";
 import SubscribeFeedModal from "./SubscribeFeedModal";
 import AboutModal from "./AboutModal";
 
+// can delete the below
 interface Props {
   isAboutModalOpen: boolean;
   isSubscribeFeedModalOpen: boolean;
@@ -18,11 +19,14 @@ interface Props {
   selectedFeed: number | null;
 }
 
-const App: React.FC<Props> = ({
+const App: React.FC<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> = ({
   isAboutModalOpen,
   isSubscribeFeedModalOpen,
   retrieveFeeds,
   selectedFeed,
+  theme,
 }) => {
   React.useEffect(() => {
     retrieveFeeds();
@@ -46,7 +50,11 @@ const App: React.FC<Props> = ({
 
   return (
     <>
-      <div className="min-h-screen flex">
+      <div
+        className={`antialiased min-h-screen flex ${
+          theme === Themes.LIGHT ? "text-black" : "text-white"
+        }`}
+      >
         <Header />
         <main className="flex-1 flex">
           {selectedFeed !== null ? (
@@ -69,6 +77,7 @@ const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
   isAboutModalOpen: state.ui.isAboutModalOpen,
   isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

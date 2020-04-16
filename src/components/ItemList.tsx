@@ -9,7 +9,7 @@ import {
   setUnsubscribeFeedModalVisibility,
 } from "../state/actions";
 import UnsubscribeFeedModal from "./UnsubscribeFeedModal";
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 import useClickOutside from "./useClickOutside";
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
   openUnsubscribeModal: () => {};
   selectedFeed: number;
   selectedItem: number | null;
+  theme: Themes;
   unSubscribeFeed: (index: number) => {};
   viewItem: (index: number) => {};
 }
@@ -30,6 +31,7 @@ const ItemList: React.FC<Props> = ({
   openUnsubscribeModal,
   selectedFeed,
   selectedItem,
+  theme,
   viewItem,
 }) => {
   const [isMenuVisible, setMenuVisible] = React.useState(false);
@@ -46,13 +48,19 @@ const ItemList: React.FC<Props> = ({
   return (
     <>
       <section className="sticky top-0 w-2/5 max-h-screen overflow-scroll">
-        <div className="bg-gray-300 border-b border-gray-400 sticky top-0 flex items-center">
+        <div
+          className={`border-b ${
+            theme === Themes.LIGHT
+              ? "bg-gray-300 border-gray-400"
+              : "bg-gray-800 border-black"
+          } sticky top-0 flex items-center`}
+        >
           <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
           </h2>
           <div className="relative ml-4">
             <button
-              onClick={() => setMenuVisible((isMenuVisible) => !isMenuVisible)}
+              onClick={() => setMenuVisible(!isMenuVisible)}
               className="px-3 py-1 uppercase font-bold text-xs tracking-wide ml-4"
             >
               <span className="-mr-1" role="img" aria-label="Settings">
@@ -62,10 +70,18 @@ const ItemList: React.FC<Props> = ({
             {isMenuVisible && (
               <div
                 ref={dropdownMenuRef}
-                className="absolute shadow py-2 text-xs right-0 bg-white -mr-px border border-gray-400"
+                className={`absolute shadow py-2 text-xs right-0 border ${
+                  theme === Themes.LIGHT
+                    ? "bg-white border-gray-400"
+                    : "bg-gray-800 border-black"
+                } -mr-px`}
               >
                 <a
-                  className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
+                  className={`block w-full px-3 py-1 pr-10 ${
+                    theme === Themes.LIGHT
+                      ? "hover:bg-gray-200"
+                      : "hover:bg-gray-700"
+                  }`}
                   href={feed.link}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -77,7 +93,11 @@ const ItemList: React.FC<Props> = ({
                 </a>
                 <button
                   onClick={() => openUnsubscribeModal()}
-                  className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
+                  className={`block w-full px-3 py-1 pr-10 ${
+                    theme === Themes.LIGHT
+                      ? "hover:bg-gray-200"
+                      : "hover:bg-gray-700"
+                  }`}
                 >
                   <span className="pr-1" role="img" aria-label="Filter">
                     🗑
@@ -94,12 +114,20 @@ const ItemList: React.FC<Props> = ({
               <article
                 onClick={() => viewItem(i)}
                 className={`${
+                  i > 0
+                    ? `border-t ${
+                        theme === Themes.LIGHT
+                          ? "border-gray-400"
+                          : "border-black"
+                      }`
+                    : ""
+                } ${theme === Themes.LIGHT ? "bg-white" : "bg-gray-900"} ${
                   selectedItem === i
                     ? "bg-indigo-600 text-white"
-                    : "hover:bg-gray-100"
-                } cursor-pointer w-full text-left py-2 px-3 ${
-                  i > 0 ? "border-t border-gray-400" : ""
-                } text-xs`}
+                    : theme === Themes.LIGHT
+                    ? "hover:bg-gray-100"
+                    : "hover:bg-gray-800"
+                } cursor-pointer w-full text-left py-2 px-3 text-xs`}
                 key={`feed-${selectedFeed}-item-${i}`}
               >
                 <div className="flex">
@@ -144,6 +172,7 @@ const mapStateToProps = (state: InitialState) => ({
   feeds: state.feeds,
   items:
     state.selectedFeed !== null ? state.feeds[state.selectedFeed].items : [],
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -2,17 +2,24 @@ import dayjs from "dayjs";
 import React from "react";
 import { connect } from "react-redux";
 
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 import { Dispatch } from "redux";
 import { selectItem } from "../state/actions";
 
 interface Props {
   item: FeedItem | null;
+  theme: Themes;
   unselectItem: () => {};
 }
 
-const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
-  <section className="flex-1 flex bg-white border-l border-gray-400">
+const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
+  <section
+    className={`flex-1 flex border-l ${
+      theme === Themes.LIGHT
+        ? "bg-white border-gray-400"
+        : "bg-gray-900 border-black"
+    }`}
+  >
     {item ? (
       <article className="flex-1 px-10 py-6">
         <div className="flex items-start  ">
@@ -25,7 +32,7 @@ const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
             </span>
           </button>
         </div>
-        <div className="flex mb-6 text-sm text-gray-700">
+        <div className="flex mb-6 text-sm text-gray-600">
           <div className="pr-6">
             <span className="mr-1" role="img" aria-label="Calendar">
               🗓
@@ -70,6 +77,7 @@ const mapStateToProps = (state: InitialState) => ({
     state.selectedFeed !== null && state.selectedItem !== null
       ? state.feeds[state.selectedFeed].items[state.selectedItem]
       : null,
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

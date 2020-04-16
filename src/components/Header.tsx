@@ -2,42 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 import {
   selectFeed,
   setSubscribeFeedModalVisibility,
   setAboutModalVisibility,
   setHeaderCollapse,
+  setTheme,
 } from "../state/actions";
 import useKeyPress from "./useKeyPress";
-
-interface HeaderLinkProps {
-  isSelected?: boolean;
-}
-
-const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
-  const classes = [
-    "flex",
-    "items-center",
-    "text-left",
-    "text-gray-700",
-    "block",
-    "rounded",
-    "leading-none",
-    "py-3",
-    "px-4",
-  ];
-
-  if (typeof isSelected !== "undefined") {
-    classes.push(
-      isSelected ? "bg-blue-200 text-gray-900" : "hover:bg-blue-200",
-    );
-  } else {
-    classes.push("hover:bg-blue-200");
-  }
-
-  return <span className={classes.join(" ")}>{children}</span>;
-};
+import HeaderLink from "./HeaderLink";
 
 interface Props {
   feeds: Feed[];
@@ -47,7 +21,9 @@ interface Props {
   openSubscribeModal: () => {};
   selectedFeed: number | null;
   selectFeed: (i: number | null) => {};
+  theme: Themes;
   toggleHeaderCollapse: (isCollapsed: boolean) => {};
+  toggleTheme: (theme: string) => {};
 }
 
 const KEY_CODE_N = 78;
@@ -61,7 +37,9 @@ const Header: React.FC<Props> = ({
   openSubscribeModal,
   selectedFeed,
   selectFeed,
+  theme,
   toggleHeaderCollapse,
+  toggleTheme,
 }) => {
   useKeyPress(KEY_CODE_N, () => {
     if (!isSubscribeFeedModalOpen) {
@@ -77,9 +55,11 @@ const Header: React.FC<Props> = ({
 
   return (
     <header
-      className={`${
-        isCollapsed ? "w-16" : "w-1/5"
-      } bg-purple-100 border-r border-gray-400 sticky top-0 max-h-screen`}
+      className={`border-r ${isCollapsed ? "w-16" : "w-1/5"} ${
+        theme === Themes.LIGHT
+          ? "bg-purple-100 border-gray-400"
+          : "bg-purple-900 border-black"
+      } sticky top-0 max-h-screen`}
     >
       <div className="h-full flex flex-col p-2">
         <nav className="flex-1">
@@ -131,6 +111,26 @@ const Header: React.FC<Props> = ({
             {!isCollapsed && "nosh"}
           </HeaderLink>
         </button>
+        <button
+          onClick={() =>
+            toggleTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)
+          }
+        >
+          <HeaderLink>
+            <span className="w-4 mr-3" role="img" aria-label="About nosh">
+              {theme === Themes.LIGHT ? (
+                <span role="img" aria-label="Dark theme">
+                  🌙
+                </span>
+              ) : (
+                <span role="img" aria-label="Light theme">
+                  ☀️
+                </span>
+              )}
+            </span>
+            {!isCollapsed && "Toggle theme"}
+          </HeaderLink>
+        </button>
         <button onClick={() => toggleHeaderCollapse(!isCollapsed)}>
           <HeaderLink>
             <span
@@ -153,6 +153,7 @@ const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
   isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
   isCollapsed: state.ui.isHeaderCollapsed,
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -160,6 +161,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
   toggleHeaderCollapse: (isCollapsed: boolean) =>
     dispatch(setHeaderCollapse(isCollapsed)),
+  toggleTheme: (theme: string) => dispatch(setTheme(theme)),
   selectFeed: (i: number | null) => dispatch(selectFeed(i)),
 });
 
