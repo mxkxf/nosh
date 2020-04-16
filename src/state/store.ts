@@ -1,16 +1,23 @@
-import { createStore, applyMiddleware, Middleware } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 import reducers from "./reducers";
-import { persistLocalStorage } from "./middleware";
+import {
+  loadFromLocalStorage,
+  persistToLocalStorage,
+} from "./persistLocalStorage";
 
-const middleware: Middleware[] = [thunk, persistLocalStorage];
+const middleware = [thunk, persistToLocalStorage];
 
 if (process.env.NODE_ENV !== "production") {
   middleware.push(logger);
 }
 
-const store = createStore(reducers, applyMiddleware(...middleware));
+const store = createStore(
+  reducers,
+  loadFromLocalStorage(),
+  applyMiddleware(...middleware),
+);
 
 export default store;

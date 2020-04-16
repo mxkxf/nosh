@@ -22,7 +22,7 @@ export interface InitialState {
   };
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   selectedFeed: null,
   selectedItem: null,
   feeds: [],
@@ -33,7 +33,7 @@ const initialState: InitialState = {
     isUnsubscribeFeedModalOpen: false,
     isAboutModalOpen: false,
     isHeaderCollapsed: true,
-    theme: Themes.DARK,
+    theme: Themes.LIGHT,
   },
 };
 
