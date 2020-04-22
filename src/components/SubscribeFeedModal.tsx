@@ -7,7 +7,7 @@ import {
   setSubscribeFeedModalVisibility,
 } from "../state/actions";
 import Modal from "./Modal";
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 
 interface Props {
   closeModal: () => {};
@@ -15,6 +15,7 @@ interface Props {
   feeds: Feed[];
   isLoading: boolean;
   subscribeFeed: (url: string) => {};
+  theme: Themes;
 }
 
 const examples = [
@@ -34,6 +35,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
   feeds,
   isLoading,
   subscribeFeed,
+  theme,
 }) => {
   const [url, setUrl] = React.useState("");
 
@@ -51,7 +53,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
         <h2>Subscribe to a new feed</h2>
       </div>
       {feeds.length === 0 && (
-        <div className="bg-green-200 border border-green-300 px-6 py-4 rounded text-sm mb-6">
+        <div className="text-sm mb-6">
           <p className="mb-2">
             <span className="mr-1" role="img" aria-label="Eyes">
               👀
@@ -80,7 +82,9 @@ const SubscribeFeedModal: React.FC<Props> = ({
           Feed URL
         </label>
         <input
-          className={`border flex-1 rounded px-2 py-1 ${
+          className={`border ${
+            theme === Themes.LIGHT ? "bg-white" : "border-black bg-gray-900"
+          } flex-1 rounded px-2 py-1 ${
             isLoading ? "cursor-not-allowed bg-gray-100" : ""
           }`}
           required={true}
@@ -121,6 +125,7 @@ const mapStateToProps = (state: InitialState) => ({
   error: state.ui.error,
   feeds: state.feeds,
   isLoading: state.ui.isLoading,
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

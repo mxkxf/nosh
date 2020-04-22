@@ -1,6 +1,11 @@
 import { Middleware } from "redux";
 
-import { ADD_FEED, UNSUBSCRIBE_FEED, SET_HEADER_COLLAPSE } from "./actions";
+import {
+  ADD_FEED,
+  UNSUBSCRIBE_FEED,
+  SET_HEADER_COLLAPSE,
+  SET_THEME,
+} from "./actions";
 import { InitialState, initialState } from "./reducers";
 
 export const persistToLocalStorage: Middleware<{}, InitialState> = (store) => (
@@ -9,9 +14,10 @@ export const persistToLocalStorage: Middleware<{}, InitialState> = (store) => (
   const result = next(action);
 
   try {
-    if (action.type === SET_HEADER_COLLAPSE) {
+    if (action.type === SET_HEADER_COLLAPSE || action.type === SET_THEME) {
       const uiState = {
         isHeaderCollapsed: store.getState().ui.isHeaderCollapsed,
+        theme: store.getState().ui.theme,
       };
 
       window.localStorage.setItem("ui", JSON.stringify(uiState));

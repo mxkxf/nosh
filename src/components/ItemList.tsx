@@ -9,8 +9,9 @@ import {
   setUnsubscribeFeedModalVisibility,
 } from "../state/actions";
 import UnsubscribeFeedModal from "./UnsubscribeFeedModal";
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 import useClickOutside from "./useClickOutside";
+import Dropdown from "./Dropdown";
 
 interface Props {
   feeds: Feed[];
@@ -19,6 +20,7 @@ interface Props {
   openUnsubscribeModal: () => {};
   selectedFeed: number;
   selectedItem: number | null;
+  theme: Themes;
   unSubscribeFeed: (index: number) => {};
   viewItem: (index: number) => {};
 }
@@ -30,6 +32,7 @@ const ItemList: React.FC<Props> = ({
   openUnsubscribeModal,
   selectedFeed,
   selectedItem,
+  theme,
   viewItem,
 }) => {
   const [isMenuVisible, setMenuVisible] = React.useState(false);
@@ -46,26 +49,38 @@ const ItemList: React.FC<Props> = ({
   return (
     <>
       <section className="sticky top-0 w-2/5 max-h-screen overflow-scroll">
-        <div className="bg-gray-300 border-b border-gray-400 sticky top-0 flex items-center">
+        <div
+          className={`border-b ${
+            theme === Themes.LIGHT
+              ? "bg-gray-300 border-gray-400"
+              : "bg-gray-800 border-black"
+          } sticky top-0 flex items-center`}
+        >
           <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
           </h2>
-          <div className="relative ml-4">
+          <div className="relative">
             <button
-              onClick={() => setMenuVisible((isMenuVisible) => !isMenuVisible)}
-              className="px-3 py-1 uppercase font-bold text-xs tracking-wide ml-4"
+              onClick={() => setMenuVisible(!isMenuVisible)}
+              className="px-3 py-1 uppercase font-bold text-xs tracking-wide"
             >
-              <span className="-mr-1" role="img" aria-label="Settings">
-                ⚙️
-              </span>
+              <svg
+                aria-label="Settings"
+                className="w-4 fill-current"
+                viewBox="0 0 1792 1792"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1152 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zm512-109v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z" />
+              </svg>
             </button>
             {isMenuVisible && (
-              <div
-                ref={dropdownMenuRef}
-                className="absolute shadow py-2 text-xs right-0 bg-white -mr-px border border-gray-400"
-              >
+              <Dropdown ref={dropdownMenuRef}>
                 <a
-                  className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
+                  className={`block w-full px-3 py-1 pr-10 ${
+                    theme === Themes.LIGHT
+                      ? "hover:bg-gray-200"
+                      : "hover:bg-gray-700"
+                  }`}
                   href={feed.link}
                   rel="noopener noreferrer"
                   target="_blank"
@@ -77,14 +92,18 @@ const ItemList: React.FC<Props> = ({
                 </a>
                 <button
                   onClick={() => openUnsubscribeModal()}
-                  className="block w-full px-3 py-1 pr-10 hover:bg-gray-200"
+                  className={`block w-full px-3 py-1 pr-10 ${
+                    theme === Themes.LIGHT
+                      ? "hover:bg-gray-200"
+                      : "hover:bg-gray-700"
+                  }`}
                 >
                   <span className="pr-1" role="img" aria-label="Filter">
                     🗑
                   </span>
                   Unsubscribe
                 </button>
-              </div>
+              </Dropdown>
             )}
           </div>
         </div>
@@ -94,16 +113,26 @@ const ItemList: React.FC<Props> = ({
               <article
                 onClick={() => viewItem(i)}
                 className={`${
+                  i > 0
+                    ? `border-t ${
+                        theme === Themes.LIGHT
+                          ? "border-gray-400"
+                          : "border-black"
+                      }`
+                    : ""
+                } ${theme === Themes.LIGHT ? "bg-white" : "bg-gray-900"} ${
                   selectedItem === i
                     ? "bg-indigo-600 text-white"
-                    : "hover:bg-gray-100"
-                } cursor-pointer w-full text-left py-2 px-3 ${
-                  i > 0 ? "border-t border-gray-400" : ""
-                } text-xs`}
+                    : theme === Themes.LIGHT
+                    ? "hover:bg-gray-100"
+                    : "hover:bg-gray-800"
+                } cursor-pointer w-full text-left py-2 px-3 text-xs`}
                 key={`feed-${selectedFeed}-item-${i}`}
               >
                 <div className="flex">
-                  <h4 className="flex-1 truncate">{item.author}</h4>
+                  <h4 className="flex-1 truncate">
+                    {item.author || feed.title}
+                  </h4>
                   <p
                     className={`pl-4 ${
                       selectedItem === i ? "text-gray-400" : "text-gray-600"
@@ -144,6 +173,7 @@ const mapStateToProps = (state: InitialState) => ({
   feeds: state.feeds,
   items:
     state.selectedFeed !== null ? state.feeds[state.selectedFeed].items : [],
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

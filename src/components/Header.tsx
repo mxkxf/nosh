@@ -2,42 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { InitialState } from "../state/reducers";
+import { InitialState, Themes } from "../state/reducers";
 import {
   selectFeed,
   setSubscribeFeedModalVisibility,
   setAboutModalVisibility,
   setHeaderCollapse,
+  setTheme,
 } from "../state/actions";
 import useKeyPress from "./useKeyPress";
-
-interface HeaderLinkProps {
-  isSelected?: boolean;
-}
-
-const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
-  const classes = [
-    "flex",
-    "items-center",
-    "text-left",
-    "text-gray-700",
-    "block",
-    "rounded",
-    "leading-none",
-    "py-3",
-    "px-4",
-  ];
-
-  if (typeof isSelected !== "undefined") {
-    classes.push(
-      isSelected ? "bg-blue-200 text-gray-900" : "hover:bg-blue-200",
-    );
-  } else {
-    classes.push("hover:bg-blue-200");
-  }
-
-  return <span className={classes.join(" ")}>{children}</span>;
-};
+import HeaderLink from "./HeaderLink";
 
 interface Props {
   feeds: Feed[];
@@ -47,7 +21,9 @@ interface Props {
   openSubscribeModal: () => {};
   selectedFeed: number | null;
   selectFeed: (i: number | null) => {};
+  theme: Themes;
   toggleHeaderCollapse: (isCollapsed: boolean) => {};
+  toggleTheme: (theme: string) => {};
 }
 
 const KEY_CODE_N = 78;
@@ -61,7 +37,9 @@ const Header: React.FC<Props> = ({
   openSubscribeModal,
   selectedFeed,
   selectFeed,
+  theme,
   toggleHeaderCollapse,
+  toggleTheme,
 }) => {
   useKeyPress(KEY_CODE_N, () => {
     if (!isSubscribeFeedModalOpen) {
@@ -77,9 +55,11 @@ const Header: React.FC<Props> = ({
 
   return (
     <header
-      className={`${
-        isCollapsed ? "w-16" : "w-1/5"
-      } bg-purple-100 border-r border-gray-400 sticky top-0 max-h-screen transition`}
+      className={`border-r ${isCollapsed ? "w-16" : "w-1/5"} ${
+        theme === Themes.LIGHT
+          ? "bg-purple-100 border-gray-400"
+          : "bg-purple-900 border-black"
+      } sticky top-0 max-h-screen transition`}
     >
       <div className="h-full flex flex-col p-2">
         <nav className="flex-1">
@@ -94,12 +74,12 @@ const Header: React.FC<Props> = ({
                   >
                     <HeaderLink isSelected={selectedFeed === i}>
                       <img
-                        className="w-4 rounded mr-3"
+                        className="w-4 rounded"
                         src={feed.icon}
                         alt={feed.title}
                       />
                       {!isCollapsed && (
-                        <span className="max-lines">{feed.title}</span>
+                        <span className="ml-3 max-lines">{feed.title}</span>
                       )}
                     </HeaderLink>
                   </button>
@@ -110,14 +90,15 @@ const Header: React.FC<Props> = ({
                 onClick={() => openSubscribeModal()}
               >
                 <HeaderLink>
-                  <span
-                    className="opacity-50 w-4 mr-3"
-                    role="img"
+                  <svg
                     aria-label="Add"
+                    className="w-4 text-gray-500 fill-current"
+                    viewBox="0 0 1792 1792"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    ➕
-                  </span>
-                  {!isCollapsed && "Add feed"}
+                    <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z" />
+                  </svg>
+                  {!isCollapsed && <span className="ml-3">Add feed</span>}
                 </HeaderLink>
               </button>
             </>
@@ -125,22 +106,52 @@ const Header: React.FC<Props> = ({
         </nav>
         <button onClick={() => openAboutModal()}>
           <HeaderLink>
-            <span className="w-4 mr-3" role="img" aria-label="About nosh">
+            <span className="w-4" role="img" aria-label="About nosh">
               🍜
             </span>
-            {!isCollapsed && "nosh"}
+            {!isCollapsed && <span className="ml-3">About</span>}
+          </HeaderLink>
+        </button>
+        <button
+          onClick={() =>
+            toggleTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)
+          }
+        >
+          <HeaderLink>
+            {theme === Themes.LIGHT ? (
+              <span className="w-4" role="img" aria-label="Dark theme">
+                🌙
+              </span>
+            ) : (
+              <span className="w-4" role="img" aria-label="Light theme">
+                ☀️
+              </span>
+            )}
+            {!isCollapsed && <span className="ml-3">Toggle theme</span>}
           </HeaderLink>
         </button>
         <button onClick={() => toggleHeaderCollapse(!isCollapsed)}>
           <HeaderLink>
-            <span
-              className="w-4 mr-3"
-              role="img"
-              aria-label={isCollapsed ? "Expand" : "Collapse"}
-            >
-              {isCollapsed ? "➡️" : "⬅️"}
-            </span>
-            {!isCollapsed && "Collapse sidebar"}
+            {isCollapsed ? (
+              <svg
+                aria-label="Expand menu"
+                className="w-4 text-gray-500 fill-current"
+                viewBox="0 0 1792 1792"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z" />
+              </svg>
+            ) : (
+              <svg
+                aria-label="Collapse menu"
+                className="w-4 text-gray-500 fill-current"
+                viewBox="0 0 1792 1792"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z" />
+              </svg>
+            )}
+            {!isCollapsed && <span className="ml-3">Collapse sidebar</span>}
           </HeaderLink>
         </button>
       </div>
@@ -153,6 +164,7 @@ const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
   isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
   isCollapsed: state.ui.isHeaderCollapsed,
+  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -160,6 +172,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
   toggleHeaderCollapse: (isCollapsed: boolean) =>
     dispatch(setHeaderCollapse(isCollapsed)),
+  toggleTheme: (theme: string) => dispatch(setTheme(theme)),
   selectFeed: (i: number | null) => dispatch(selectFeed(i)),
 });
 

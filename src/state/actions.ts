@@ -89,6 +89,12 @@ export const setHeaderCollapse = (isCollapsed: boolean) => ({
   isCollapsed,
 });
 
+export const SET_THEME = "SET_THEME";
+export const setTheme = (theme: string) => ({
+  type: SET_THEME,
+  theme,
+});
+
 export const ADD_FEED = "ADD_FEED";
 export const addFeed = (feed: Feed) => ({
   type: ADD_FEED,

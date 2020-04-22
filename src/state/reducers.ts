@@ -2,6 +2,11 @@ import { combineReducers } from "redux";
 
 import * as actions from "./actions";
 
+export enum Themes {
+  LIGHT = "LIGHT",
+  DARK = "DARK",
+}
+
 export interface InitialState {
   selectedFeed: number | null;
   selectedItem: number | null;
@@ -13,6 +18,7 @@ export interface InitialState {
     isUnsubscribeFeedModalOpen: boolean;
     isAboutModalOpen: boolean;
     isHeaderCollapsed: boolean;
+    theme: Themes;
   };
 }
 
@@ -27,6 +33,7 @@ export const initialState: InitialState = {
     isUnsubscribeFeedModalOpen: false,
     isAboutModalOpen: false,
     isHeaderCollapsed: true,
+    theme: Themes.LIGHT,
   },
 };
 
@@ -128,6 +135,12 @@ const ui = (state = initialState.ui, action: actions.ActionTypes) => {
       return {
         ...state,
         isHeaderCollapsed: action.isCollapsed,
+      };
+
+    case actions.SET_THEME:
+      return {
+        ...state,
+        theme: action.theme,
       };
 
     default:
