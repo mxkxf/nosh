@@ -53,7 +53,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
         <h2>Subscribe to a new feed</h2>
       </div>
       {feeds.length === 0 && (
-        <div className="bg-green-200 border border-green-300 px-6 py-4 rounded text-sm mb-6">
+        <div className="text-sm mb-6">
           <p className="mb-2">
             <span className="mr-1" role="img" aria-label="Eyes">
               👀

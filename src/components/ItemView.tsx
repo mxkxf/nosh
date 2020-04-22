@@ -44,12 +44,14 @@ const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
             </span>
             {dayjs(item.pubDate).format("DD/MM/YYYY")}
           </div>
-          <div className="pr-6">
-            <span className="mr-1" role="img" aria-label="User">
-              👤
-            </span>
-            {item.author}
-          </div>
+          {item.author && (
+            <div className="pr-6">
+              <span className="mr-1" role="img" aria-label="User">
+                👤
+              </span>
+              {item.author}
+            </div>
+          )}
           <div>
             <a href={item.link}>
               <span className="mr-1" role="img" aria-label="Link">

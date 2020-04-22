@@ -130,7 +130,9 @@ const ItemList: React.FC<Props> = ({
                 key={`feed-${selectedFeed}-item-${i}`}
               >
                 <div className="flex">
-                  <h4 className="flex-1 truncate">{item.author}</h4>
+                  <h4 className="flex-1 truncate">
+                    {item.author || feed.title}
+                  </h4>
                   <p
                     className={`pl-4 ${
                       selectedItem === i ? "text-gray-400" : "text-gray-600"
