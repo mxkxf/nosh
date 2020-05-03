@@ -16,13 +16,13 @@ interface Props {
 
 const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
   const [isClosing, setClosing] = React.useState(false);
-  const modalWindowRef = React.createRef<HTMLDivElement>();
 
   const closeModal = () => {
     setClosing(true);
   };
 
-  useClickOutside(modalWindowRef, closeModal);
+  const modalWindowRef = useClickOutside(closeModal);
+
   useKeyPress(KEY_CODE_ESCAPE, closeModal);
 
   return ReactDOM.createPortal(

@@ -1,11 +1,10 @@
 import React from "react";
 
-const useClickOutside = (
-  ref: React.RefObject<any>,
-  callback: CallableFunction,
-) =>
+const useClickOutside = (callback: CallableFunction) => {
+  const ref = React.createRef<any>();
+
   React.useEffect(() => {
-    const listener = (event: any) => {
+    const listener = (event: MouseEvent) => {
       if (!ref || !ref.current || ref.current.contains(event.target)) {
         return;
       }
@@ -19,5 +18,8 @@ const useClickOutside = (
       window.removeEventListener("mousedown", listener);
     };
   });
+
+  return ref;
+};
 
 export default useClickOutside;
