@@ -8,7 +8,6 @@ import {
   setSubscribeFeedModalVisibility,
   setAboutModalVisibility,
   setHeaderCollapse,
-  setTheme,
 } from "../state/actions";
 import useKeyPress from "./useKeyPress";
 import HeaderLink from "./HeaderLink";
@@ -23,7 +22,6 @@ interface Props {
   selectFeed: (i: number | null) => {};
   theme: Themes;
   toggleHeaderCollapse: (isCollapsed: boolean) => {};
-  toggleTheme: (theme: string) => {};
 }
 
 const KEY_CODE_N = 78;
@@ -39,7 +37,6 @@ const Header: React.FC<Props> = ({
   selectFeed,
   theme,
   toggleHeaderCollapse,
-  toggleTheme,
 }) => {
   useKeyPress(KEY_CODE_N, () => {
     if (!isSubscribeFeedModalOpen) {
@@ -73,11 +70,23 @@ const Header: React.FC<Props> = ({
                     key={`select-feed-${i}`}
                   >
                     <HeaderLink isSelected={selectedFeed === i}>
-                      <img
-                        className="w-4 rounded"
-                        src={feed.icon}
-                        alt={feed.title}
-                      />
+                      {feed.icon ? (
+                        <img
+                          className="w-4 rounded"
+                          src={feed.icon}
+                          alt={feed.title}
+                        />
+                      ) : (
+                        <span
+                          className={`flex items-center justify-center rounded w-4 h-4 text-center text-xs ${
+                            theme === Themes.LIGHT
+                              ? "bg-black text-white"
+                              : "bg-white text-black"
+                          }`}
+                        >
+                          {feed.title[0]}
+                        </span>
+                      )}
                       {!isCollapsed && (
                         <span className="ml-3 max-lines">{feed.title}</span>
                       )}
@@ -110,24 +119,6 @@ const Header: React.FC<Props> = ({
               🍜
             </span>
             {!isCollapsed && <span className="ml-3">About</span>}
-          </HeaderLink>
-        </button>
-        <button
-          onClick={() =>
-            toggleTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)
-          }
-        >
-          <HeaderLink>
-            {theme === Themes.LIGHT ? (
-              <span className="w-4" role="img" aria-label="Dark theme">
-                🌙
-              </span>
-            ) : (
-              <span className="w-4" role="img" aria-label="Light theme">
-                ☀️
-              </span>
-            )}
-            {!isCollapsed && <span className="ml-3">Toggle theme</span>}
           </HeaderLink>
         </button>
         <button onClick={() => toggleHeaderCollapse(!isCollapsed)}>
@@ -172,7 +163,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
   toggleHeaderCollapse: (isCollapsed: boolean) =>
     dispatch(setHeaderCollapse(isCollapsed)),
-  toggleTheme: (theme: string) => dispatch(setTheme(theme)),
   selectFeed: (i: number | null) => dispatch(selectFeed(i)),
 });
 
