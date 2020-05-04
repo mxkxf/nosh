@@ -11,10 +11,21 @@ export default async function getFeed(url: string) {
 
   const urlParts = new URL(url);
 
+  let icon = null;
+  const iconUrl = `https://${urlParts.hostname}/favicon.ico`;
+
+  try {
+    await axios.get(`https://cors-anywhere.herokuapp.com/${iconUrl}`);
+
+    icon = iconUrl;
+  } catch (error) {
+    //
+  }
+
   return {
     url,
+    icon,
     title: feed.title,
-    icon: `https://${urlParts.hostname}/favicon.ico`,
     description: feed.description,
     link: feed.link,
     items: feed.items

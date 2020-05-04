@@ -14,7 +14,7 @@ interface Props {
 
 const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
   <section
-    className={`flex-1 flex border-l ${
+    className={`flex-1 flex border-l transition ${
       theme === Themes.LIGHT
         ? "bg-white border-gray-400"
         : "bg-gray-900 border-black"

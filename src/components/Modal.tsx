@@ -16,13 +16,13 @@ interface Props {
 
 const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
   const [isClosing, setClosing] = React.useState(false);
-  const modalWindowRef = React.createRef<HTMLDivElement>();
 
   const closeModal = () => {
     setClosing(true);
   };
 
-  useClickOutside(modalWindowRef, closeModal);
+  const modalWindowRef = useClickOutside(closeModal);
+
   useKeyPress(KEY_CODE_ESCAPE, closeModal);
 
   return ReactDOM.createPortal(
@@ -38,7 +38,7 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
       <div className="absolute inset-0 flex p-4 z-30">
         <div
           ref={modalWindowRef}
-          className={`p-10 ${
+          className={`p-10 transition ${
             theme === Themes.LIGHT
               ? "bg-white text-black"
               : "bg-gray-800 text-white"
