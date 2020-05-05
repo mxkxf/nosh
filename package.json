@@ -15,11 +15,6 @@
     "rss-parser": "^3.7.6"
   },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^2.1.2",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
@@ -32,7 +27,7 @@
     "postcss-nested": "^4.2.1",
     "prettier": "^2.0.2",
     "redux-logger": "^3.0.6",
-    "tailwindcss": "^1.2.0",
+    "tailwindcss": "^1.4.4",
     "typescript": "~3.7.2"
   },
   "scripts": {
