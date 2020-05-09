@@ -1,5 +1,6 @@
 {
   "name": "@mikefrancis/nosh",
+  "description": "Modern RSS reader",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

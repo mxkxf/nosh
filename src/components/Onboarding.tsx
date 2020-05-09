@@ -13,13 +13,7 @@ interface Props {
 
 const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
   return (
-    <div
-      className={`flex-1 flex text-xl font-light ${
-        theme === Themes.LIGHT
-          ? "bg-white text-gray-800"
-          : "bg-gray-800 text-white"
-      }`}
-    >
+    <div className={`flex-1 flex text-xl font-light opacity-50`}>
       <div className="m-auto text-center max-w-md">
         {isLoading ? (
           <div>
@@ -30,7 +24,7 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
           </div>
         ) : (
           <>
-            <h2 className="text-3xl mb-4">
+            <h2 className="text-2xl mb-4">
               Welcome{" "}
               <span role="img" aria-label="Wave">
                 👋
