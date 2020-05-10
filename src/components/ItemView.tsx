@@ -22,7 +22,7 @@ const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
   >
     {item ? (
       <article className="flex-1 px-10 py-6">
-        <div className="flex items-start  ">
+        <div className="flex items-start">
           <h1 className="flex-1 text-4xl leading-tight font-light mb-6">
             {item.title}
           </h1>

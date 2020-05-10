@@ -66,9 +66,9 @@ const ItemList: React.FC<Props> = ({
           <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
           </h2>
-          <Dropdown toggle={<DropdownToggle />}>
+          <Dropdown direction="bottom" toggle={<DropdownToggle />}>
             <a
-              className={`block w-full px-3 py-1 pr-10 transition ${
+              className={`text-left block w-full px-3 py-1 pr-10 transition ${
                 theme === Themes.LIGHT
                   ? "hover:bg-gray-200"
                   : "hover:bg-gray-700"
@@ -84,7 +84,7 @@ const ItemList: React.FC<Props> = ({
             </a>
             <button
               onClick={() => openUnsubscribeModal()}
-              className={`block w-full px-3 py-1 pr-10 transition ${
+              className={`text-left block w-full px-3 py-1 pr-10 transition ${
                 theme === Themes.LIGHT
                   ? "hover:bg-gray-200"
                   : "hover:bg-gray-700"

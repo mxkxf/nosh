@@ -8,9 +8,11 @@ import {
   setSubscribeFeedModalVisibility,
   setAboutModalVisibility,
   setHeaderCollapse,
+  setTheme,
 } from "../state/actions";
 import useKeyPress from "./useKeyPress";
 import HeaderLink from "./HeaderLink";
+import Dropdown from "./Dropdown";
 
 interface Props {
   feeds: Feed[];
@@ -22,10 +24,12 @@ interface Props {
   selectFeed: (i: number | null) => {};
   theme: Themes;
   toggleHeaderCollapse: (isCollapsed: boolean) => {};
+  toggleTheme: (theme: Themes) => {};
 }
 
 const KEY_CODE_N = 78;
 const KEY_CODE_S = 83;
+const KEY_CODE_T = 84;
 
 const Header: React.FC<Props> = ({
   feeds,
@@ -37,6 +41,7 @@ const Header: React.FC<Props> = ({
   selectFeed,
   theme,
   toggleHeaderCollapse,
+  toggleTheme,
 }) => {
   useKeyPress(KEY_CODE_N, () => {
     if (!isSubscribeFeedModalOpen) {
@@ -50,13 +55,19 @@ const Header: React.FC<Props> = ({
     }
   });
 
+  useKeyPress(KEY_CODE_T, () => {
+    if (!isSubscribeFeedModalOpen) {
+      toggleTheme(theme);
+    }
+  });
+
   return (
     <header
       className={`border-r ${isCollapsed ? "w-16" : "w-1/5"} ${
         theme === Themes.LIGHT
           ? "bg-purple-100 border-gray-400"
           : "bg-purple-900 border-black"
-      } sticky top-0 max-h-screen transition`}
+      } sticky top-0 max-h-screen transition z-20`}
     >
       <div className="h-full flex flex-col p-2">
         <nav className="flex-1">
@@ -127,30 +138,45 @@ const Header: React.FC<Props> = ({
             {!isCollapsed && <span className="ml-3">About</span>}
           </HeaderLink>
         </button>
-        <button onClick={() => toggleHeaderCollapse(!isCollapsed)}>
-          <HeaderLink>
-            {isCollapsed ? (
+        <Dropdown
+          direction="right"
+          toggle={
+            <HeaderLink>
               <svg
-                aria-label="Expand menu"
+                aria-label="Settings"
                 className="w-4 text-gray-500 fill-current"
                 viewBox="0 0 1792 1792"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <path d="M1363 877l-742 742q-19 19-45 19t-45-19l-166-166q-19-19-19-45t19-45l531-531-531-531q-19-19-19-45t19-45l166-166q19-19 45-19t45 19l742 742q19 19 19 45t-19 45z" />
+                <path d="M1152 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zm512-109v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z" />
               </svg>
-            ) : (
-              <svg
-                aria-label="Collapse menu"
-                className="w-4 text-gray-500 fill-current"
-                viewBox="0 0 1792 1792"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M1427 301l-531 531 531 531q19 19 19 45t-19 45l-166 166q-19 19-45 19t-45-19l-742-742q-19-19-19-45t19-45l742-742q19-19 45-19t45 19l166 166q19 19 19 45t-19 45z" />
-              </svg>
-            )}
-            {!isCollapsed && <span className="ml-3">Collapse sidebar</span>}
-          </HeaderLink>
-        </button>
+              {!isCollapsed && <span className="ml-3">Settings</span>}
+            </HeaderLink>
+          }
+        >
+          <button
+            className={`text-left block w-full px-3 py-1 pr-10 transition ${
+              theme === Themes.LIGHT ? "hover:bg-gray-200" : "hover:bg-gray-700"
+            }`}
+            onClick={() => toggleTheme(theme)}
+          >
+            <span className="pr-1" role="img" aria-label="Toggle theme">
+              {theme === Themes.LIGHT ? "🌙" : "☀️"}
+            </span>
+            {theme === Themes.LIGHT ? "Dark" : "Light"} theme
+          </button>
+          <button
+            className={`text-left block w-full px-3 py-1 pr-10 transition ${
+              theme === Themes.LIGHT ? "hover:bg-gray-200" : "hover:bg-gray-700"
+            }`}
+            onClick={() => toggleHeaderCollapse(!isCollapsed)}
+          >
+            <span className="pr-1" role="img" aria-label="Toggle sidebar">
+              {isCollapsed ? "➡️" : "⬅️"}
+            </span>
+            {isCollapsed ? "Expand" : "Collapse"} sidebar
+          </button>
+        </Dropdown>
       </div>
     </header>
   );
@@ -170,6 +196,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleHeaderCollapse: (isCollapsed: boolean) =>
     dispatch(setHeaderCollapse(isCollapsed)),
   selectFeed: (i: number | null) => dispatch(selectFeed(i)),
+  toggleTheme: (theme: Themes) =>
+    dispatch(setTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

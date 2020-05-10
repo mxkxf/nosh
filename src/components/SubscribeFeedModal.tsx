@@ -64,7 +64,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
             {examples.map((example, i) => (
               <li key={`example-${i}`}>
                 <button
-                  className="text-blue-700 hover:text-blue-900 underline"
+                  className="text-blue-500 hover:text-blue-700 underline"
                   onClick={() => {
                     setUrl(example.url);
                     subscribeFeed(example.url);

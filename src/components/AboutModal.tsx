@@ -4,12 +4,11 @@ import { Dispatch } from "redux";
 import { version } from "../../package.json";
 
 import Modal from "./Modal";
-import { setAboutModalVisibility, setTheme } from "../state/actions";
-import { InitialState, Themes } from "../state/reducers";
+import { setAboutModalVisibility } from "../state/actions";
 
-const AboutModal: React.FC<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({ closeModal, theme, toggleTheme }) => (
+const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
+  closeModal,
+}) => (
   <Modal closeModalFunc={() => closeModal()}>
     <div className="text-center mb-10">
       <h2 className="text-4xl font-light mb-2">
@@ -43,7 +42,7 @@ const AboutModal: React.FC<
         <em>
           Why{" "}
           <a
-            className="text-blue-700 hover:text-blue-900 underline"
+            className="text-blue-500 hover:text-blue-700 underline"
             href="https://www.dictionary.com/browse/nosh"
           >
             nosh
@@ -52,33 +51,13 @@ const AboutModal: React.FC<
         </em>{" "}
         It's a slang word for eating/food.
       </p>
-      <p>
-        <button
-          onClick={() =>
-            toggleTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)
-          }
-        >
-          <span>
-            {theme === Themes.LIGHT ? (
-              <span className="w-4" role="img" aria-label="Dark theme">
-                🌙
-              </span>
-            ) : (
-              <span className="w-4" role="img" aria-label="Light theme">
-                ☀️
-              </span>
-            )}
-            <span className="ml-3">Toggle theme</span>
-          </span>
-        </button>
-      </p>
     </div>
     <div className="flex text-sm">
       <span className="flex-1 text-gray-600">
         © Mike Francis {new Date().getFullYear()}
       </span>
       <a
-        className="text-blue-700 hover:text-blue-900 underline"
+        className="text-blue-500 hover:text-blue-700 underline"
         href="https://twitter.com/_mikefrancis"
         target="_blank"
         rel="noopener noreferrer"
@@ -89,13 +68,8 @@ const AboutModal: React.FC<
   </Modal>
 );
 
-const mapStateToProps = (state: InitialState) => ({
-  theme: state.ui.theme,
-});
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeModal: () => dispatch(setAboutModalVisibility(false)),
-  toggleTheme: (theme: string) => dispatch(setTheme(theme)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AboutModal);
+export default connect(null, mapDispatchToProps)(AboutModal);
