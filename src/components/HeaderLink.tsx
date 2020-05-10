@@ -23,6 +23,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({
     "leading-none",
     "py-3",
     "px-4",
+    "w-full",
   ];
 
   if (typeof isSelected !== "undefined") {

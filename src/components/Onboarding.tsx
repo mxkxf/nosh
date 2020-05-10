@@ -15,12 +15,10 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
   return (
     <div
       className={`flex-1 flex text-xl font-light ${
-        theme === Themes.LIGHT
-          ? "bg-white text-gray-800"
-          : "bg-gray-800 text-white"
+        theme === Themes.LIGHT ? "bg-white" : "bg-gray-900"
       }`}
     >
-      <div className="m-auto text-center max-w-md">
+      <div className="m-auto text-center max-w-md opacity-50">
         {isLoading ? (
           <div>
             <span className="mx-2" role="img" aria-label="Hourglass">
@@ -30,7 +28,7 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
           </div>
         ) : (
           <>
-            <h2 className="text-3xl mb-4">
+            <h2 className="text-2xl mb-4">
               Welcome{" "}
               <span role="img" aria-label="Wave">
                 👋
@@ -39,7 +37,7 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
             <p className="mb-4">
               To get started, please{" "}
               <button
-                className="font-light text-blue-700 hover:text-blue-900 underline mr-1"
+                className="font-light text-blue-500 hover:text-blue-700 underline mr-1"
                 onClick={() => openModal()}
               >
                 subscribe

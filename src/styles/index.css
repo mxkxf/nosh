@@ -14419,6 +14419,10 @@ video {
   -webkit-line-clamp: 1;
 }
 
+.left-full {
+  left: 100%;
+}
+
 .wysiwyg h1,
 .wysiwyg h2,
 .wysiwyg h3,
