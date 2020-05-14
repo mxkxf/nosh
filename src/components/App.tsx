@@ -51,7 +51,7 @@ const App: React.FC<
   return (
     <>
       <div
-        className={`antialiased min-h-screen flex ${
+        className={`antialiased min-h-screen flex flex-col-reverse md:flex-row ${
           theme === Themes.LIGHT ? "text-black" : "text-white"
         }`}
       >

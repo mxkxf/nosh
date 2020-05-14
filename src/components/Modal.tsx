@@ -38,14 +38,14 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
       <div className="absolute inset-0 flex p-4 z-30">
         <div
           ref={modalWindowRef}
-          className={`p-10 transition ${
+          className={`p-6 md:p-10 transition ${
             theme === Themes.LIGHT
               ? "bg-white text-black"
               : "bg-gray-800 text-white"
           } max-w-xl flex-1 m-auto rounded shadow relative`}
         >
           <button
-            className="absolute top-0 right-0 px-2 py-1 mr-10 mt-10 text-center"
+            className="absolute top-0 right-0 p-3 text-center"
             type="button"
             onClick={closeModal}
           >

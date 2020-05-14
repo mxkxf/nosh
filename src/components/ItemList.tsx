@@ -55,7 +55,11 @@ const ItemList: React.FC<Props> = ({
 
   return (
     <>
-      <section className="sticky top-0 w-2/5 max-h-screen overflow-scroll">
+      <section
+        className={`md:sticky md:top-0 w-full md:w-2/5 md:max-h-screen md:overflow-scroll ${
+          selectedItem !== null ? "hidden md:block" : ""
+        }`}
+      >
         <div
           className={`border-b transition ${
             theme === Themes.LIGHT
@@ -66,7 +70,7 @@ const ItemList: React.FC<Props> = ({
           <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
           </h2>
-          <Dropdown direction="bottom" toggle={<DropdownToggle />}>
+          <Dropdown direction="down" toggle={<DropdownToggle />}>
             <a
               className={`text-left block w-full px-3 py-1 pr-10 transition ${
                 theme === Themes.LIGHT

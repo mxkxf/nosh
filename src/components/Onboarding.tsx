@@ -18,7 +18,7 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
         theme === Themes.LIGHT ? "bg-white" : "bg-gray-900"
       }`}
     >
-      <div className="m-auto text-center max-w-md opacity-50">
+      <div className="m-auto p-10 text-center max-w-md opacity-50">
         {isLoading ? (
           <div>
             <span className="mx-2" role="img" aria-label="Hourglass">

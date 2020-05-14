@@ -63,51 +63,52 @@ const Header: React.FC<Props> = ({
 
   return (
     <header
-      className={`border-r ${isCollapsed ? "w-16" : "w-1/5"} ${
+      className={`border-t md:border-t-0 md:border-r ${
+        isCollapsed ? "md:w-16" : "md:w-1/5"
+      } ${
         theme === Themes.LIGHT
           ? "bg-purple-100 border-gray-400"
           : "bg-purple-900 border-black"
-      } sticky top-0 max-h-screen transition z-20`}
+      } sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-20`}
     >
-      <div className="h-full flex flex-col p-2">
-        <nav className="flex-1">
-          {feeds && feeds.length > 0 && (
-            <>
-              {feeds.map((feed, i) => {
-                return (
-                  <button
-                    className="w-full mb-1"
-                    onClick={() => selectFeed(i)}
-                    key={`select-feed-${i}`}
-                  >
-                    <HeaderLink isSelected={selectedFeed === i}>
-                      {feed.icon ? (
-                        <img
-                          className="w-4 rounded"
-                          src={feed.icon}
-                          alt={feed.title}
-                        />
-                      ) : (
-                        <span
-                          className={`flex items-center justify-center rounded w-4 h-4 text-center text-xs ${
-                            theme === Themes.LIGHT
-                              ? "bg-black text-white"
-                              : "bg-white text-black"
-                          }`}
-                        >
-                          {feed.title[0]}
-                        </span>
-                      )}
-                      {!isCollapsed && (
-                        <span className="ml-3 max-lines">{feed.title}</span>
-                      )}
-                    </HeaderLink>
-                  </button>
-                );
-              })}
-            </>
-          )}
-          <button className="w-full mb-1" onClick={() => openSubscribeModal()}>
+      <div className="h-full flex flex-row md:flex-col px-4 py-2 md:px-2">
+        <nav className="flex-1 flex flex-row md:flex-col">
+          {feeds &&
+            feeds.length > 0 &&
+            feeds.map((feed, i) => (
+              <button
+                className="md:w-full md:mb-1"
+                onClick={() => selectFeed(i)}
+                key={`select-feed-${i}`}
+              >
+                <HeaderLink isSelected={selectedFeed === i}>
+                  {feed.icon ? (
+                    <img
+                      className="w-4 rounded"
+                      src={feed.icon}
+                      alt={feed.title}
+                    />
+                  ) : (
+                    <span
+                      className={`flex items-center justify-center rounded w-4 h-4 text-center text-xs ${
+                        theme === Themes.LIGHT
+                          ? "bg-black text-white"
+                          : "bg-white text-black"
+                      }`}
+                    >
+                      {feed.title[0]}
+                    </span>
+                  )}
+                  {!isCollapsed && (
+                    <span className="ml-3 max-lines">{feed.title}</span>
+                  )}
+                </HeaderLink>
+              </button>
+            ))}
+          <button
+            className="md:w-full md:mb-1"
+            onClick={() => openSubscribeModal()}
+          >
             <HeaderLink>
               <svg
                 aria-label="Add"
