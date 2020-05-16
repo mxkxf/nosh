@@ -69,15 +69,15 @@ const Header: React.FC<Props> = ({
         theme === Themes.LIGHT
           ? "bg-purple-100 border-gray-400"
           : "bg-purple-900 border-black"
-      } sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-20`}
+      } sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-10`}
     >
-      <div className="h-full flex flex-row md:flex-col px-4 py-2 md:px-2">
-        <nav className="flex-1 flex flex-row md:flex-col">
+      <div className="h-full flex flex-row md:flex-col px-3 py-2 md:px-2">
+        <nav className="flex-1 flex flex-row md:flex-col overflow-scroll">
           {feeds &&
             feeds.length > 0 &&
             feeds.map((feed, i) => (
               <button
-                className="md:w-full md:mb-1"
+                className="md:w-full mx-1 md:mb-1 md:mx-0"
                 onClick={() => selectFeed(i)}
                 key={`select-feed-${i}`}
               >
@@ -106,7 +106,7 @@ const Header: React.FC<Props> = ({
               </button>
             ))}
           <button
-            className="md:w-full md:mb-1"
+            className="md:w-full mx-1 md:mb-1 md:mx-0"
             onClick={() => openSubscribeModal()}
           >
             <HeaderLink>

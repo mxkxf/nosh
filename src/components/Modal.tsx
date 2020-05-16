@@ -27,7 +27,7 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
 
   return ReactDOM.createPortal(
     <div
-      className={isClosing ? "fade-out" : "fade-in"}
+      className={`absolute inset-0 z-30 ${isClosing ? "fade-out" : "fade-in"}`}
       onAnimationEnd={() => {
         if (isClosing) {
           closeModalFunc();
