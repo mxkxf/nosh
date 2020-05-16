@@ -104,7 +104,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
           disabled={isLoading}
           type="submit"
         >
-          {isLoading ? "Loading..." : "Subscribe"}
+          {isLoading ? "..." : "Add"}
         </button>
       </form>
       {error && (

@@ -6,7 +6,7 @@ import useClickOutside from "./useClickOutside";
 
 type Props = ReturnType<typeof mapStateToProps> & {
   children: React.ReactNode;
-  direction: "right" | "bottom";
+  direction: "right" | "down";
   toggle: React.ReactNode;
 };
 
@@ -17,20 +17,18 @@ const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
   const classes = [];
 
   switch (direction) {
-    case "bottom":
+    case "down":
       classes.push("right-0");
-      classes.push("-mr-px");
       break;
     case "right":
-      classes.push("left-full");
-      classes.push("bottom-0");
+      classes.push("left-full", "bottom-0");
       break;
     default:
     //
   }
 
   return (
-    <div ref={ref} className="relative z-20">
+    <div ref={ref} className="relative">
       <button
         className="flex w-full"
         onClick={() => setMenuVisible(!isMenuVisible)}
