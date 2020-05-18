@@ -49,7 +49,7 @@ const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
             </div>
           )}
           <div>
-            <a href={item.link}>
+            <a href={item.link} rel="noopener noreferrer" target="_blank">
               <span className="mr-1" role="img" aria-label="Link">
                 🔗
               </span>

@@ -44,6 +44,8 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
           <a
             className="text-blue-500 hover:text-blue-700 underline"
             href="https://www.dictionary.com/browse/nosh"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             nosh
           </a>
