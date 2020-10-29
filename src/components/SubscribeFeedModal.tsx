@@ -8,6 +8,7 @@ import {
 } from "../state/actions";
 import Modal from "./Modal";
 import { InitialState, Themes } from "../state/reducers";
+import { Feed } from "../types";
 
 interface Props {
   closeModal: () => {};

@@ -1,10 +1,11 @@
 import dayjs from "dayjs";
 import React from "react";
 import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 import { InitialState, Themes } from "../state/reducers";
-import { Dispatch } from "redux";
 import { selectItem } from "../state/actions";
+import { FeedItem } from "../types";
 
 interface Props {
   item: FeedItem | null;

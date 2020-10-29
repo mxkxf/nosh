@@ -11,6 +11,7 @@ import {
 import UnsubscribeFeedModal from "./UnsubscribeFeedModal";
 import { InitialState, Themes } from "../state/reducers";
 import Dropdown from "./Dropdown";
+import { Feed, FeedItem } from "../types";
 
 interface Props {
   feeds: Feed[];

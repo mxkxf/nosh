@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { connect } from "react-redux";
 
 import useKeyPress from "./useKeyPress";
 import useClickOutside from "./useClickOutside";
-import { connect } from "react-redux";
 import { InitialState, Themes } from "../state/reducers";
 
 const KEY_CODE_ESCAPE = 27;

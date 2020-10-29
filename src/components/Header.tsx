@@ -13,6 +13,7 @@ import {
 import useKeyPress from "./useKeyPress";
 import HeaderLink from "./HeaderLink";
 import Dropdown from "./Dropdown";
+import { Feed } from "../types";
 
 interface Props {
   feeds: Feed[];

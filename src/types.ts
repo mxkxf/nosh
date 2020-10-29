@@ -1,8 +1,4 @@
-/// <reference types="react-scripts" />
-
-declare module "colorthief";
-
-declare type FeedItem = {
+export type FeedItem = {
   title: string;
   description: string;
   link: string;
@@ -11,7 +7,7 @@ declare type FeedItem = {
   content: string;
 };
 
-declare type Feed = {
+export type Feed = {
   title: string;
   description: string;
   url: string;
