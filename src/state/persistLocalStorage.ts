@@ -1,4 +1,5 @@
 import { Middleware } from "redux";
+import { Feed } from "../types";
 
 import {
   ADD_FEED,

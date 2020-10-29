@@ -32,22 +32,6 @@ const App: React.FC<
     retrieveFeeds();
   }, [retrieveFeeds]);
 
-  React.useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://unpkg.com/@mikefrancis/strata.js";
-    script.async = true;
-    script.onload = () => {
-      (window as any).Strata.init(process.env.REACT_APP_STRATA_KEY);
-      (window as any).Strata.page();
-    };
-
-    document.body.append(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   return (
     <>
       <div

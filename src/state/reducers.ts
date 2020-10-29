@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 
+import { Feed } from "../types";
 import * as actions from "./actions";
 
 export enum Themes {

@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 import reducers from "./reducers";
@@ -8,10 +7,11 @@ import {
   persistToLocalStorage,
 } from "./persistLocalStorage";
 
-const middleware = [thunk, persistToLocalStorage];
+let middleware = [thunk, persistToLocalStorage];
 
 if (process.env.NODE_ENV !== "production") {
-  middleware.push(logger);
+  const { createLogger } = require("redux-logger");
+  middleware = [...middleware, createLogger()];
 }
 
 const store = createStore(

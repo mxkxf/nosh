@@ -1,10 +1,9 @@
 import axios from "axios";
 import Parser from "rss-parser";
+import { Feed } from "../types";
 
 export default async function getFeed(url: string) {
-  const response = await axios.get(
-    `https://cors-anywhere.herokuapp.com/${url}`,
-  );
+  const response = await axios.post(`/api/get-feed`, { url });
 
   const parser = new Parser();
   const feed = await parser.parseString(response.data);
