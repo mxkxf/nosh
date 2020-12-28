@@ -1,19 +1,19 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { InitialState, Themes } from "../state/reducers";
+import { InitialState, Themes } from '../state/reducers';
 import {
   selectFeed,
   setSubscribeFeedModalVisibility,
   setAboutModalVisibility,
   setHeaderCollapse,
   setTheme,
-} from "../state/actions";
-import useKeyPress from "./useKeyPress";
-import HeaderLink from "./HeaderLink";
-import Dropdown from "./Dropdown";
-import { Feed } from "../types";
+} from '../state/actions';
+import useKeyPress from './useKeyPress';
+import HeaderLink from './HeaderLink';
+import Dropdown from './Dropdown';
+import { Feed } from '../types';
 
 interface Props {
   feeds: Feed[];
@@ -65,11 +65,11 @@ const Header: React.FC<Props> = ({
   return (
     <header
       className={`border-t md:border-t-0 md:border-r ${
-        isCollapsed ? "md:w-16" : "md:w-1/5"
+        isCollapsed ? 'md:w-16' : 'md:w-1/5'
       } ${
         theme === Themes.LIGHT
-          ? "bg-purple-100 border-gray-400"
-          : "bg-purple-900 border-black"
+          ? 'bg-purple-100 border-gray-400'
+          : 'bg-purple-900 border-black'
       } sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-10`}
     >
       <div className="h-full flex flex-row md:flex-col px-3 py-2 md:px-2">
@@ -93,8 +93,8 @@ const Header: React.FC<Props> = ({
                     <span
                       className={`flex items-center justify-center rounded w-4 h-4 text-center text-xs ${
                         theme === Themes.LIGHT
-                          ? "bg-black text-white"
-                          : "bg-white text-black"
+                          ? 'bg-black text-white'
+                          : 'bg-white text-black'
                       }`}
                     >
                       {feed.title[0]}
@@ -158,25 +158,25 @@ const Header: React.FC<Props> = ({
         >
           <button
             className={`text-left block w-full px-3 py-1 pr-10 transition ${
-              theme === Themes.LIGHT ? "hover:bg-gray-200" : "hover:bg-gray-700"
+              theme === Themes.LIGHT ? 'hover:bg-gray-200' : 'hover:bg-gray-700'
             }`}
             onClick={() => toggleTheme(theme)}
           >
             <span className="pr-1" role="img" aria-label="Toggle theme">
-              {theme === Themes.LIGHT ? "🌙" : "☀️"}
+              {theme === Themes.LIGHT ? '🌙' : '☀️'}
             </span>
-            {theme === Themes.LIGHT ? "Dark" : "Light"} theme
+            {theme === Themes.LIGHT ? 'Dark' : 'Light'} theme
           </button>
           <button
             className={`text-left block w-full px-3 py-1 pr-10 transition ${
-              theme === Themes.LIGHT ? "hover:bg-gray-200" : "hover:bg-gray-700"
+              theme === Themes.LIGHT ? 'hover:bg-gray-200' : 'hover:bg-gray-700'
             }`}
             onClick={() => toggleHeaderCollapse(!isCollapsed)}
           >
             <span className="pr-1" role="img" aria-label="Toggle sidebar">
-              {isCollapsed ? "➡️" : "⬅️"}
+              {isCollapsed ? '➡️' : '⬅️'}
             </span>
-            {isCollapsed ? "Expand" : "Collapse"} sidebar
+            {isCollapsed ? 'Expand' : 'Collapse'} sidebar
           </button>
         </Dropdown>
       </div>

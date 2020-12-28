@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { setSubscribeFeedModalVisibility } from "../state/actions";
-import { InitialState, Themes } from "../state/reducers";
+import { setSubscribeFeedModalVisibility } from '../state/actions';
+import { InitialState, Themes } from '../state/reducers';
 
 interface Props {
   isLoading: boolean;
@@ -15,7 +15,7 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
   return (
     <div
       className={`flex-1 flex text-xl font-light ${
-        theme === Themes.LIGHT ? "bg-white" : "bg-gray-900"
+        theme === Themes.LIGHT ? 'bg-white' : 'bg-gray-900'
       }`}
     >
       <div className="m-auto p-10 text-center max-w-md opacity-50">
@@ -29,13 +29,13 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
         ) : (
           <>
             <h2 className="text-2xl mb-4">
-              Welcome{" "}
+              Welcome{' '}
               <span role="img" aria-label="Wave">
                 👋
               </span>
             </h2>
             <p className="mb-4">
-              To get started, please{" "}
+              To get started, please{' '}
               <button
                 className="font-light text-blue-500 hover:text-blue-700 underline mr-1"
                 onClick={() => openModal()}

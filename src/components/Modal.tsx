@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { connect } from "react-redux";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { connect } from 'react-redux';
 
-import useKeyPress from "./useKeyPress";
-import useClickOutside from "./useClickOutside";
-import { InitialState, Themes } from "../state/reducers";
+import useKeyPress from './useKeyPress';
+import useClickOutside from './useClickOutside';
+import { InitialState, Themes } from '../state/reducers';
 
 const KEY_CODE_ESCAPE = 27;
 
@@ -27,7 +27,7 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
 
   return ReactDOM.createPortal(
     <div
-      className={`absolute inset-0 z-30 ${isClosing ? "fade-out" : "fade-in"}`}
+      className={`absolute inset-0 z-30 ${isClosing ? 'fade-out' : 'fade-in'}`}
       onAnimationEnd={() => {
         if (isClosing) {
           closeModalFunc();
@@ -40,8 +40,8 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
           ref={modalWindowRef}
           className={`p-6 md:p-10 transition ${
             theme === Themes.LIGHT
-              ? "bg-white text-black"
-              : "bg-gray-800 text-white"
+              ? 'bg-white text-black'
+              : 'bg-gray-800 text-white'
           } max-w-xl flex-1 m-auto rounded shadow relative`}
         >
           <button

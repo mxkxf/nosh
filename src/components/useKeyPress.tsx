@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const useKeyPress = (keyCode: number, callback: CallableFunction) =>
   React.useEffect(() => {
@@ -10,10 +10,10 @@ const useKeyPress = (keyCode: number, callback: CallableFunction) =>
       callback();
     };
 
-    window.addEventListener("keydown", listener);
+    window.addEventListener('keydown', listener);
 
     return () => {
-      window.removeEventListener("keydown", listener);
+      window.removeEventListener('keydown', listener);
     };
   });
 

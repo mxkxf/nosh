@@ -1,12 +1,12 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 
-import { InitialState, Themes } from "../state/reducers";
-import useClickOutside from "./useClickOutside";
+import { InitialState, Themes } from '../state/reducers';
+import useClickOutside from './useClickOutside';
 
 type Props = ReturnType<typeof mapStateToProps> & {
   children: React.ReactNode;
-  direction: "right" | "down";
+  direction: 'right' | 'down';
   toggle: React.ReactNode;
 };
 
@@ -17,11 +17,11 @@ const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
   const classes = [];
 
   switch (direction) {
-    case "down":
-      classes.push("right-0");
+    case 'down':
+      classes.push('right-0');
       break;
-    case "right":
-      classes.push("left-full", "bottom-0");
+    case 'right':
+      classes.push('left-full', 'bottom-0');
       break;
     default:
     //
@@ -38,11 +38,11 @@ const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
       {isMenuVisible && (
         <div
           className={`absolute shadow py-2 text-xs border w-48 ${classes.join(
-            " ",
+            ' ',
           )} ${
             theme === Themes.LIGHT
-              ? "bg-white border-gray-400"
-              : "bg-gray-800 border-black"
+              ? 'bg-white border-gray-400'
+              : 'bg-gray-800 border-black'
           }`}
         >
           {children}

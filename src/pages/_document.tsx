@@ -1,7 +1,7 @@
-import { readFileSync } from "fs";
-import { join } from "path";
-import Document, { Head, Html, Main, NextScript } from "next/document";
-import React from "react";
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
+import React from 'react';
 
 type DocumentFiles = {
   sharedFiles: string[];
@@ -22,7 +22,7 @@ class InlineStylesHead extends Head {
           nonce={this.props.nonce}
           data-href={`${assetPrefix}/_next/${file}`}
           dangerouslySetInnerHTML={{
-            __html: readFileSync(join(process.cwd(), ".next", file), "utf-8"),
+            __html: readFileSync(join(process.cwd(), '.next', file), 'utf-8'),
           }}
         />
       ));

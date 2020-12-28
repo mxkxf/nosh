@@ -1,11 +1,11 @@
-import dayjs from "dayjs";
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import dayjs from 'dayjs';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { InitialState, Themes } from "../state/reducers";
-import { selectItem } from "../state/actions";
-import { FeedItem } from "../types";
+import { InitialState, Themes } from '../state/reducers';
+import { selectItem } from '../state/actions';
+import { FeedItem } from '../types';
 
 interface Props {
   item: FeedItem | null;
@@ -17,9 +17,9 @@ const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
   <section
     className={`flex-1 border-l transition ${
       theme === Themes.LIGHT
-        ? "bg-white border-gray-400"
-        : "bg-gray-900 border-black"
-    } ${item ? "flex" : "hidden md:flex"}`}
+        ? 'bg-white border-gray-400'
+        : 'bg-gray-900 border-black'
+    } ${item ? 'flex' : 'hidden md:flex'}`}
   >
     {item ? (
       <article className="flex-1 px-10 py-6">
@@ -39,7 +39,7 @@ const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
             <span className="mr-1" role="img" aria-label="Calendar">
               🗓
             </span>
-            {dayjs(item.pubDate).format("DD/MM/YYYY")}
+            {dayjs(item.pubDate).format('DD/MM/YYYY')}
           </div>
           {item.author && (
             <div className="md:pr-6">
