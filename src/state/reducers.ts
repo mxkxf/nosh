@@ -1,11 +1,11 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import { Feed } from "../types";
-import * as actions from "./actions";
+import { Feed } from '../types';
+import * as actions from './actions';
 
 export enum Themes {
-  LIGHT = "LIGHT",
-  DARK = "DARK",
+  LIGHT = 'LIGHT',
+  DARK = 'DARK',
 }
 
 export interface InitialState {

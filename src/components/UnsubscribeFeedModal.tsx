@@ -1,14 +1,14 @@
-import React, { FormEvent } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import React, { FormEvent } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import Modal from "./Modal";
+import Modal from './Modal';
 import {
   setUnsubscribeFeedModalVisibility,
   unSubscribeFeed,
   selectFeed,
-} from "../state/actions";
-import { InitialState } from "../state/reducers";
+} from '../state/actions';
+import { InitialState } from '../state/reducers';
 
 interface Props {
   closeModal: () => {};

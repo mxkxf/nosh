@@ -1,15 +1,15 @@
-import { Dispatch } from "redux";
-import { batchActions } from "redux-batched-actions";
-import { Feed } from "../types";
+import { Dispatch } from 'redux';
+import { batchActions } from 'redux-batched-actions';
+import { Feed } from '../types';
 
-import getFeed from "../utils/getFeed";
-import { InitialState } from "./reducers";
+import getFeed from '../utils/getFeed';
+import { InitialState } from './reducers';
 
-export const RETRIEVE_FEEDS = "RETRIEVE_FEEDS";
+export const RETRIEVE_FEEDS = 'RETRIEVE_FEEDS';
 export const retrieveFeeds = (): any => async (dispatch: Dispatch) => {
   try {
     const feedUrls: string[] = JSON.parse(
-      window.localStorage.getItem("feedUrls") as string,
+      window.localStorage.getItem('feedUrls') as string,
     );
 
     if (!feedUrls.length) {
@@ -30,19 +30,19 @@ export const retrieveFeeds = (): any => async (dispatch: Dispatch) => {
   }
 };
 
-export const SET_FEEDS = "SET_FEEDS";
+export const SET_FEEDS = 'SET_FEEDS';
 export const setFeeds = (feeds: Feed[]) => ({
   type: SET_FEEDS,
   feeds,
 });
 
-export const SELECT_FEED = "SELECT_FEED";
+export const SELECT_FEED = 'SELECT_FEED';
 export const selectFeed = (index: number | null) => ({
   type: SELECT_FEED,
   index,
 });
 
-export const SUBSCRIBE_FEED = "SUBSCRIBE_FEED";
+export const SUBSCRIBE_FEED = 'SUBSCRIBE_FEED';
 export const subscribeFeed = (url: string): any => async (
   dispatch: Dispatch,
   getState: () => InitialState,
@@ -65,62 +65,62 @@ export const subscribeFeed = (url: string): any => async (
 };
 
 export const SET_SUBSCRIBE_FEED_MODAL_VISIBILITY =
-  "SET_SUBSCRIBE_FEED_MODAL_VISIBILITY";
+  'SET_SUBSCRIBE_FEED_MODAL_VISIBILITY';
 export const setSubscribeFeedModalVisibility = (isOpen: boolean) => ({
   type: SET_SUBSCRIBE_FEED_MODAL_VISIBILITY,
   isOpen,
 });
 
 export const SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY =
-  "SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY";
+  'SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY';
 export const setUnsubscribeFeedModalVisibility = (isOpen: boolean) => ({
   type: SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY,
   isOpen,
 });
 
-export const SET_ABOUT_MODAL_VISIBILITY = "SET_ABOUT_MODAL_VISIBILITY";
+export const SET_ABOUT_MODAL_VISIBILITY = 'SET_ABOUT_MODAL_VISIBILITY';
 export const setAboutModalVisibility = (isOpen: boolean) => ({
   type: SET_ABOUT_MODAL_VISIBILITY,
   isOpen,
 });
 
-export const SET_HEADER_COLLAPSE = "SET_HEADER_COLLAPSE";
+export const SET_HEADER_COLLAPSE = 'SET_HEADER_COLLAPSE';
 export const setHeaderCollapse = (isCollapsed: boolean) => ({
   type: SET_HEADER_COLLAPSE,
   isCollapsed,
 });
 
-export const SET_THEME = "SET_THEME";
+export const SET_THEME = 'SET_THEME';
 export const setTheme = (theme: string) => ({
   type: SET_THEME,
   theme,
 });
 
-export const ADD_FEED = "ADD_FEED";
+export const ADD_FEED = 'ADD_FEED';
 export const addFeed = (feed: Feed) => ({
   type: ADD_FEED,
   feed,
 });
 
-export const UNSUBSCRIBE_FEED = "UNSUBSCRIBE_FEED";
+export const UNSUBSCRIBE_FEED = 'UNSUBSCRIBE_FEED';
 export const unSubscribeFeed = (index: number) => ({
   type: UNSUBSCRIBE_FEED,
   index,
 });
 
-export const SELECT_ITEM = "SELECT_ITEM";
+export const SELECT_ITEM = 'SELECT_ITEM';
 export const selectItem = (index: number | null) => ({
   type: SELECT_ITEM,
   index,
 });
 
-export const SET_ERROR = "SET_ERROR";
+export const SET_ERROR = 'SET_ERROR';
 export const setError = (error: Error) => ({
   type: SET_ERROR,
   error,
 });
 
-export const SET_LOADING = "SET_LOADING";
+export const SET_LOADING = 'SET_LOADING';
 export const setLoading = (isLoading: boolean) => ({
   type: SET_LOADING,
   isLoading,

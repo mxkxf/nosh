@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { version } from "../../package.json";
-import Modal from "./Modal";
-import { setAboutModalVisibility } from "../state/actions";
+import { version } from '../../package.json';
+import Modal from './Modal';
+import { setAboutModalVisibility } from '../state/actions';
 
 const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
   closeModal,
@@ -40,7 +40,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
       </p>
       <p className="mb-10">
         <em>
-          Why{" "}
+          Why{' '}
           <a
             className="text-blue-500 hover:text-blue-700 underline"
             href="https://www.dictionary.com/browse/nosh"
@@ -50,7 +50,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
             nosh
           </a>
           ?
-        </em>{" "}
+        </em>{' '}
         It's a slang word for eating/food.
       </p>
     </div>

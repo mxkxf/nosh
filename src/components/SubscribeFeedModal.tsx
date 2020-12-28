@@ -1,14 +1,14 @@
-import React, { FormEvent } from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import React, { FormEvent } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   subscribeFeed,
   setSubscribeFeedModalVisibility,
-} from "../state/actions";
-import Modal from "./Modal";
-import { InitialState, Themes } from "../state/reducers";
-import { Feed } from "../types";
+} from '../state/actions';
+import Modal from './Modal';
+import { InitialState, Themes } from '../state/reducers';
+import { Feed } from '../types';
 
 interface Props {
   closeModal: () => {};
@@ -21,12 +21,12 @@ interface Props {
 
 const examples = [
   {
-    url: "http://smashingmagazine.com/feed",
-    text: "Smashing Magazine",
+    url: 'http://smashingmagazine.com/feed',
+    text: 'Smashing Magazine',
   },
   {
-    url: "http://news.ycombinator.com/rss",
-    text: "Hacker News",
+    url: 'http://news.ycombinator.com/rss',
+    text: 'Hacker News',
   },
 ];
 
@@ -38,7 +38,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
   subscribeFeed,
   theme,
 }) => {
-  const [url, setUrl] = React.useState("");
+  const [url, setUrl] = React.useState('');
 
   const handleSubmit = (event?: FormEvent) => {
     if (event) {
@@ -84,9 +84,9 @@ const SubscribeFeedModal: React.FC<Props> = ({
         </label>
         <input
           className={`border ${
-            theme === Themes.LIGHT ? "bg-white" : "border-black bg-gray-900"
+            theme === Themes.LIGHT ? 'bg-white' : 'border-black bg-gray-900'
           } flex-1 rounded px-2 py-1 ${
-            isLoading ? "cursor-not-allowed bg-gray-100" : ""
+            isLoading ? 'cursor-not-allowed bg-gray-100' : ''
           }`}
           required={true}
           disabled={isLoading}
@@ -100,12 +100,12 @@ const SubscribeFeedModal: React.FC<Props> = ({
         />
         <button
           className={`ml-4 rounded bg-blue-500 border-blue-500 hover:bg-blue-600 px-3 py-2 text-white ${
-            isLoading ? "cursor-not-allowed opacity-75" : ""
+            isLoading ? 'cursor-not-allowed opacity-75' : ''
           }`}
           disabled={isLoading}
           type="submit"
         >
-          {isLoading ? "..." : "Add"}
+          {isLoading ? '...' : 'Add'}
         </button>
       </form>
       {error && (

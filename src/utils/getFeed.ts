@@ -1,6 +1,6 @@
-import axios from "axios";
-import Parser from "rss-parser";
-import { Feed } from "../types";
+import axios from 'axios';
+import Parser from 'rss-parser';
+import { Feed } from '../types';
 
 export default async function getFeed(url: string) {
   const response = await axios.post(`/api/get-feed`, { url });

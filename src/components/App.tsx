@@ -1,15 +1,15 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { retrieveFeeds } from "../state/actions";
-import { InitialState, Themes } from "../state/reducers";
-import Header from "./Header";
-import ItemList from "./ItemList";
-import ItemView from "./ItemView";
-import Onboarding from "./Onboarding";
-import SubscribeFeedModal from "./SubscribeFeedModal";
-import AboutModal from "./AboutModal";
+import { retrieveFeeds } from '../state/actions';
+import { InitialState, Themes } from '../state/reducers';
+import Header from './Header';
+import ItemList from './ItemList';
+import ItemView from './ItemView';
+import Onboarding from './Onboarding';
+import SubscribeFeedModal from './SubscribeFeedModal';
+import AboutModal from './AboutModal';
 
 // can delete the below
 interface Props {
@@ -36,7 +36,7 @@ const App: React.FC<
     <>
       <div
         className={`antialiased min-h-screen flex flex-col-reverse md:flex-row ${
-          theme === Themes.LIGHT ? "text-black" : "text-white"
+          theme === Themes.LIGHT ? 'text-black' : 'text-white'
         }`}
       >
         <Header />

@@ -1,17 +1,17 @@
-import dayjs from "dayjs";
-import React from "react";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import dayjs from 'dayjs';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   selectItem,
   unSubscribeFeed,
   setUnsubscribeFeedModalVisibility,
-} from "../state/actions";
-import UnsubscribeFeedModal from "./UnsubscribeFeedModal";
-import { InitialState, Themes } from "../state/reducers";
-import Dropdown from "./Dropdown";
-import { Feed, FeedItem } from "../types";
+} from '../state/actions';
+import UnsubscribeFeedModal from './UnsubscribeFeedModal';
+import { InitialState, Themes } from '../state/reducers';
+import Dropdown from './Dropdown';
+import { Feed, FeedItem } from '../types';
 
 interface Props {
   feeds: Feed[];
@@ -58,14 +58,14 @@ const ItemList: React.FC<Props> = ({
     <>
       <section
         className={`md:sticky md:top-0 w-full md:w-2/5 md:max-h-screen md:overflow-scroll ${
-          selectedItem !== null ? "hidden md:block" : ""
+          selectedItem !== null ? 'hidden md:block' : ''
         }`}
       >
         <div
           className={`border-b transition ${
             theme === Themes.LIGHT
-              ? "bg-gray-300 border-gray-400"
-              : "bg-gray-800 border-black"
+              ? 'bg-gray-300 border-gray-400'
+              : 'bg-gray-800 border-black'
           } sticky top-0 flex items-center`}
         >
           <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
@@ -75,8 +75,8 @@ const ItemList: React.FC<Props> = ({
             <a
               className={`text-left block w-full px-3 py-1 pr-10 transition ${
                 theme === Themes.LIGHT
-                  ? "hover:bg-gray-200"
-                  : "hover:bg-gray-700"
+                  ? 'hover:bg-gray-200'
+                  : 'hover:bg-gray-700'
               }`}
               href={feed.link}
               rel="noopener noreferrer"
@@ -91,8 +91,8 @@ const ItemList: React.FC<Props> = ({
               onClick={() => openUnsubscribeModal()}
               className={`text-left block w-full px-3 py-1 pr-10 transition ${
                 theme === Themes.LIGHT
-                  ? "hover:bg-gray-200"
-                  : "hover:bg-gray-700"
+                  ? 'hover:bg-gray-200'
+                  : 'hover:bg-gray-700'
               }`}
             >
               <span className="pr-1" role="img" aria-label="Filter">
@@ -111,16 +111,16 @@ const ItemList: React.FC<Props> = ({
                   i > 0
                     ? `border-t ${
                         theme === Themes.LIGHT
-                          ? "border-gray-400"
-                          : "border-black"
+                          ? 'border-gray-400'
+                          : 'border-black'
                       }`
-                    : ""
-                } ${theme === Themes.LIGHT ? "bg-white" : "bg-gray-900"} ${
+                    : ''
+                } ${theme === Themes.LIGHT ? 'bg-white' : 'bg-gray-900'} ${
                   selectedItem === i
-                    ? "bg-indigo-600 text-white"
+                    ? 'bg-indigo-600 text-white'
                     : theme === Themes.LIGHT
-                    ? "hover:bg-gray-100"
-                    : "hover:bg-gray-800"
+                    ? 'hover:bg-gray-100'
+                    : 'hover:bg-gray-800'
                 } cursor-pointer w-full text-left py-2 px-3 text-xs`}
                 key={`feed-${selectedFeed}-item-${i}`}
               >
@@ -130,16 +130,16 @@ const ItemList: React.FC<Props> = ({
                   </h4>
                   <p
                     className={`pl-4 ${
-                      selectedItem === i ? "text-gray-400" : "text-gray-600"
+                      selectedItem === i ? 'text-gray-400' : 'text-gray-600'
                     }`}
                   >
-                    {dayjs(item.pubDate).format("DD/MM/YYYY")}
+                    {dayjs(item.pubDate).format('DD/MM/YYYY')}
                   </p>
                 </div>
                 <h3 className="text-sm font-bold truncate">{item.title}</h3>
                 <p
                   className={`max-lines ${
-                    selectedItem === i ? "text-gray-400" : "text-gray-600"
+                    selectedItem === i ? 'text-gray-400' : 'text-gray-600'
                   }`}
                 >
                   {item.description}
@@ -151,7 +151,7 @@ const ItemList: React.FC<Props> = ({
           <div className="p-3 text-center text-sm">
             <span role="img" aria-label="Thinking face">
               🤔
-            </span>{" "}
+            </span>{' '}
             There doesn't seem to be any items in this feed.
           </div>
         )}

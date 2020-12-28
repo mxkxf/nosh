@@ -1,16 +1,16 @@
-import { createStore, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
-import reducers from "./reducers";
+import reducers from './reducers';
 import {
   loadFromLocalStorage,
   persistToLocalStorage,
-} from "./persistLocalStorage";
+} from './persistLocalStorage';
 
 let middleware = [thunk, persistToLocalStorage];
 
-if (process.env.NODE_ENV !== "production") {
-  const { createLogger } = require("redux-logger");
+if (process.env.NODE_ENV !== 'production') {
+  const { createLogger } = require('redux-logger');
   middleware = [...middleware, createLogger()];
 }
 

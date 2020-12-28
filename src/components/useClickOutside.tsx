@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const useClickOutside = (callback: CallableFunction) => {
   const ref = React.createRef<any>();
@@ -12,10 +12,10 @@ const useClickOutside = (callback: CallableFunction) => {
       callback();
     };
 
-    window.addEventListener("mousedown", listener);
+    window.addEventListener('mousedown', listener);
 
     return () => {
-      window.removeEventListener("mousedown", listener);
+      window.removeEventListener('mousedown', listener);
     };
   });
 
