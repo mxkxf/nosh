@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { batchActions } from 'redux-batched-actions';
-import { Feed } from '../types';
 
+import { Feed } from '../types';
 import getFeed from '../utils/getFeed';
 import { InitialState } from './reducers';
 
