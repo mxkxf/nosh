@@ -24,6 +24,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - env:
+        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
       - name: Install dependencies
         run: yarn install
 
@@ -32,3 +35,8 @@ jobs:
       
       - name: Test
         run: yarn test
+
+      - name: Regression
+        run: |
+          curl -H "Content-type: application/json" -H "Authorization: Bearer $VERCEL_TOKEN" https://api.vercel.com/v5/deployments?meta-githubRepo=nosh&meta-githubCommitRef=ci&meta-githubCommitSha=$GITHUB_SHA
+          # yarn run cypress run --config baseUrl=$URL
