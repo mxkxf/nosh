@@ -1,18 +1,11 @@
 @tailwind base;
 
-*,
-*:before,
-*:after {
-  @apply .box-border;
-}
-
 @tailwind components;
 
 @tailwind utilities;
 
 .fade-in,
-.fade-out,
-.transition {
+.fade-out {
   will-change: auto;
 }
 
@@ -44,10 +37,6 @@
   }
 }
 
-.transition {
-  transition: all 300ms ease;
-}
-
 .max-lines {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -56,11 +45,7 @@
   -webkit-line-clamp: 1;
 }
 
-.left-full {
-  left: 100%;
-}
-
-.wysiwyg {
+/* .wysiwyg {
   h1,
   h2,
   h3,
@@ -71,46 +56,46 @@
   ul,
   ol,
   hr {
-    @apply .mb-2;
+    @apply mb-2;
   }
 
   h1 {
-    @apply .text-3xl;
+    @apply text-3xl;
   }
   h2 {
-    @apply .text-2xl;
+    @apply text-2xl;
   }
   h3 {
-    @apply .text-xl;
+    @apply text-xl;
   }
   h4 {
-    @apply .text-lg;
+    @apply text-lg;
   }
   h5 {
-    @apply .text-sm;
+    @apply text-sm;
   }
   h6 {
-    @apply .text-xs;
+    @apply text-xs;
   }
 
   li {
-    @apply .ml-4;
+    @apply ml-4;
   }
 
   ol {
-    @apply .list-decimal;
+    @apply list-decimal;
   }
 
   ul {
-    @apply .list-disc;
+    @apply list-disc;
   }
 
   a {
-    @apply .text-blue-700;
-    @apply .underline;
+    @apply text-blue-700;
+    @apply underline;
 
     &:hover {
-      @apply .text-blue-800;
+      @apply text-blue-800;
     }
   }
 
@@ -118,4 +103,4 @@
   pre {
     max-width: 100%;
   }
-}
+} */

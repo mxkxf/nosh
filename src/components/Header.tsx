@@ -66,11 +66,7 @@ const Header: React.FC<Props> = ({
     <header
       className={`border-t md:border-t-0 md:border-r ${
         isCollapsed ? 'md:w-16' : 'md:w-1/5'
-      } ${
-        theme === Themes.LIGHT
-          ? 'bg-purple-100 border-gray-400'
-          : 'bg-purple-900 border-black'
-      } sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-10`}
+      } bg-indigo-50 border-gray-300 dark:bg-indigo-900 dark:border-black sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-10`}
     >
       <div className="h-full flex flex-row md:flex-col px-3 py-2 md:px-2">
         <nav className="flex-1 flex flex-row md:flex-col overflow-scroll">
@@ -90,13 +86,7 @@ const Header: React.FC<Props> = ({
                       alt={feed.title}
                     />
                   ) : (
-                    <span
-                      className={`flex items-center justify-center rounded w-4 h-4 text-center text-xs ${
-                        theme === Themes.LIGHT
-                          ? 'bg-black text-white'
-                          : 'bg-white text-black'
-                      }`}
-                    >
+                    <span className="flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
                       {feed.title[0]}
                     </span>
                   )}
@@ -168,9 +158,7 @@ const Header: React.FC<Props> = ({
             {theme === Themes.LIGHT ? 'Dark' : 'Light'} theme
           </button>
           <button
-            className={`text-left block w-full px-3 py-1 pr-10 transition ${
-              theme === Themes.LIGHT ? 'hover:bg-gray-200' : 'hover:bg-gray-700'
-            }`}
+            className="text-left block w-full px-3 py-1 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
             onClick={() => toggleHeaderCollapse(!isCollapsed)}
           >
             <span className="pr-1" role="img" aria-label="Toggle sidebar">

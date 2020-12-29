@@ -3,21 +3,16 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { setSubscribeFeedModalVisibility } from '../state/actions';
-import { InitialState, Themes } from '../state/reducers';
+import { InitialState } from '../state/reducers';
 
 interface Props {
   isLoading: boolean;
   openModal: () => {};
-  theme: Themes;
 }
 
-const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
+const Onboarding: React.FC<Props> = ({ isLoading, openModal }) => {
   return (
-    <div
-      className={`flex-1 flex text-xl font-light ${
-        theme === Themes.LIGHT ? 'bg-white' : 'bg-gray-900'
-      }`}
-    >
+    <div className="flex-1 flex text-xl font-light bg-white dark:bg-gray-900">
       <div className="m-auto p-10 text-center max-w-md opacity-50">
         {isLoading ? (
           <div>
@@ -54,7 +49,6 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal, theme }) => {
 
 const mapStateToProps = (state: InitialState) => ({
   isLoading: state.ui.isLoading,
-  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

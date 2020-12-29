@@ -87,7 +87,7 @@ const selectedItem = (
   }
 };
 
-const error = (state = initialState.ui, action: actions.ActionTypes) => {
+const ui = (state = initialState.ui, action: actions.ActionTypes) => {
   switch (action.type) {
     case actions.SET_ERROR:
       return {
@@ -95,13 +95,6 @@ const error = (state = initialState.ui, action: actions.ActionTypes) => {
         error: action.error,
       };
 
-    default:
-      return state;
-  }
-};
-
-const ui = (state = initialState.ui, action: actions.ActionTypes) => {
-  switch (action.type) {
     case actions.SET_LOADING:
       return {
         ...state,
@@ -153,6 +146,5 @@ export default combineReducers({
   feeds,
   selectedFeed,
   selectedItem,
-  error,
   ui,
 });

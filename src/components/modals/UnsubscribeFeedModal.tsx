@@ -7,8 +7,8 @@ import {
   setUnsubscribeFeedModalVisibility,
   unSubscribeFeed,
   selectFeed,
-} from '../state/actions';
-import { InitialState } from '../state/reducers';
+} from '../../state/actions';
+import { InitialState } from '../../state/reducers';
 
 interface Props {
   closeModal: () => {};

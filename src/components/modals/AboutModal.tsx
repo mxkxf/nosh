@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { version } from '../../package.json';
+import { version } from '../../../package.json';
 import Modal from './Modal';
-import { setAboutModalVisibility } from '../state/actions';
+import { setAboutModalVisibility } from '../../state/actions';
 
 const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
   closeModal,

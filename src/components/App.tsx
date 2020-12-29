@@ -9,8 +9,8 @@ import Header from './Header';
 import ItemList from './ItemList';
 import ItemView from './ItemView';
 import Onboarding from './Onboarding';
-import SubscribeFeedModal from './SubscribeFeedModal';
-import AboutModal from './AboutModal';
+import SubscribeFeedModal from './modals/SubscribeFeedModal';
+import AboutModal from './modals/AboutModal';
 
 const App: React.FC<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
@@ -30,25 +30,23 @@ const App: React.FC<
       <Head>
         <title>nosh | the RSS reader</title>
       </Head>
-      <div
-        className={`antialiased min-h-screen flex flex-col-reverse md:flex-row ${
-          theme === Themes.LIGHT ? 'text-black' : 'text-white'
-        }`}
-      >
-        <Header />
-        <main className="flex-1 flex">
-          {selectedFeed !== null ? (
-            <>
-              <ItemList />
-              <ItemView />
-            </>
-          ) : (
-            <Onboarding />
-          )}
-        </main>
+      <div className={theme === Themes.DARK ? 'dark' : ''}>
+        <div className="antialiased min-h-screen flex flex-col-reverse md:flex-row text-black dark:text-white">
+          <Header />
+          <main className="flex-1 flex">
+            {selectedFeed !== null ? (
+              <>
+                <ItemList />
+                <ItemView />
+              </>
+            ) : (
+              <Onboarding />
+            )}
+          </main>
+        </div>
+        {isAboutModalOpen && <AboutModal />}
+        {isSubscribeFeedModalOpen && <SubscribeFeedModal />}
       </div>
-      {isAboutModalOpen && <AboutModal />}
-      {isSubscribeFeedModalOpen && <SubscribeFeedModal />}
     </>
   );
 };

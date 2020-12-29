@@ -2,24 +2,35 @@ import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Parser from 'rss-parser';
 
+function isValidUrl(str: string) {
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' + // protocol
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return !!pattern.test(str);
+}
+
 const parser = new Parser();
 
 const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   const { url } = request.body;
 
-  if (!url || url.trim() === '') {
+  if (!url || url.trim() === '' || !isValidUrl(url)) {
     response.status(400);
     response.send({
-      message: 'URL is missing',
+      message: 'URL is missing/invalid',
     });
     return;
   }
 
   try {
     const feedResponse = await axios.get(url);
-
     const feed = await parser.parseString(feedResponse.data);
-
     const urlParts = new URL(url);
 
     let icon = null;

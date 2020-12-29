@@ -3,23 +3,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { InitialState, Themes } from '../state/reducers';
+import { InitialState } from '../state/reducers';
 import { selectItem } from '../state/actions';
 import { FeedItem } from '../types';
 
 interface Props {
   item: FeedItem | null;
-  theme: Themes;
   unselectItem: () => {};
 }
 
-const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
+const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
   <section
-    className={`flex-1 border-l transition ${
-      theme === Themes.LIGHT
-        ? 'bg-white border-gray-400'
-        : 'bg-gray-900 border-black'
-    } ${item ? 'flex' : 'hidden md:flex'}`}
+    className={`flex-1 border-l transition bg-white border-gray-300 dark:bg-gray-900 dark:border-black ${
+      item ? 'flex' : 'hidden md:flex'
+    }`}
   >
     {item ? (
       <article className="flex-1 px-10 py-6">
@@ -34,7 +31,7 @@ const ItemView: React.FC<Props> = ({ item, theme, unselectItem }) => (
           </svg>
         </button>
         <h1 className="text-4xl leading-tight font-light mb-6">{item.title}</h1>
-        <div className="md:flex mb-6 text-sm text-gray-600">
+        <div className="md:flex mb-6 text-sm text-gray-600 dark:text-gray-500">
           <div className="md:pr-6">
             <span className="mr-1" role="img" aria-label="Calendar">
               🗓

@@ -1,20 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
 
-import useKeyPress from './useKeyPress';
-import useClickOutside from './useClickOutside';
-import { InitialState, Themes } from '../state/reducers';
+import useKeyPress from '../useKeyPress';
+import useClickOutside from '../useClickOutside';
 
 const KEY_CODE_ESCAPE = 27;
 
 interface Props {
   children: React.ReactNode;
   closeModalFunc: () => {};
-  theme: Themes;
 }
 
-const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
+const Modal: React.FC<Props> = ({ children, closeModalFunc }) => {
   const [isClosing, setClosing] = React.useState(false);
 
   const closeModal = () => {
@@ -38,11 +35,7 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
       <div className="absolute inset-0 flex p-4 z-30">
         <div
           ref={modalWindowRef}
-          className={`p-6 md:p-10 transition ${
-            theme === Themes.LIGHT
-              ? 'bg-white text-black'
-              : 'bg-gray-800 text-white'
-          } max-w-xl flex-1 m-auto rounded shadow relative`}
+          className="p-6 md:p-10 transition bg-white text-black dark:bg-gray-800 dark:text-white max-w-xl flex-1 m-auto rounded shadow relative"
         >
           <button
             className="absolute top-0 right-0 p-3 text-center"
@@ -66,8 +59,4 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, theme }) => {
   );
 };
 
-const mapStateToProps = (state: InitialState) => ({
-  theme: state.ui.theme,
-});
-
-export default connect(mapStateToProps)(Modal);
+export default Modal;
