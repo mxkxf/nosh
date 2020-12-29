@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: ["tailwindcss", "postcss-nested"],
+  plugins: ['tailwindcss', 'postcss-nested'],
 };

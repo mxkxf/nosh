@@ -12,14 +12,6 @@ import Onboarding from './Onboarding';
 import SubscribeFeedModal from './SubscribeFeedModal';
 import AboutModal from './AboutModal';
 
-// can delete the below
-interface Props {
-  isAboutModalOpen: boolean;
-  isSubscribeFeedModalOpen: boolean;
-  retrieveFeeds: () => {};
-  selectedFeed: number | null;
-}
-
 const App: React.FC<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > = ({

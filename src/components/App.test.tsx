@@ -1,4 +1,4 @@
-import { fireEvent, getByLabelText, waitFor } from '@testing-library/react';
+import { fireEvent, waitFor } from '@testing-library/react';
 import React from 'react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -75,7 +75,7 @@ describe('App', () => {
       ),
     );
 
-    const { debug, getByText, getByLabelText } = render(<App />);
+    const { getByText, getByLabelText } = render(<App />);
 
     fireEvent.click(getByText('subscribe'));
     fireEvent.change(getByLabelText('Feed URL'), {
