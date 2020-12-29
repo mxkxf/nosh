@@ -26,7 +26,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const iconUrl = `https://${urlParts.hostname}/favicon.ico`;
 
     try {
-      await axios.get(`https://cors-anywhere.herokuapp.com/${iconUrl}`);
+      await axios.get(iconUrl);
 
       icon = iconUrl;
     } catch (error) {
