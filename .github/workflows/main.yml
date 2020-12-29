@@ -24,6 +24,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
         run: yarn install
 
@@ -37,5 +43,5 @@ jobs:
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
-          curl -H "Content-type: application/json" -H "Authorization: Bearer $VERCEL_TOKEN" https://api.vercel.com/v5/deployments?meta-githubRepo=nosh&meta-githubCommitRef=ci&meta-githubCommitSha=$GITHUB_SHA
-          # yarn run cypress run --config baseUrl=$URL
+          DEPLOYMENT_URL=$(curl -H "Content-type: application/json" -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/deployments?meta-githubRepo=nosh&meta-githubCommitRef=$GITHUB_HEAD_REF&meta-githubCommitSha=$GITHUB_SHA" | jq -r '.deployments[0].url')
+          yarn cypress run --config baseUrl="https://$DEPLOYMENT_URL"
