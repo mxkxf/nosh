@@ -12,8 +12,8 @@ interface Props {
 
 const Onboarding: React.FC<Props> = ({ isLoading, openModal }) => {
   return (
-    <div className="flex-1 flex text-xl font-light bg-white dark:bg-gray-900">
-      <div className="m-auto p-10 text-center max-w-md opacity-50">
+    <div className="flex-1 flex text-xl text-gray-700 dark:text-gray-400 font-light bg-white dark:bg-gray-900">
+      <div className="m-auto p-10 text-center max-w-md">
         {isLoading ? (
           <div>
             <span className="mx-2" role="img" aria-label="Hourglass">
@@ -23,16 +23,16 @@ const Onboarding: React.FC<Props> = ({ isLoading, openModal }) => {
           </div>
         ) : (
           <>
-            <h2 className="text-2xl mb-4">
+            <h1 className="text-2xl mb-4">
               Welcome{' '}
               <span role="img" aria-label="Wave">
                 👋
               </span>
-            </h2>
+            </h1>
             <p className="mb-4">
               To get started, please{' '}
               <button
-                className="font-light text-blue-500 hover:text-blue-700 underline mr-1"
+                className="font-light text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 underline mr-1"
                 onClick={() => openModal()}
               >
                 subscribe

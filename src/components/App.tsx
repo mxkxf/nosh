@@ -22,6 +22,14 @@ const App: React.FC<
   theme,
 }) => {
   React.useEffect(() => {
+    if (theme === Themes.DARK) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
+  React.useEffect(() => {
     retrieveFeeds();
   }, [retrieveFeeds]);
 
@@ -30,23 +38,21 @@ const App: React.FC<
       <Head>
         <title>nosh | the RSS reader</title>
       </Head>
-      <div className={theme === Themes.DARK ? 'dark' : ''}>
-        <div className="antialiased min-h-screen flex flex-col-reverse md:flex-row text-black dark:text-white">
-          <Header />
-          <main className="flex-1 flex">
-            {selectedFeed !== null ? (
-              <>
-                <ItemList />
-                <ItemView />
-              </>
-            ) : (
-              <Onboarding />
-            )}
-          </main>
+      <div className="antialiased min-h-screen flex flex-col-reverse md:flex-row text-black dark:text-white">
+        <Header />
+        <div className="flex-1 flex">
+          {selectedFeed !== null ? (
+            <>
+              <ItemList />
+              <ItemView />
+            </>
+          ) : (
+            <Onboarding />
+          )}
         </div>
-        {isAboutModalOpen && <AboutModal />}
-        {isSubscribeFeedModalOpen && <SubscribeFeedModal />}
       </div>
+      {isAboutModalOpen && <AboutModal />}
+      {isSubscribeFeedModalOpen && <SubscribeFeedModal />}
     </>
   );
 };

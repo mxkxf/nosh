@@ -47,12 +47,12 @@ const SubscribeFeedModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal closeModalFunc={closeModal}>
+    <Modal closeModalFunc={closeModal} title="Subscribe to a new feed">
       <div className="text-center text-2xl mb-8">
         <h2>Subscribe to a new feed</h2>
       </div>
       {feeds.length === 0 && (
-        <div className="text-sm mb-6">
+        <div className="mb-6">
           <p className="mb-2">
             <span className="mr-1" role="img" aria-label="Eyes">
               👀
@@ -63,7 +63,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
             {examples.map((example, i) => (
               <li key={`example-${i}`}>
                 <button
-                  className="text-blue-500 hover:text-blue-700 underline"
+                  className="text-indigo-600 hover:text-indigo-700 underline"
                   onClick={() => {
                     setUrl(example.url);
                     subscribeFeed(example.url);
@@ -95,7 +95,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
           onChange={(event) => setUrl(event.target.value)}
         />
         <button
-          className={`ml-4 rounded bg-blue-500 border-blue-500 hover:bg-blue-600 px-3 py-2 text-white ${
+          className={`ml-4 rounded bg-indigo-600 border-indigo-500 hover:bg-indigo-600 px-3 py-2 text-white font-semibold ${
             isLoading ? 'cursor-not-allowed opacity-75' : ''
           }`}
           disabled={isLoading}
@@ -105,8 +105,8 @@ const SubscribeFeedModal: React.FC<Props> = ({
         </button>
       </form>
       {error && (
-        <p className="text-center text-red-500 font-bold text-sm mt-2">
-          <span role="img" aria-label="Sad face">
+        <p className="text-center text-red-600 font-semibold text-sm mt-2">
+          <span className="mr-2" role="img" aria-label="Sad face">
             😔
           </span>
           Oh no! There was a problem subscribing to your feed.

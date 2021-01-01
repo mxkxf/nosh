@@ -13,13 +13,13 @@ interface Props {
 }
 
 const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
-  <section
+  <div
     className={`flex-1 border-l transition bg-white border-gray-300 dark:bg-gray-900 dark:border-black ${
       item ? 'flex' : 'hidden md:flex'
     }`}
   >
     {item ? (
-      <article className="flex-1 px-10 py-6">
+      <div className="flex-1 px-10 py-6">
         <button className="absolute right-0 top-0 p-3" onClick={unselectItem}>
           <svg
             aria-label="Close"
@@ -31,7 +31,7 @@ const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
           </svg>
         </button>
         <h1 className="text-4xl leading-tight font-light mb-6">{item.title}</h1>
-        <div className="md:flex mb-6 text-sm text-gray-600 dark:text-gray-500">
+        <div className="mb-6 text-sm text-gray-600 dark:text-gray-500">
           <div className="md:pr-6">
             <span className="mr-1" role="img" aria-label="Calendar">
               🗓
@@ -46,26 +46,26 @@ const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
               {item.author}
             </div>
           )}
-          <div>
+          {/* <div>
             <a href={item.link} rel="noopener noreferrer" target="_blank">
               <span className="mr-1" role="img" aria-label="Link">
                 🔗
               </span>
               Permalink
             </a>
-          </div>
+          </div> */}
         </div>
         <div
           className={`wysiwyg mb-10 wysiwyg-${item.title}`}
           dangerouslySetInnerHTML={{ __html: item.content }}
         />
-      </article>
+      </div>
     ) : (
       <div className="m-auto">
-        <p className="text-2xl opacity-25">Pick an item to read</p>
+        <p className="text-2xl text-gray-500">Pick an item to read</p>
       </div>
     )}
-  </section>
+  </div>
 );
 
 const mapStateToProps = (state: InitialState) => ({

@@ -54,15 +54,15 @@ const ItemList: React.FC<Props> = ({
 
   return (
     <>
-      <section
+      <div
         className={`md:sticky md:top-0 w-full md:w-2/5 md:max-h-screen md:overflow-scroll ${
           selectedItem !== null ? 'hidden md:block' : ''
         }`}
       >
         <div className="border-b transition bg-gray-200 border-gray-300 dark:bg-gray-800 dark:border-black sticky top-0 flex items-center">
-          <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
+          <h1 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
-          </h2>
+          </h1>
           <Dropdown direction="down" toggle={<DropdownToggle />}>
             <a
               className="text-left block w-full px-3 py-1 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
@@ -101,9 +101,7 @@ const ItemList: React.FC<Props> = ({
                 key={`feed-${selectedFeed}-item-${i}`}
               >
                 <div className="flex leading-relaxed">
-                  <h4 className="flex-1 truncate">
-                    {item.author || feed.title}
-                  </h4>
+                  <p className="flex-1 truncate">{item.author || feed.title}</p>
                   <p
                     className={`pl-4 text-gray-400 ${
                       selectedItem === i ? 'text-gray-400' : 'text-gray-500'
@@ -112,9 +110,9 @@ const ItemList: React.FC<Props> = ({
                     {dayjs(item.pubDate).format('DD/MM/YYYY')}
                   </p>
                 </div>
-                <h3 className="text-sm font-bold truncate leading-relaxed">
+                <h2 className="text-sm font-bold truncate leading-relaxed">
                   {item.title}
-                </h3>
+                </h2>
                 <p
                   className={`max-lines ${
                     selectedItem === i ? 'text-gray-400' : 'text-gray-500'
@@ -133,7 +131,7 @@ const ItemList: React.FC<Props> = ({
             There doesn't seem to be any items in this feed.
           </div>
         )}
-      </section>
+      </div>
       {isUnsubscribeFeedModalOpen && <UnsubscribeFeedModal />}
     </>
   );

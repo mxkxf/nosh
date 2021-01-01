@@ -9,9 +9,10 @@ const KEY_CODE_ESCAPE = 27;
 interface Props {
   children: React.ReactNode;
   closeModalFunc: () => {};
+  title: string;
 }
 
-const Modal: React.FC<Props> = ({ children, closeModalFunc }) => {
+const Modal: React.FC<Props> = ({ children, closeModalFunc, title }) => {
   const [isClosing, setClosing] = React.useState(false);
 
   const closeModal = () => {
@@ -24,6 +25,8 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc }) => {
 
   return ReactDOM.createPortal(
     <div
+      role="dialog"
+      aria-label={title}
       className={`absolute inset-0 z-30 ${isClosing ? 'fade-out' : 'fade-in'}`}
       onAnimationEnd={() => {
         if (isClosing) {

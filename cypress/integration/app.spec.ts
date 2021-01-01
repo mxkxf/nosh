@@ -1,9 +1,26 @@
 describe('App', () => {
   beforeEach(() => {
     cy.visit('/');
+    cy.injectAxe();
   });
 
-  it('Can see the welcome page', () => {
+  it('can see the welcome page', () => {
     cy.contains('Welcome');
+    cy.checkA11y();
+
+    cy.get('button').contains('subscribe').click();
+    cy.checkA11y();
+
+    cy.get('button').contains('Smashing Magazine').click();
+    cy.checkA11y();
+
+    cy.get('article').eq(0).click();
+    cy.checkA11y();
+  });
+
+  it.skip('can toggle dark mode', () => {
+    cy.get('svg[aria-label="Settings"]').click();
+    cy.get('button').contains('Dark theme').click();
+    cy.checkA11y();
   });
 });
