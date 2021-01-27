@@ -109,7 +109,7 @@ const ItemList: React.FC<Props> = ({
                     </p>
                     <p
                       className={`pl-4 ${
-                        isSelected ? 'text-gray-200' : 'text-gray-500'
+                        isSelected ? 'text-white' : 'text-gray-500'
                       }`}
                     >
                       {dayjs(item.pubDate).format('DD/MM/YYYY')}
@@ -120,7 +120,7 @@ const ItemList: React.FC<Props> = ({
                   </h2>
                   <p
                     className={`max-lines ${
-                      isSelected ? 'text-gray-200' : 'text-gray-500'
+                      isSelected ? 'text-white' : 'text-gray-500'
                     }`}
                   >
                     {item.description}
