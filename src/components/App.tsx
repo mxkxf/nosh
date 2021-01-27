@@ -40,7 +40,7 @@ const App: React.FC<
       </Head>
       <div className="antialiased min-h-screen flex flex-col-reverse md:flex-row text-black dark:text-white">
         <Header />
-        <div className="flex-1 flex">
+        <div role="main" className="flex-1 flex">
           {selectedFeed !== null ? (
             <>
               <ItemList />

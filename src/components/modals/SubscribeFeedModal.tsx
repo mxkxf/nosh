@@ -49,7 +49,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
   return (
     <Modal closeModalFunc={closeModal} title="Subscribe to a new feed">
       <div className="text-center text-2xl mb-8">
-        <h2>Subscribe to a new feed</h2>
+        <h1>Subscribe to a new feed</h1>
       </div>
       {feeds.length === 0 && (
         <div className="mb-6">

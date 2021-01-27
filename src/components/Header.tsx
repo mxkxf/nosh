@@ -83,7 +83,7 @@ const Header: React.FC<Props> = ({
                     <img
                       className="w-4 rounded"
                       src={feed.icon}
-                      alt={feed.title}
+                      alt={`${feed.title} icon`}
                     />
                   ) : (
                     <span className="flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">

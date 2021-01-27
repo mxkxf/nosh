@@ -88,40 +88,46 @@ const ItemList: React.FC<Props> = ({
         </div>
         {items.length > 0 ? (
           <>
-            {items.map((item, i) => (
-              <article
-                onClick={() => viewItem(i)}
-                className={`transition ${
-                  i > 0 ? 'border-t border-gray-300 dark:border-black' : ''
-                } bg-white dark:bg-gray-900 ${
-                  selectedItem === i
-                    ? 'bg-indigo-600 dark:bg-indigo-600 text-white'
-                    : 'hover:bg-gray-100 dark:hover:bg-gray-800'
-                } cursor-pointer w-full text-left py-2 px-3 text-xs`}
-                key={`feed-${selectedFeed}-item-${i}`}
-              >
-                <div className="flex leading-relaxed">
-                  <p className="flex-1 truncate">{item.author || feed.title}</p>
+            {items.map((item, i) => {
+              const isSelected = selectedItem === i;
+
+              return (
+                <article
+                  onClick={() => viewItem(i)}
+                  className={`transition ${
+                    i > 0 ? 'border-t border-gray-300 dark:border-black' : ''
+                  } bg-white dark:bg-gray-900 ${
+                    isSelected
+                      ? 'bg-indigo-600 dark:bg-indigo-600 text-white'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                  } cursor-pointer w-full text-left py-2 px-3 text-xs`}
+                  key={`feed-${selectedFeed}-item-${i}`}
+                >
+                  <div className="flex leading-relaxed">
+                    <p className="flex-1 truncate">
+                      {item.author || feed.title}
+                    </p>
+                    <p
+                      className={`pl-4 ${
+                        isSelected ? 'text-gray-200' : 'text-gray-500'
+                      }`}
+                    >
+                      {dayjs(item.pubDate).format('DD/MM/YYYY')}
+                    </p>
+                  </div>
+                  <h2 className="text-sm font-bold truncate leading-relaxed">
+                    {item.title}
+                  </h2>
                   <p
-                    className={`pl-4 text-gray-400 ${
-                      selectedItem === i ? 'text-gray-400' : 'text-gray-500'
+                    className={`max-lines ${
+                      isSelected ? 'text-gray-200' : 'text-gray-500'
                     }`}
                   >
-                    {dayjs(item.pubDate).format('DD/MM/YYYY')}
+                    {item.description}
                   </p>
-                </div>
-                <h2 className="text-sm font-bold truncate leading-relaxed">
-                  {item.title}
-                </h2>
-                <p
-                  className={`max-lines ${
-                    selectedItem === i ? 'text-gray-400' : 'text-gray-500'
-                  }`}
-                >
-                  {item.description}
-                </p>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </>
         ) : (
           <div className="p-3 text-center text-sm">
