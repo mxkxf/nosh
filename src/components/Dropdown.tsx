@@ -4,7 +4,7 @@ import useClickOutside from './useClickOutside';
 
 type Props = {
   children: React.ReactNode;
-  direction: 'right' | 'down';
+  direction: 'up' | 'down';
   toggle: React.ReactNode;
 };
 
@@ -18,8 +18,8 @@ const Dropdown: React.FC<Props> = ({ children, direction, toggle }) => {
     case 'down':
       classes.push('right-0');
       break;
-    case 'right':
-      classes.push('left-full', 'bottom-0');
+    case 'up':
+      classes.push('bottom-full', 'right-0');
       break;
     default:
     //
@@ -35,7 +35,7 @@ const Dropdown: React.FC<Props> = ({ children, direction, toggle }) => {
       </button>
       {isMenuVisible && (
         <div
-          className={`absolute shadow py-2 text-xs border w-48 ${classes.join(
+          className={`absolute rounded shadow w-64 py-2 text-sm w-48 ${classes.join(
             ' ',
           )} bg-white border-gray-300 dark:bg-gray-800 dark:border-black`}
         >

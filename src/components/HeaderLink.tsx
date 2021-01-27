@@ -8,6 +8,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
   const classes = [
     'flex',
     'items-center',
+    'justify-start',
     'text-left',
     'text-gray-700',
     'dark:text-gray-300',
@@ -17,6 +18,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
     'py-3',
     'px-4',
     'w-full',
+    'overflow-hidden',
   ];
 
   if (isSelected) {

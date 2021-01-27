@@ -65,21 +65,21 @@ const ItemList: React.FC<Props> = ({
           </h1>
           <Dropdown direction="down" toggle={<DropdownToggle />}>
             <a
-              className="text-left block w-full px-3 py-1 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+              className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
               href={feed.link}
               rel="noopener noreferrer"
               target="_blank"
             >
-              <span className="pr-1" role="img" aria-label="Link">
+              <span className="pr-3" role="img" aria-label="Link">
                 🔗
               </span>
               Permalink
             </a>
             <button
               onClick={() => openUnsubscribeModal()}
-              className="text-left block w-full px-3 py-1 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+              className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
             >
-              <span className="pr-1" role="img" aria-label="Filter">
+              <span className="pr-3" role="img" aria-label="Filter">
                 🗑
               </span>
               Unsubscribe
