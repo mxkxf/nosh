@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "dayjs": "^1.9.4",
     "next": "^10.0.4",
     "react": "^17.0.1",
