@@ -35,7 +35,7 @@ const Dropdown: React.FC<Props> = ({ children, direction, toggle }) => {
       </button>
       {isMenuVisible && (
         <div
-          className={`absolute rounded shadow w-64 py-2 text-sm w-48 ${classes.join(
+          className={`absolute rounded shadow w-64 py-2 text-sm ${classes.join(
             ' ',
           )} bg-white border-gray-300 dark:bg-gray-800 dark:border-black`}
         >

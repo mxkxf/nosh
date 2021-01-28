@@ -104,7 +104,7 @@ const ItemList: React.FC<Props> = ({
                   key={`feed-${selectedFeed}-item-${i}`}
                 >
                   <div className="flex leading-relaxed">
-                    <p className="flex-1 truncate">
+                    <p className="flex-1 max-lines">
                       {item.author || feed.title}
                     </p>
                     <p

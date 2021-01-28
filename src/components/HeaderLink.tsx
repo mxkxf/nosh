@@ -14,7 +14,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
     'dark:text-gray-300',
     'block',
     'rounded',
-    'leading-none',
+    'leading-normal',
     'py-3',
     'px-4',
     'w-full',

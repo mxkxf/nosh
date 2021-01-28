@@ -69,7 +69,7 @@ const Header: React.FC<Props> = ({
       } bg-indigo-50 border-gray-300 dark:bg-indigo-900 dark:border-black sticky bottom-0 md:bottom-auto md:top-0 md:max-h-screen transition z-10`}
     >
       <div className="h-full flex flex-row md:flex-col px-3 py-2 md:px-2">
-        <nav className="flex-1 flex flex-row md:flex-col overflow-scroll">
+        <nav className="flex-1 flex flex-row md:flex-col items overflow-scroll">
           {feeds &&
             feeds.length > 0 &&
             feeds.map((feed, i) => (
@@ -86,11 +86,13 @@ const Header: React.FC<Props> = ({
                       alt={`${feed.title} icon`}
                     />
                   ) : (
-                    <span className="flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
+                    <span className="flex-none min-w-4 flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
                       {feed.title[0]}
                     </span>
                   )}
-                  <span className="ml-4 max-lines">{feed.title}</span>
+                  <span className="ml-4 max-lines hidden md:block">
+                    {feed.title}
+                  </span>
                 </HeaderLink>
               </button>
             ))}
@@ -109,7 +111,7 @@ const Header: React.FC<Props> = ({
                   <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z" />
                 </svg>
               </span>
-              <span className="ml-4 max-lines">Add feed</span>
+              <span className="ml-4 max-lines hidden md:block">Add feed</span>
             </HeaderLink>
           </button>
         </nav>
@@ -129,7 +131,7 @@ const Header: React.FC<Props> = ({
                 </g>
               </svg>
             </span>
-            <span className="ml-4">About</span>
+            <span className="ml-4 hidden md:block">About</span>
           </HeaderLink>
         </button>
         <Dropdown
@@ -146,7 +148,7 @@ const Header: React.FC<Props> = ({
                   <path d="M1152 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zm512-109v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z" />
                 </svg>
               </span>
-              <span className="ml-4">Settings</span>
+              <span className="ml-4 hidden md:block">Settings</span>
             </HeaderLink>
           }
         >
@@ -162,7 +164,7 @@ const Header: React.FC<Props> = ({
             {theme === Themes.LIGHT ? 'Dark' : 'Light'} theme
           </button>
           <button
-            className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="text-left hidden md:block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
             onClick={() => toggleHeaderCollapse(!isCollapsed)}
           >
             <span className="pr-3" role="img" aria-label="Toggle sidebar">
