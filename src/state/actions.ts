@@ -26,7 +26,7 @@ export const retrieveFeeds = (): any => async (dispatch: Dispatch) => {
       dispatch(selectFeed(0)),
     ]);
   } catch (error) {
-    //
+    dispatch(setError(error));
   }
 };
 

@@ -1,16 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-import { InitialState, Themes } from '../state/reducers';
 import useClickOutside from './useClickOutside';
 
-type Props = ReturnType<typeof mapStateToProps> & {
+type Props = {
   children: React.ReactNode;
-  direction: 'right' | 'down';
+  direction: 'up' | 'down';
   toggle: React.ReactNode;
 };
 
-const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
+const Dropdown: React.FC<Props> = ({ children, direction, toggle }) => {
   const [isMenuVisible, setMenuVisible] = React.useState(false);
   const ref = useClickOutside(() => setMenuVisible(false));
 
@@ -20,8 +18,8 @@ const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
     case 'down':
       classes.push('right-0');
       break;
-    case 'right':
-      classes.push('left-full', 'bottom-0');
+    case 'up':
+      classes.push('bottom-full', 'right-0');
       break;
     default:
     //
@@ -37,13 +35,9 @@ const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
       </button>
       {isMenuVisible && (
         <div
-          className={`absolute shadow py-2 text-xs border w-48 ${classes.join(
+          className={`absolute rounded shadow w-64 py-2 text-sm w-48 ${classes.join(
             ' ',
-          )} ${
-            theme === Themes.LIGHT
-              ? 'bg-white border-gray-400'
-              : 'bg-gray-800 border-black'
-          }`}
+          )} bg-white border-gray-300 dark:bg-gray-800 dark:border-black`}
         >
           {children}
         </div>
@@ -52,8 +46,4 @@ const Dropdown: React.FC<Props> = ({ children, direction, theme, toggle }) => {
   );
 };
 
-const mapStateToProps = (state: InitialState) => ({
-  theme: state.ui.theme,
-});
-
-export default connect(mapStateToProps)(Dropdown);
+export default Dropdown;

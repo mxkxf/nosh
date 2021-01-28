@@ -18,7 +18,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "types": ["cypress", "cypress-axe"]
   },
   "include": [
     "src"

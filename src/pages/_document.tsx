@@ -32,7 +32,7 @@ class InlineStylesHead extends Head {
 export default class CustomDocument extends Document {
   render() {
     return (
-      <Html>
+      <Html className="transition" lang="en">
         <InlineStylesHead />
         <body>
           <Main />

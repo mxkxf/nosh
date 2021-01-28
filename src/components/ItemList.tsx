@@ -8,8 +8,8 @@ import {
   unSubscribeFeed,
   setUnsubscribeFeedModalVisibility,
 } from '../state/actions';
-import UnsubscribeFeedModal from './UnsubscribeFeedModal';
-import { InitialState, Themes } from '../state/reducers';
+import UnsubscribeFeedModal from './modals/UnsubscribeFeedModal';
+import { InitialState } from '../state/reducers';
 import Dropdown from './Dropdown';
 import { Feed, FeedItem } from '../types';
 
@@ -20,7 +20,6 @@ interface Props {
   openUnsubscribeModal: () => {};
   selectedFeed: number | null;
   selectedItem: number | null;
-  theme: Themes;
   unSubscribeFeed: (index: number) => {};
   viewItem: (index: number) => {};
 }
@@ -45,7 +44,6 @@ const ItemList: React.FC<Props> = ({
   openUnsubscribeModal,
   selectedFeed,
   selectedItem,
-  theme,
   viewItem,
 }) => {
   if (selectedFeed === null) {
@@ -56,46 +54,32 @@ const ItemList: React.FC<Props> = ({
 
   return (
     <>
-      <section
+      <div
         className={`md:sticky md:top-0 w-full md:w-2/5 md:max-h-screen md:overflow-scroll ${
           selectedItem !== null ? 'hidden md:block' : ''
         }`}
       >
-        <div
-          className={`border-b transition ${
-            theme === Themes.LIGHT
-              ? 'bg-gray-300 border-gray-400'
-              : 'bg-gray-800 border-black'
-          } sticky top-0 flex items-center`}
-        >
-          <h2 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
+        <div className="border-b transition bg-gray-200 border-gray-300 dark:bg-gray-800 dark:border-black sticky top-0 flex items-center">
+          <h1 className="flex-1 px-3 py-1 uppercase font-bold text-xs tracking-wide truncate">
             {feed.title}
-          </h2>
+          </h1>
           <Dropdown direction="down" toggle={<DropdownToggle />}>
             <a
-              className={`text-left block w-full px-3 py-1 pr-10 transition ${
-                theme === Themes.LIGHT
-                  ? 'hover:bg-gray-200'
-                  : 'hover:bg-gray-700'
-              }`}
+              className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
               href={feed.link}
               rel="noopener noreferrer"
               target="_blank"
             >
-              <span className="pr-1" role="img" aria-label="Link">
+              <span className="pr-3" role="img" aria-label="Link">
                 🔗
               </span>
               Permalink
             </a>
             <button
               onClick={() => openUnsubscribeModal()}
-              className={`text-left block w-full px-3 py-1 pr-10 transition ${
-                theme === Themes.LIGHT
-                  ? 'hover:bg-gray-200'
-                  : 'hover:bg-gray-700'
-              }`}
+              className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
             >
-              <span className="pr-1" role="img" aria-label="Filter">
+              <span className="pr-3" role="img" aria-label="Filter">
                 🗑
               </span>
               Unsubscribe
@@ -104,48 +88,46 @@ const ItemList: React.FC<Props> = ({
         </div>
         {items.length > 0 ? (
           <>
-            {items.map((item, i) => (
-              <article
-                onClick={() => viewItem(i)}
-                className={`transition ${
-                  i > 0
-                    ? `border-t ${
-                        theme === Themes.LIGHT
-                          ? 'border-gray-400'
-                          : 'border-black'
-                      }`
-                    : ''
-                } ${theme === Themes.LIGHT ? 'bg-white' : 'bg-gray-900'} ${
-                  selectedItem === i
-                    ? 'bg-indigo-600 text-white'
-                    : theme === Themes.LIGHT
-                    ? 'hover:bg-gray-100'
-                    : 'hover:bg-gray-800'
-                } cursor-pointer w-full text-left py-2 px-3 text-xs`}
-                key={`feed-${selectedFeed}-item-${i}`}
-              >
-                <div className="flex">
-                  <h4 className="flex-1 truncate">
-                    {item.author || feed.title}
-                  </h4>
+            {items.map((item, i) => {
+              const isSelected = selectedItem === i;
+
+              return (
+                <article
+                  onClick={() => viewItem(i)}
+                  className={`transition ${
+                    i > 0 ? 'border-t border-gray-300 dark:border-black' : ''
+                  } bg-white dark:bg-gray-900 ${
+                    isSelected
+                      ? 'bg-indigo-600 dark:bg-indigo-600 text-white'
+                      : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                  } cursor-pointer w-full text-left py-2 px-3 text-xs`}
+                  key={`feed-${selectedFeed}-item-${i}`}
+                >
+                  <div className="flex leading-relaxed">
+                    <p className="flex-1 truncate">
+                      {item.author || feed.title}
+                    </p>
+                    <p
+                      className={`pl-4 ${
+                        isSelected ? 'text-white' : 'text-gray-500'
+                      }`}
+                    >
+                      {dayjs(item.pubDate).format('DD/MM/YYYY')}
+                    </p>
+                  </div>
+                  <h2 className="text-sm font-bold truncate leading-relaxed">
+                    {item.title}
+                  </h2>
                   <p
-                    className={`pl-4 ${
-                      selectedItem === i ? 'text-gray-400' : 'text-gray-600'
+                    className={`max-lines ${
+                      isSelected ? 'text-white' : 'text-gray-500'
                     }`}
                   >
-                    {dayjs(item.pubDate).format('DD/MM/YYYY')}
+                    {item.description}
                   </p>
-                </div>
-                <h3 className="text-sm font-bold truncate">{item.title}</h3>
-                <p
-                  className={`max-lines ${
-                    selectedItem === i ? 'text-gray-400' : 'text-gray-600'
-                  }`}
-                >
-                  {item.description}
-                </p>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </>
         ) : (
           <div className="p-3 text-center text-sm">
@@ -155,7 +137,7 @@ const ItemList: React.FC<Props> = ({
             There doesn't seem to be any items in this feed.
           </div>
         )}
-      </section>
+      </div>
       {isUnsubscribeFeedModalOpen && <UnsubscribeFeedModal />}
     </>
   );
@@ -168,7 +150,6 @@ const mapStateToProps = (state: InitialState) => ({
   feeds: state.feeds,
   items:
     state.selectedFeed !== null ? state.feeds[state.selectedFeed].items : [],
-  theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -7,8 +7,8 @@ import {
   setUnsubscribeFeedModalVisibility,
   unSubscribeFeed,
   selectFeed,
-} from '../state/actions';
-import { InitialState } from '../state/reducers';
+} from '../../state/actions';
+import { InitialState } from '../../state/reducers';
 
 interface Props {
   closeModal: () => {};
@@ -31,7 +31,7 @@ const UnsubscribeFeedModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal closeModalFunc={() => closeModal()}>
+    <Modal closeModalFunc={() => closeModal()} title="Unsubscribe from a feed">
       <div className="text-center">
         <h2 className="font-light text-2xl mb-8">Are you sure?</h2>
         <form method="POST" onSubmit={handleSubmit}>

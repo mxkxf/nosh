@@ -75,12 +75,14 @@ describe('App', () => {
       ),
     );
 
-    const { getByText, getByLabelText } = render(<App />);
+    const { getByText, getByLabelText, queryByText } = render(<App />);
 
     fireEvent.click(getByText('subscribe'));
     fireEvent.change(getByLabelText('Feed URL'), {
       target: { value: 'http://some-feed-url' },
     });
     fireEvent.click(getByText('Add'));
+
+    await waitFor(() => queryByText('Oh no'));
   });
 });
