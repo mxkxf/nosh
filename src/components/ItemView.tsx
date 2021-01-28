@@ -31,30 +31,32 @@ const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
           </svg>
         </button>
         <h1 className="text-4xl leading-tight font-light mb-6">{item.title}</h1>
-        <div className="mb-6 text-sm text-gray-600 dark:text-gray-500">
-          <div className="md:pr-6">
-            <span className="mr-1" role="img" aria-label="Calendar">
+        <ul className="unstyled mb-6 text-sm text-gray-600 dark:text-gray-500">
+          <li className="mb-2">
+            <span className="mr-2" role="img" aria-label="Calendar">
               🗓
             </span>
             {dayjs(item.pubDate).format('DD/MM/YYYY')}
-          </div>
+          </li>
           {item.author && (
-            <div className="md:pr-6">
-              <span className="mr-1" role="img" aria-label="User">
+            <li className="mb-2">
+              <span className="mr-2" role="img" aria-label="User">
                 👤
               </span>
               {item.author}
-            </div>
+            </li>
           )}
-          {/* <div>
-            <a href={item.link} rel="noopener noreferrer" target="_blank">
-              <span className="mr-1" role="img" aria-label="Link">
-                🔗
-              </span>
-              Permalink
-            </a>
-          </div> */}
-        </div>
+          {item.link && (
+            <li className="mb-2">
+              <a href={item.link} rel="noopener noreferrer" target="_blank">
+                <span className="mr-2" role="img" aria-label="Link">
+                  🔗
+                </span>
+                Permalink
+              </a>
+            </li>
+          )}
+        </ul>
         <div
           className={`wysiwyg mb-10 wysiwyg-${item.title}`}
           dangerouslySetInnerHTML={{ __html: item.content }}
