@@ -13,26 +13,14 @@ import {
 import useKeyPress from './useKeyPress';
 import HeaderLink from './HeaderLink';
 import Dropdown from './Dropdown';
-import { Feed } from '../types';
-
-interface Props {
-  feeds: Feed[];
-  isCollapsed: boolean;
-  isSubscribeFeedModalOpen: boolean;
-  openAboutModal: () => {};
-  openSubscribeModal: () => {};
-  selectedFeed: number | null;
-  selectFeed: (i: number | null) => {};
-  theme: Themes;
-  toggleHeaderCollapse: (isCollapsed: boolean) => {};
-  toggleTheme: (theme: Themes) => {};
-}
 
 const KEY_CODE_N = 78;
 const KEY_CODE_S = 83;
 const KEY_CODE_T = 84;
 
-const Header: React.FC<Props> = ({
+const Header: React.FC<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> = ({
   feeds,
   isCollapsed,
   isSubscribeFeedModalOpen,
@@ -71,31 +59,35 @@ const Header: React.FC<Props> = ({
       <div className="h-full flex flex-row md:flex-col px-3 py-2 md:px-2">
         <nav className="flex-1 flex flex-row md:flex-col items overflow-scroll">
           {feeds &&
-            feeds.length > 0 &&
-            feeds.map((feed, i) => (
-              <button
-                className="md:w-full mx-1 md:mb-1 md:mx-0"
-                onClick={() => selectFeed(i)}
-                key={`select-feed-${i}`}
-              >
-                <HeaderLink isSelected={selectedFeed === i}>
-                  {feed.icon ? (
-                    <img
-                      className="w-4 rounded"
-                      src={feed.icon}
-                      alt={`${feed.title} icon`}
-                    />
-                  ) : (
-                    <span className="flex-none min-w-4 flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
-                      {feed.title[0]}
+            Object.keys(feeds).length > 0 &&
+            Object.keys(feeds).map((i) => {
+              const feed = feeds[i];
+
+              return (
+                <button
+                  className="md:w-full mx-1 md:mb-1 md:mx-0"
+                  key={`select-feed-${i}`}
+                  onClick={() => selectFeed(i)}
+                >
+                  <HeaderLink isSelected={selectedFeed === i}>
+                    {feed.icon ? (
+                      <img
+                        className="w-4 rounded"
+                        src={feed.icon}
+                        alt={`${feed.title} icon`}
+                      />
+                    ) : (
+                      <span className="flex-none min-w-4 flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
+                        {feed.title[0]}
+                      </span>
+                    )}
+                    <span className="ml-4 max-lines hidden md:block">
+                      {feed.title}
                     </span>
-                  )}
-                  <span className="ml-4 max-lines hidden md:block">
-                    {feed.title}
-                  </span>
-                </HeaderLink>
-              </button>
-            ))}
+                  </HeaderLink>
+                </button>
+              );
+            })}
           <button
             className="md:w-full mx-1 md:mb-1 md:mx-0"
             onClick={() => openSubscribeModal()}
@@ -191,7 +183,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
   toggleHeaderCollapse: (isCollapsed: boolean) =>
     dispatch(setHeaderCollapse(isCollapsed)),
-  selectFeed: (i: number | null) => dispatch(selectFeed(i)),
+  selectFeed: (key: string) => dispatch(selectFeed(key)),
   toggleTheme: (theme: Themes) =>
     dispatch(setTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)),
 });

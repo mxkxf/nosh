@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { client } from './client';
 
 export default async function getFeed(url: string) {
-  const response = await axios.post(`/api/get-feed`, { url });
+  const response = await client.post(`/api/get-feed`, { url });
 
   return response.data;
 }

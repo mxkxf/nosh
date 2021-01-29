@@ -21,17 +21,18 @@ const App: React.FC<
   selectedFeed,
   theme,
 }) => {
-  React.useEffect(() => {
-    if (theme === Themes.DARK) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [theme]);
+  // React.useEffect(() => {
+  //   if (theme === Themes.DARK) {
+  //     document.documentElement.classList.add('dark');
+  //   } else {
+  //     document.documentElement.classList.remove('dark');
+  //   }
+  // }, [theme]);
 
-  React.useEffect(() => {
-    retrieveFeeds();
-  }, [retrieveFeeds]);
+  // TODO: Re-enable at some point
+  // React.useEffect(() => {
+  //   retrieveFeeds();
+  // }, [retrieveFeeds]);
 
   return (
     <>

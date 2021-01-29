@@ -7,39 +7,35 @@ import { InitialState } from './reducers';
 
 export const RETRIEVE_FEEDS = 'RETRIEVE_FEEDS';
 export const retrieveFeeds = (): any => async (dispatch: Dispatch) => {
-  try {
-    const feedUrls: string[] = JSON.parse(
-      window.localStorage.getItem('feedUrls') as string,
-    );
-
-    if (!feedUrls.length) {
-      return;
-    }
-
-    dispatch(setLoading(true));
-
-    const feeds = await Promise.all(feedUrls.map(getFeed));
-
-    batchActions([
-      dispatch(setLoading(false)),
-      dispatch(setFeeds(feeds)),
-      dispatch(selectFeed(0)),
-    ]);
-  } catch (error) {
-    dispatch(setError(error));
-  }
+  // try {
+  //   const feedUrls: string[] = JSON.parse(
+  //     window.localStorage.getItem('feedUrls') as string,
+  //   );
+  //   if (!feedUrls || !feedUrls.length) {
+  //     return;
+  //   }
+  //   dispatch(setLoading(true));
+  //   const feeds = await Promise.all(feedUrls.map(getFeed));
+  //   batchActions([
+  //     dispatch(setLoading(false)),
+  //     dispatch(setFeeds(feeds)),
+  //     dispatch(selectFeed(0)),
+  //   ]);
+  // } catch (error) {
+  //   dispatch(setError(error));
+  // }
 };
 
 export const SET_FEEDS = 'SET_FEEDS';
-export const setFeeds = (feeds: Feed[]) => ({
+export const setFeeds = (feeds: { [key: string]: Feed }) => ({
   type: SET_FEEDS,
   feeds,
 });
 
 export const SELECT_FEED = 'SELECT_FEED';
-export const selectFeed = (index: number | null) => ({
+export const selectFeed = (key: string | null) => ({
   type: SELECT_FEED,
-  index,
+  key,
 });
 
 export const SUBSCRIBE_FEED = 'SUBSCRIBE_FEED';
@@ -49,12 +45,27 @@ export const subscribeFeed = (url: string): any => async (
 ) => {
   dispatch(setLoading(true));
 
+  const currentFeeds = getState().feeds;
+  const alreadySubscribed = Object.keys(currentFeeds).some(
+    (f) => currentFeeds[f].url === url,
+  );
+
   try {
+    if (alreadySubscribed) {
+      throw new Error(`Already subscribed to ${url}`);
+    }
+
     const feed = await getFeed(url);
 
     batchActions([
       dispatch(addFeed(feed)),
-      dispatch(selectFeed(getState().feeds.length - 1)),
+      dispatch(
+        selectFeed(
+          Object.keys(getState().feeds)[
+            Object.keys(getState().feeds).length - 1
+          ],
+        ),
+      ),
       dispatch(setSubscribeFeedModalVisibility(false)),
     ]);
   } catch (error) {
@@ -103,9 +114,9 @@ export const addFeed = (feed: Feed) => ({
 });
 
 export const UNSUBSCRIBE_FEED = 'UNSUBSCRIBE_FEED';
-export const unSubscribeFeed = (index: number) => ({
+export const unSubscribeFeed = (key: string) => ({
   type: UNSUBSCRIBE_FEED,
-  index,
+  key,
 });
 
 export const SELECT_ITEM = 'SELECT_ITEM';

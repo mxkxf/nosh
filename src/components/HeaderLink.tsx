@@ -32,7 +32,7 @@ const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
     classes.push('hover:bg-indigo-200', 'dark:hover:bg-indigo-800');
   }
 
-  return <span className={classes.join(' ')}>{children}</span>;
+  return <div className={classes.join(' ')}>{children}</div>;
 };
 
 export default HeaderLink;

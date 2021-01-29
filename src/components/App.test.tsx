@@ -9,9 +9,11 @@ import App from './App';
 describe('App', () => {
   const server = setupServer();
 
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
+  beforeEach(() => server.listen());
+  afterEach(() => {
+    server.resetHandlers();
+    server.close();
+  });
 
   it('shows a welcome screen if not subscribed to any feeds', () => {
     const { getByText } = render(<App />);

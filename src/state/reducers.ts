@@ -4,14 +4,16 @@ import { Feed } from '../types';
 import * as actions from './actions';
 
 export enum Themes {
-  LIGHT = 'LIGHT',
-  DARK = 'DARK',
+  LIGHT = 'light',
+  DARK = 'dark',
 }
 
 export interface InitialState {
-  selectedFeed: number | null;
+  selectedFeed: string | null;
   selectedItem: number | null;
-  feeds: Feed[];
+  feeds: {
+    [key: string]: Feed;
+  };
   ui: {
     error: Error | null;
     isLoading: boolean;
@@ -26,14 +28,14 @@ export interface InitialState {
 export const initialState: InitialState = {
   selectedFeed: null,
   selectedItem: null,
-  feeds: [],
+  feeds: {},
   ui: {
     error: null,
     isLoading: false,
     isSubscribeFeedModalOpen: false,
     isUnsubscribeFeedModalOpen: false,
     isAboutModalOpen: false,
-    isHeaderCollapsed: true,
+    isHeaderCollapsed: false,
     theme: Themes.LIGHT,
   },
 };
@@ -44,7 +46,7 @@ const selectedFeed = (
 ) => {
   switch (action.type) {
     case actions.SELECT_FEED:
-      return action.index;
+      return action.key;
 
     default:
       return state;
@@ -57,15 +59,16 @@ const feeds = (state = initialState.feeds, action: actions.ActionTypes) => {
       return action.feeds;
 
     case actions.ADD_FEED:
-      return [
+      const feedLength = Object.keys(state).length;
+      return {
         ...state,
-        {
+        [feedLength + 1]: {
           ...action.feed,
         },
-      ];
+      };
     case actions.UNSUBSCRIBE_FEED:
-      const stateCopy = [...state];
-      stateCopy.splice(action.index, 1);
+      const stateCopy = { ...state };
+      delete stateCopy[action.key];
 
       return stateCopy;
 

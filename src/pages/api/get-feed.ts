@@ -1,6 +1,7 @@
-import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 import Parser from 'rss-parser';
+
+import { client } from '../../utils/client';
 
 function isValidUrl(str: string) {
   const pattern = new RegExp(
@@ -29,7 +30,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   }
 
   try {
-    const feedResponse = await axios.get(url);
+    const feedResponse = await client.get(url);
     const feed = await parser.parseString(feedResponse.data);
     const urlParts = new URL(url);
 
@@ -37,7 +38,7 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
     const iconUrl = `https://${urlParts.hostname}/favicon.ico`;
 
     try {
-      await axios.get(iconUrl);
+      await client.get(iconUrl);
 
       icon = iconUrl;
     } catch (error) {

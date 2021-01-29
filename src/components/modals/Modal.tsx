@@ -23,6 +23,10 @@ const Modal: React.FC<Props> = ({ children, closeModalFunc, title }) => {
 
   useKeyPress(KEY_CODE_ESCAPE, closeModal);
 
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   return ReactDOM.createPortal(
     <div
       role="dialog"
