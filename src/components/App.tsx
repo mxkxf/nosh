@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import Head from 'next/head';
 
 import { InitialState, Themes } from '../state/reducers';
 import Header from './Header';
@@ -32,9 +31,6 @@ const App: React.FC<
 
   return (
     <>
-      <Head>
-        <title>nosh | the RSS reader</title>
-      </Head>
       <div className="antialiased min-h-screen flex flex-col-reverse md:flex-row text-black dark:text-white">
         <Header />
         <div role="main" className="flex-1 flex min-w-0">
