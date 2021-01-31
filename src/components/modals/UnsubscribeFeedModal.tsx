@@ -6,7 +6,7 @@ import Modal from './Modal';
 import {
   setUnsubscribeFeedModalVisibility,
   unSubscribeFeed,
-  selectFeed,
+  setFeed,
 } from '../../state/actions';
 import { InitialState } from '../../state/reducers';
 
@@ -45,7 +45,7 @@ const mapStateToProps = (state: InitialState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeModal: () => dispatch(setUnsubscribeFeedModalVisibility(false)),
-  unselectFeed: () => dispatch(selectFeed(null)),
+  unselectFeed: () => dispatch(setFeed(null)),
   unsubscribeFeed: (key: string) => {
     dispatch(setUnsubscribeFeedModalVisibility(false));
     return dispatch(unSubscribeFeed(key));

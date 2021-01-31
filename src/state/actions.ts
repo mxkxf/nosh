@@ -5,27 +5,6 @@ import { Feed } from '../types';
 import getFeed from '../utils/getFeed';
 import { InitialState } from './reducers';
 
-export const RETRIEVE_FEEDS = 'RETRIEVE_FEEDS';
-export const retrieveFeeds = (): any => async (dispatch: Dispatch) => {
-  // try {
-  //   const feedUrls: string[] = JSON.parse(
-  //     window.localStorage.getItem('feedUrls') as string,
-  //   );
-  //   if (!feedUrls || !feedUrls.length) {
-  //     return;
-  //   }
-  //   dispatch(setLoading(true));
-  //   const feeds = await Promise.all(feedUrls.map(getFeed));
-  //   batchActions([
-  //     dispatch(setLoading(false)),
-  //     dispatch(setFeeds(feeds)),
-  //     dispatch(selectFeed(0)),
-  //   ]);
-  // } catch (error) {
-  //   dispatch(setError(error));
-  // }
-};
-
 export const SET_FEEDS = 'SET_FEEDS';
 export const setFeeds = (feeds: { [key: string]: Feed }) => ({
   type: SET_FEEDS,
@@ -33,8 +12,42 @@ export const setFeeds = (feeds: { [key: string]: Feed }) => ({
 });
 
 export const SELECT_FEED = 'SELECT_FEED';
-export const selectFeed = (key: string | null) => ({
-  type: SELECT_FEED,
+export const selectFeed = (key: string): any => async (
+  dispatch: Dispatch,
+  getState: () => InitialState,
+) => {
+  if (!window.navigator?.onLine) {
+    dispatch(setFeed(key));
+    return;
+  }
+
+  try {
+    dispatch(setLoading(true));
+
+    const feedUrl = getState().feeds[key].url;
+    const feed = await getFeed(feedUrl);
+
+    batchActions([
+      dispatch(setLoading(false)),
+      dispatch(updateFeed(key, feed)),
+      dispatch(setFeed(key)),
+    ]);
+  } catch (error) {
+    dispatch(setLoading(false));
+    dispatch(setError(error));
+  }
+};
+
+export const UPDATE_FEED = 'UPDATE_FEED';
+export const updateFeed = (key: string, feed: Feed) => ({
+  type: UPDATE_FEED,
+  key,
+  feed,
+});
+
+export const SET_FEED = 'SET_FEED';
+export const setFeed = (key: string | null) => ({
+  type: SET_FEED,
   key,
 });
 
@@ -58,9 +71,10 @@ export const subscribeFeed = (url: string): any => async (
     const feed = await getFeed(url);
 
     batchActions([
+      dispatch(setLoading(false)),
       dispatch(addFeed(feed)),
       dispatch(
-        selectFeed(
+        setFeed(
           Object.keys(getState().feeds)[
             Object.keys(getState().feeds).length - 1
           ],
@@ -69,9 +83,7 @@ export const subscribeFeed = (url: string): any => async (
       dispatch(setSubscribeFeedModalVisibility(false)),
     ]);
   } catch (error) {
-    dispatch(setError(error));
-  } finally {
-    dispatch(setLoading(false));
+    batchActions([dispatch(setLoading(false)), dispatch(setError(error))]);
   }
 };
 
@@ -138,7 +150,6 @@ export const setLoading = (isLoading: boolean) => ({
 });
 
 export type ActionTypes =
-  | ReturnType<typeof retrieveFeeds>
   | ReturnType<typeof setFeeds>
   | ReturnType<typeof selectFeed>
   | ReturnType<typeof subscribeFeed>

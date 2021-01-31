@@ -50,7 +50,7 @@ const SubscribeFeedModal: React.FC<
             {examples.map((example, i) => (
               <li key={`example-${i}`}>
                 <button
-                  className="text-indigo-600 hover:text-indigo-700 underline"
+                  className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-200 underline"
                   onClick={() => {
                     setUrl(example.url);
                     subscribeFeed(example.url);

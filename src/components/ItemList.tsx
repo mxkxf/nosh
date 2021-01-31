@@ -29,6 +29,7 @@ const ItemList: React.FC<
 > = ({
   feeds,
   items,
+  isLoading,
   isUnsubscribeFeedModalOpen,
   openUnsubscribeModal,
   selectedFeed,
@@ -40,6 +41,10 @@ const ItemList: React.FC<
   }
 
   const feed = feeds[selectedFeed];
+
+  if (isLoading) {
+    return <span>loading...</span>;
+  }
 
   return (
     <>
@@ -133,6 +138,7 @@ const ItemList: React.FC<
 };
 
 const mapStateToProps = (state: InitialState) => ({
+  isLoading: state.ui.isLoading,
   isUnsubscribeFeedModalOpen: state.ui.isUnsubscribeFeedModalOpen,
   selectedItem: state.selectedItem,
   selectedFeed: state.selectedFeed,

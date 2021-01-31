@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import Head from 'next/head';
 
-import { retrieveFeeds } from '../state/actions';
 import { InitialState, Themes } from '../state/reducers';
 import Header from './Header';
 import ItemList from './ItemList';
@@ -11,28 +10,25 @@ import ItemView from './ItemView';
 import Onboarding from './Onboarding';
 import SubscribeFeedModal from './modals/SubscribeFeedModal';
 import AboutModal from './modals/AboutModal';
+import { setTheme } from '../state/actions';
 
 const App: React.FC<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
 > = ({
   isAboutModalOpen,
   isSubscribeFeedModalOpen,
-  retrieveFeeds,
   selectedFeed,
   theme,
+  setTheme,
 }) => {
-  // React.useEffect(() => {
-  //   if (theme === Themes.DARK) {
-  //     document.documentElement.classList.add('dark');
-  //   } else {
-  //     document.documentElement.classList.remove('dark');
-  //   }
-  // }, [theme]);
-
-  // TODO: Re-enable at some point
-  // React.useEffect(() => {
-  //   retrieveFeeds();
-  // }, [retrieveFeeds]);
+  React.useEffect(() => {
+    if (theme === Themes.DARK) {
+      document.documentElement.classList.add('dark');
+      setTheme(Themes.DARK);
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme, setTheme]);
 
   return (
     <>
@@ -66,7 +62,7 @@ const mapStateToProps = (state: InitialState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  retrieveFeeds: () => dispatch(retrieveFeeds()),
+  setTheme: (theme: Themes) => dispatch(setTheme(theme)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -45,7 +45,7 @@ const selectedFeed = (
   action: actions.ActionTypes,
 ) => {
   switch (action.type) {
-    case actions.SELECT_FEED:
+    case actions.SET_FEED:
       return action.key;
 
     default:
@@ -66,6 +66,15 @@ const feeds = (state = initialState.feeds, action: actions.ActionTypes) => {
           ...action.feed,
         },
       };
+
+    case actions.UPDATE_FEED:
+      return {
+        ...state,
+        [action.key]: {
+          ...action.feed,
+        },
+      };
+
     case actions.UNSUBSCRIBE_FEED:
       const stateCopy = { ...state };
       delete stateCopy[action.key];

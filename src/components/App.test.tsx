@@ -9,9 +9,15 @@ import App from './App';
 describe('App', () => {
   const server = setupServer();
 
-  beforeEach(() => server.listen());
+  beforeEach(() => {
+    server.listen();
+  });
+
   afterEach(() => {
     server.resetHandlers();
+  });
+
+  afterAll(() => {
     server.close();
   });
 
