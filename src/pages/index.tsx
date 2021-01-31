@@ -1,7 +1,10 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 
-import App from '../components/App';
+const NoSSRComponent = dynamic(() => import('../components/App'), {
+  ssr: false,
+});
 
-const Page = () => <App />;
+const Page = () => <NoSSRComponent />;
 
 export default Page;
