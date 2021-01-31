@@ -1,11 +1,11 @@
 import { Middleware } from 'redux';
-import { Feed } from '../types';
 
 import {
   ADD_FEED,
   UNSUBSCRIBE_FEED,
   SET_HEADER_COLLAPSE,
   SET_THEME,
+  UPDATE_FEED,
 } from './actions';
 import { InitialState, initialState } from './reducers';
 
@@ -24,10 +24,14 @@ export const persistToLocalStorage: Middleware<{}, InitialState> = (store) => (
       window.localStorage.setItem('ui', JSON.stringify(uiState));
     }
 
-    if (action.type === ADD_FEED || action.type === UNSUBSCRIBE_FEED) {
-      const feedUrls = store.getState().feeds.map((feed: Feed) => feed.url);
+    if (
+      action.type === ADD_FEED ||
+      action.type === UNSUBSCRIBE_FEED ||
+      action.type === UPDATE_FEED
+    ) {
+      const feeds = store.getState().feeds;
 
-      window.localStorage.setItem('feedUrls', JSON.stringify(feedUrls));
+      window.localStorage.setItem('feeds', JSON.stringify(feeds));
     }
 
     return result;
@@ -38,10 +42,12 @@ export const persistToLocalStorage: Middleware<{}, InitialState> = (store) => (
 
 export const loadFromLocalStorage = () => {
   try {
-    const serialisedUiState = localStorage.getItem('ui') as string;
+    const serialisedUiState = localStorage.getItem('ui') || '{}';
+    const serialisedFeeds = localStorage.getItem('feeds') || '{}';
 
     return {
       ...initialState,
+      feeds: JSON.parse(serialisedFeeds),
       ui: {
         ...initialState.ui,
         ...JSON.parse(serialisedUiState),

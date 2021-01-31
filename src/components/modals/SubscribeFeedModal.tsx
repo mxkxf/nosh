@@ -8,15 +8,6 @@ import {
 } from '../../state/actions';
 import Modal from './Modal';
 import { InitialState } from '../../state/reducers';
-import { Feed } from '../../types';
-
-interface Props {
-  closeModal: () => {};
-  error: Error | null;
-  feeds: Feed[];
-  isLoading: boolean;
-  subscribeFeed: (url: string) => {};
-}
 
 const examples = [
   {
@@ -29,13 +20,9 @@ const examples = [
   },
 ];
 
-const SubscribeFeedModal: React.FC<Props> = ({
-  closeModal,
-  error,
-  feeds,
-  isLoading,
-  subscribeFeed,
-}) => {
+const SubscribeFeedModal: React.FC<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> = ({ closeModal, error, feeds, isLoading, subscribeFeed }) => {
   const [url, setUrl] = React.useState('');
 
   const handleSubmit = (event?: FormEvent) => {
@@ -51,7 +38,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
       <div className="text-center text-2xl mb-8">
         <h1>Subscribe to a new feed</h1>
       </div>
-      {feeds.length === 0 && (
+      {feeds && Object.keys(feeds).length === 0 ? (
         <div className="mb-6">
           <p className="mb-2">
             <span className="mr-1" role="img" aria-label="Eyes">
@@ -63,7 +50,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
             {examples.map((example, i) => (
               <li key={`example-${i}`}>
                 <button
-                  className="text-indigo-600 hover:text-indigo-700 underline"
+                  className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-200 underline"
                   onClick={() => {
                     setUrl(example.url);
                     subscribeFeed(example.url);
@@ -75,7 +62,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
             ))}
           </ul>
         </div>
-      )}
+      ) : null}
       <form className="flex" method="POST" onSubmit={handleSubmit}>
         <label className="hidden" htmlFor="url">
           Feed URL
@@ -95,7 +82,7 @@ const SubscribeFeedModal: React.FC<Props> = ({
           onChange={(event) => setUrl(event.target.value)}
         />
         <button
-          className={`ml-4 rounded bg-indigo-600 border-indigo-500 hover:bg-indigo-600 px-3 py-2 text-white font-semibold ${
+          className={`ml-4 rounded bg-indigo-600 border-indigo-500 hover:bg-indigo-700 px-4 py-2 text-white font-semibold ${
             isLoading ? 'cursor-not-allowed opacity-75' : ''
           }`}
           disabled={isLoading}

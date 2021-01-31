@@ -5,24 +5,11 @@ import { Dispatch } from 'redux';
 
 import {
   selectItem,
-  unSubscribeFeed,
   setUnsubscribeFeedModalVisibility,
 } from '../state/actions';
 import UnsubscribeFeedModal from './modals/UnsubscribeFeedModal';
 import { InitialState } from '../state/reducers';
 import Dropdown from './Dropdown';
-import { Feed, FeedItem } from '../types';
-
-interface Props {
-  feeds: Feed[];
-  items: FeedItem[];
-  isUnsubscribeFeedModalOpen: boolean;
-  openUnsubscribeModal: () => {};
-  selectedFeed: number | null;
-  selectedItem: number | null;
-  unSubscribeFeed: (index: number) => {};
-  viewItem: (index: number) => {};
-}
 
 const DropdownToggle = () => (
   <span className="inline-block px-3 py-1">
@@ -37,9 +24,12 @@ const DropdownToggle = () => (
   </span>
 );
 
-const ItemList: React.FC<Props> = ({
+const ItemList: React.FC<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> = ({
   feeds,
   items,
+  isLoading,
   isUnsubscribeFeedModalOpen,
   openUnsubscribeModal,
   selectedFeed,
@@ -51,6 +41,10 @@ const ItemList: React.FC<Props> = ({
   }
 
   const feed = feeds[selectedFeed];
+
+  if (isLoading) {
+    return <span>loading...</span>;
+  }
 
   return (
     <>
@@ -144,6 +138,7 @@ const ItemList: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: InitialState) => ({
+  isLoading: state.ui.isLoading,
   isUnsubscribeFeedModalOpen: state.ui.isUnsubscribeFeedModalOpen,
   selectedItem: state.selectedItem,
   selectedFeed: state.selectedFeed,
@@ -153,7 +148,6 @@ const mapStateToProps = (state: InitialState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  unSubscribeFeed: (i: number) => dispatch(unSubscribeFeed(i)),
   viewItem: (i: number) => dispatch(selectItem(i)),
   openUnsubscribeModal: () => dispatch(setUnsubscribeFeedModalVisibility(true)),
 });

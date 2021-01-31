@@ -6,28 +6,18 @@ import Modal from './Modal';
 import {
   setUnsubscribeFeedModalVisibility,
   unSubscribeFeed,
-  selectFeed,
+  setFeed,
 } from '../../state/actions';
 import { InitialState } from '../../state/reducers';
 
-interface Props {
-  closeModal: () => {};
-  selectedFeed: number;
-  unselectFeed: () => {};
-  unsubscribeFeed: (i: number) => {};
-}
-
-const UnsubscribeFeedModal: React.FC<Props> = ({
-  closeModal,
-  selectedFeed,
-  unselectFeed,
-  unsubscribeFeed,
-}) => {
+const UnsubscribeFeedModal: React.FC<
+  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
+> = ({ closeModal, selectedFeed, unselectFeed, unsubscribeFeed }) => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
     unselectFeed();
-    unsubscribeFeed(selectedFeed);
+    unsubscribeFeed(selectedFeed as string);
   };
 
   return (
@@ -50,15 +40,15 @@ const UnsubscribeFeedModal: React.FC<Props> = ({
 };
 
 const mapStateToProps = (state: InitialState) => ({
-  selectedFeed: state.selectedFeed as number,
+  selectedFeed: state.selectedFeed,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeModal: () => dispatch(setUnsubscribeFeedModalVisibility(false)),
-  unselectFeed: () => dispatch(selectFeed(null)),
-  unsubscribeFeed: (i: number) => {
+  unselectFeed: () => dispatch(setFeed(null)),
+  unsubscribeFeed: (key: string) => {
     dispatch(setUnsubscribeFeedModalVisibility(false));
-    return dispatch(unSubscribeFeed(i));
+    return dispatch(unSubscribeFeed(key));
   },
 });
 

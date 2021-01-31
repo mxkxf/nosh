@@ -26,7 +26,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
         </svg>
         nosh
       </h2>
-      <p className="text-sm text-gray-600">Version {version}</p>
+      <p className="text-sm text-gray-500">Version {version}</p>
     </div>
     <div className="mb-10">
       <p className="mb-3">Hey there!</p>
@@ -42,7 +42,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
         <em>
           Why{' '}
           <a
-            className="text-blue-500 hover:text-blue-700 underline"
+            className="text-indigo-500 hover:text-indigo-700 underline"
             href="https://www.dictionary.com/browse/nosh"
             rel="noopener noreferrer"
             target="_blank"
@@ -55,11 +55,11 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
       </p>
     </div>
     <div className="flex text-sm">
-      <span className="flex-1 text-gray-600">
+      <span className="flex-1 text-gray-500">
         © Mike Francis {new Date().getFullYear()}
       </span>
       <a
-        className="text-blue-500 hover:text-blue-700 underline"
+        className="text-indigo-500 hover:text-indigo-700 underline"
         href="https://twitter.com/_mikefrancis"
         target="_blank"
         rel="noopener noreferrer"

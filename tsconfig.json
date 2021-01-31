@@ -18,11 +18,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "noUnusedLocals": false,
-    "types": ["cypress", "cypress-axe"]
+    "noUnusedLocals": false
   },
   "include": [
-    "src"
+    "src",
+    "cypress"
   ],
   "exclude": [
     "node_modules"
