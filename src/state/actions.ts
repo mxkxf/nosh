@@ -3,7 +3,7 @@ import { batchActions } from 'redux-batched-actions';
 
 import { Feed } from '../types';
 import getFeed from '../utils/getFeed';
-import { InitialState } from './reducers';
+import { InitialState, Modal, NetworkStatus } from './reducers';
 
 export const SET_FEEDS = 'SET_FEEDS';
 export const setFeeds = (feeds: { [key: string]: Feed }) => ({
@@ -16,24 +16,27 @@ export const selectFeed = (key: string): any => async (
   dispatch: Dispatch,
   getState: () => InitialState,
 ) => {
+  dispatch(setFeed(key));
+
   if (!window.navigator?.onLine) {
-    dispatch(setFeed(key));
+    dispatch(setNetworkStatus('OFFLINE'));
+
     return;
   }
 
   try {
-    dispatch(setLoading(true));
+    dispatch(setNetworkStatus('FETCHING'));
 
     const feedUrl = getState().feeds[key].url;
     const feed = await getFeed(feedUrl);
 
     batchActions([
-      dispatch(setLoading(false)),
+      dispatch(setNetworkStatus('IDLE')),
       dispatch(updateFeed(key, feed)),
       dispatch(setFeed(key)),
     ]);
   } catch (error) {
-    dispatch(setLoading(false));
+    dispatch(setNetworkStatus('IDLE'));
     dispatch(setError(error));
   }
 };
@@ -56,7 +59,7 @@ export const subscribeFeed = (url: string): any => async (
   dispatch: Dispatch,
   getState: () => InitialState,
 ) => {
-  dispatch(setLoading(true));
+  dispatch(setNetworkStatus('FETCHING'));
 
   const currentFeeds = getState().feeds;
   const alreadySubscribed = Object.keys(currentFeeds).some(
@@ -71,7 +74,7 @@ export const subscribeFeed = (url: string): any => async (
     const feed = await getFeed(url);
 
     batchActions([
-      dispatch(setLoading(false)),
+      dispatch(setNetworkStatus('IDLE')),
       dispatch(addFeed(feed)),
       dispatch(
         setFeed(
@@ -80,31 +83,20 @@ export const subscribeFeed = (url: string): any => async (
           ],
         ),
       ),
-      dispatch(setSubscribeFeedModalVisibility(false)),
+      dispatch(setModal(null)),
     ]);
   } catch (error) {
-    batchActions([dispatch(setLoading(false)), dispatch(setError(error))]);
+    batchActions([
+      dispatch(setNetworkStatus('IDLE')),
+      dispatch(setError(error)),
+    ]);
   }
 };
 
-export const SET_SUBSCRIBE_FEED_MODAL_VISIBILITY =
-  'SET_SUBSCRIBE_FEED_MODAL_VISIBILITY';
-export const setSubscribeFeedModalVisibility = (isOpen: boolean) => ({
-  type: SET_SUBSCRIBE_FEED_MODAL_VISIBILITY,
-  isOpen,
-});
-
-export const SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY =
-  'SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY';
-export const setUnsubscribeFeedModalVisibility = (isOpen: boolean) => ({
-  type: SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY,
-  isOpen,
-});
-
-export const SET_ABOUT_MODAL_VISIBILITY = 'SET_ABOUT_MODAL_VISIBILITY';
-export const setAboutModalVisibility = (isOpen: boolean) => ({
-  type: SET_ABOUT_MODAL_VISIBILITY,
-  isOpen,
+export const SET_MODAL = 'SET_MODAL';
+export const setModal = (modal: Modal | null) => ({
+  type: SET_MODAL,
+  modal,
 });
 
 export const SET_HEADER_COLLAPSE = 'SET_HEADER_COLLAPSE';
@@ -143,20 +135,19 @@ export const setError = (error: Error) => ({
   error,
 });
 
-export const SET_LOADING = 'SET_LOADING';
-export const setLoading = (isLoading: boolean) => ({
-  type: SET_LOADING,
-  isLoading,
+export const SET_NETWORK_STATUS = 'SET_NETWORK_STATUS';
+export const setNetworkStatus = (networkStatus: NetworkStatus) => ({
+  type: SET_NETWORK_STATUS,
+  networkStatus,
 });
 
 export type ActionTypes =
   | ReturnType<typeof setFeeds>
   | ReturnType<typeof selectFeed>
   | ReturnType<typeof subscribeFeed>
-  | ReturnType<typeof setSubscribeFeedModalVisibility>
-  | ReturnType<typeof setUnsubscribeFeedModalVisibility>
+  | ReturnType<typeof setModal>
   | ReturnType<typeof addFeed>
   | ReturnType<typeof unSubscribeFeed>
   | ReturnType<typeof selectItem>
   | ReturnType<typeof setError>
-  | ReturnType<typeof setLoading>;
+  | ReturnType<typeof setNetworkStatus>;

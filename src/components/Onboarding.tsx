@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import { setSubscribeFeedModalVisibility } from '../state/actions';
+import { setModal } from '../state/actions';
 
 const Onboarding: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
   openModal,
@@ -31,7 +31,7 @@ const Onboarding: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
+  openModal: () => dispatch(setModal('SUBSCRIBE')),
 });
 
 export default connect(null, mapDispatchToProps)(Onboarding);

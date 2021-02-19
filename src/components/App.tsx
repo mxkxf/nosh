@@ -13,13 +13,7 @@ import { setTheme } from '../state/actions';
 
 const App: React.FC<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({
-  isAboutModalOpen,
-  isSubscribeFeedModalOpen,
-  selectedFeed,
-  theme,
-  setTheme,
-}) => {
+> = ({ modal, selectedFeed, theme, setTheme }) => {
   React.useEffect(() => {
     if (theme === Themes.DARK) {
       document.documentElement.classList.add('dark');
@@ -44,16 +38,15 @@ const App: React.FC<
           )}
         </div>
       </div>
-      {isAboutModalOpen && <AboutModal />}
-      {isSubscribeFeedModalOpen && <SubscribeFeedModal />}
+      {modal === 'ABOUT' ? <AboutModal /> : null}
+      {modal === 'SUBSCRIBE' ? <SubscribeFeedModal /> : null}
     </>
   );
 };
 
 const mapStateToProps = (state: InitialState) => ({
   selectedFeed: state.selectedFeed,
-  isAboutModalOpen: state.ui.isAboutModalOpen,
-  isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
+  modal: state.ui.modal,
   theme: state.ui.theme,
 });
 
