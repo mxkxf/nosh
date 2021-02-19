@@ -2,10 +2,7 @@ import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import {
-  subscribeFeed,
-  setSubscribeFeedModalVisibility,
-} from '../../state/actions';
+import { subscribeFeed, setModal } from '../../state/actions';
 import Modal from './Modal';
 import { InitialState } from '../../state/reducers';
 
@@ -22,7 +19,7 @@ const examples = [
 
 const SubscribeFeedModal: React.FC<
   ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({ closeModal, error, feeds, isLoading, subscribeFeed }) => {
+> = ({ closeModal, error, feeds, networkStatus, subscribeFeed }) => {
   const [url, setUrl] = React.useState('');
 
   const handleSubmit = (event?: FormEvent) => {
@@ -69,10 +66,10 @@ const SubscribeFeedModal: React.FC<
         </label>
         <input
           className={`border bg-white dark:border-black dark:bg-gray-900 flex-1 rounded px-2 py-1 ${
-            isLoading ? 'cursor-not-allowed bg-gray-100' : ''
+            networkStatus === 'FETCHING' ? 'cursor-not-allowed bg-gray-100' : ''
           }`}
           required={true}
-          disabled={isLoading}
+          disabled={networkStatus === 'FETCHING'}
           autoComplete="off"
           type="text"
           id="url"
@@ -83,12 +80,12 @@ const SubscribeFeedModal: React.FC<
         />
         <button
           className={`ml-4 rounded bg-indigo-600 border-indigo-500 hover:bg-indigo-700 px-4 py-2 text-white font-semibold ${
-            isLoading ? 'cursor-not-allowed opacity-75' : ''
+            networkStatus === 'FETCHING' ? 'cursor-not-allowed opacity-75' : ''
           }`}
-          disabled={isLoading}
+          disabled={networkStatus === 'FETCHING'}
           type="submit"
         >
-          {isLoading ? '...' : 'Add'}
+          {networkStatus === 'FETCHING' ? 'Loading...' : 'Add'}
         </button>
       </form>
       {error && (
@@ -108,12 +105,12 @@ const SubscribeFeedModal: React.FC<
 const mapStateToProps = (state: InitialState) => ({
   error: state.ui.error,
   feeds: state.feeds,
-  isLoading: state.ui.isLoading,
+  networkStatus: state.ui.networkStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   subscribeFeed: (url: string) => dispatch(subscribeFeed(url)),
-  closeModal: () => dispatch(setSubscribeFeedModalVisibility(false)),
+  closeModal: () => dispatch(setModal(null)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubscribeFeedModal);

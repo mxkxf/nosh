@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 
 import { version } from '../../../package.json';
 import Modal from './Modal';
-import { setAboutModalVisibility } from '../../state/actions';
+import { setModal } from '../../state/actions';
 
 const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
   closeModal,
@@ -71,7 +71,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
 );
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeModal: () => dispatch(setAboutModalVisibility(false)),
+  closeModal: () => dispatch(setModal(null)),
 });
 
 export default connect(null, mapDispatchToProps)(AboutModal);

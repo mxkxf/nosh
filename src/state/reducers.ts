@@ -8,6 +8,10 @@ export enum Themes {
   DARK = 'dark',
 }
 
+export type NetworkStatus = 'IDLE' | 'FETCHING' | 'ERROR' | 'OFFLINE';
+
+export type Modal = 'ABOUT' | 'SUBSCRIBE' | 'UNSUBSCRIBE';
+
 export interface InitialState {
   selectedFeed: string | null;
   selectedItem: number | null;
@@ -16,10 +20,8 @@ export interface InitialState {
   };
   ui: {
     error: Error | null;
-    isLoading: boolean;
-    isSubscribeFeedModalOpen: boolean;
-    isUnsubscribeFeedModalOpen: boolean;
-    isAboutModalOpen: boolean;
+    networkStatus: NetworkStatus;
+    modal: Modal | null;
     isHeaderCollapsed: boolean;
     theme: Themes;
   };
@@ -31,10 +33,8 @@ export const initialState: InitialState = {
   feeds: {},
   ui: {
     error: null,
-    isLoading: false,
-    isSubscribeFeedModalOpen: false,
-    isUnsubscribeFeedModalOpen: false,
-    isAboutModalOpen: false,
+    networkStatus: 'IDLE',
+    modal: null,
     isHeaderCollapsed: false,
     theme: Themes.LIGHT,
   },
@@ -107,34 +107,16 @@ const ui = (state = initialState.ui, action: actions.ActionTypes) => {
         error: action.error,
       };
 
-    case actions.SET_LOADING:
+    case actions.SET_NETWORK_STATUS:
       return {
         ...state,
-        isLoading: action.isLoading,
+        networkStatus: action.networkStatus,
       };
 
-    case actions.SET_SUBSCRIBE_FEED_MODAL_VISIBILITY:
+    case actions.SET_MODAL:
       return {
         ...state,
-        isSubscribeFeedModalOpen: action.isOpen,
-        isUnsubscribeFeedModalOpen: false,
-        isAboutModalOpen: false,
-      };
-
-    case actions.SET_UNSUBSCRIBE_FEED_MODAL_VISIBILITY:
-      return {
-        ...state,
-        isSubscribeFeedModalOpen: false,
-        isUnsubscribeFeedModalOpen: action.isOpen,
-        isAboutModalOpen: false,
-      };
-
-    case actions.SET_ABOUT_MODAL_VISIBILITY:
-      return {
-        ...state,
-        isSubscribeFeedModalOpen: false,
-        isUnsubscribeFeedModalOpen: false,
-        isAboutModalOpen: action.isOpen,
+        modal: action.modal,
       };
 
     case actions.SET_HEADER_COLLAPSE:

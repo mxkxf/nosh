@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import Modal from './Modal';
-import {
-  setUnsubscribeFeedModalVisibility,
-  unSubscribeFeed,
-  setFeed,
-} from '../../state/actions';
+import { setModal, unSubscribeFeed, setFeed } from '../../state/actions';
 import { InitialState } from '../../state/reducers';
 
 const UnsubscribeFeedModal: React.FC<
@@ -44,10 +40,10 @@ const mapStateToProps = (state: InitialState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeModal: () => dispatch(setUnsubscribeFeedModalVisibility(false)),
+  closeModal: () => dispatch(setModal(null)),
   unselectFeed: () => dispatch(setFeed(null)),
   unsubscribeFeed: (key: string) => {
-    dispatch(setUnsubscribeFeedModalVisibility(false));
+    dispatch(setModal(null));
     return dispatch(unSubscribeFeed(key));
   },
 });

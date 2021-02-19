@@ -5,8 +5,7 @@ import { Dispatch } from 'redux';
 import { InitialState, Themes } from '../state/reducers';
 import {
   selectFeed,
-  setSubscribeFeedModalVisibility,
-  setAboutModalVisibility,
+  setModal,
   setHeaderCollapse,
   setTheme,
 } from '../state/actions';
@@ -23,7 +22,7 @@ const Header: React.FC<
 > = ({
   feeds,
   isCollapsed,
-  isSubscribeFeedModalOpen,
+  modal,
   openAboutModal,
   openSubscribeModal,
   selectedFeed,
@@ -33,19 +32,19 @@ const Header: React.FC<
   toggleTheme,
 }) => {
   useKeyPress(KEY_CODE_N, () => {
-    if (!isSubscribeFeedModalOpen) {
+    if (modal !== 'SUBSCRIBE') {
       openSubscribeModal();
     }
   });
 
   useKeyPress(KEY_CODE_S, () => {
-    if (!isSubscribeFeedModalOpen) {
+    if (modal !== 'SUBSCRIBE') {
       toggleHeaderCollapse(!isCollapsed);
     }
   });
 
   useKeyPress(KEY_CODE_T, () => {
-    if (!isSubscribeFeedModalOpen) {
+    if (modal !== 'SUBSCRIBE') {
       toggleTheme(theme);
     }
   });
@@ -173,14 +172,14 @@ const Header: React.FC<
 const mapStateToProps = (state: InitialState) => ({
   feeds: state.feeds,
   selectedFeed: state.selectedFeed,
-  isSubscribeFeedModalOpen: state.ui.isSubscribeFeedModalOpen,
+  modal: state.ui.modal,
   isCollapsed: state.ui.isHeaderCollapsed,
   theme: state.ui.theme,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openAboutModal: () => dispatch(setAboutModalVisibility(true)),
-  openSubscribeModal: () => dispatch(setSubscribeFeedModalVisibility(true)),
+  openAboutModal: () => dispatch(setModal('ABOUT')),
+  openSubscribeModal: () => dispatch(setModal('SUBSCRIBE')),
   toggleHeaderCollapse: (isCollapsed: boolean) =>
     dispatch(setHeaderCollapse(isCollapsed)),
   selectFeed: (key: string) => dispatch(selectFeed(key)),
