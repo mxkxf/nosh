@@ -95,11 +95,18 @@ const Header: React.FC<
               <span className="block w-4">
                 <svg
                   aria-label="Add"
-                  className="w-4 fill-current"
-                  viewBox="0 0 1792 1792"
+                  className="w-4"
                   xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <path d="M1600 736v192q0 40-28 68t-68 28h-416v416q0 40-28 68t-68 28h-192q-40 0-68-28t-28-68v-416h-416q-40 0-68-28t-28-68v-192q0-40 28-68t68-28h416v-416q0-40 28-68t68-28h192q40 0 68 28t28 68v416h416q40 0 68 28t28 68z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
               </span>
               <span className="ml-4 max-lines hidden md:block">Add feed</span>
@@ -131,12 +138,25 @@ const Header: React.FC<
             <HeaderLink>
               <span className="block w-4">
                 <svg
-                  className="w-4 fill-current"
+                  className="w-4"
                   aria-label="Settings"
-                  viewBox="0 0 1792 1792"
                   xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  <path d="M1152 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zm512-109v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
                 </svg>
               </span>
               <span className="ml-4 hidden md:block">Settings</span>
@@ -144,24 +164,90 @@ const Header: React.FC<
           }
         >
           <button
-            className={`text-left block w-full px-3 py-2 pr-10 transition ${
+            className={`flex items-center text-left block w-full px-3 py-2 pr-10 transition ${
               theme === Themes.LIGHT ? 'hover:bg-gray-200' : 'hover:bg-gray-700'
             }`}
             onClick={() => toggleTheme(theme)}
           >
-            <span className="pr-3" role="img" aria-label="Toggle theme">
-              {theme === Themes.LIGHT ? '🌙' : '☀️'}
-            </span>
-            {theme === Themes.LIGHT ? 'Dark' : 'Light'} theme
+            {theme === Themes.LIGHT ? (
+              <>
+                <svg
+                  className="w-4 mr-3"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+                  />
+                </svg>
+                Dark theme
+              </>
+            ) : (
+              <>
+                <svg
+                  className="w-4 mr-3"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+                  />
+                </svg>
+                Light theme
+              </>
+            )}
           </button>
           <button
-            className="text-left hidden md:block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+            className="text-left hidden md:flex md:items-center w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
             onClick={() => toggleHeaderCollapse(!isCollapsed)}
           >
-            <span className="pr-3" role="img" aria-label="Toggle sidebar">
-              {isCollapsed ? '➡️' : '⬅️'}
-            </span>
-            {isCollapsed ? 'Expand' : 'Collapse'} sidebar
+            {isCollapsed ? (
+              <>
+                <svg
+                  className="w-4 mr-3"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
+                  />
+                </svg>
+                Expand
+              </>
+            ) : (
+              <>
+                <svg
+                  className="w-4 mr-3"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                Collapse
+              </>
+            )}
           </button>
         </Dropdown>
       </div>

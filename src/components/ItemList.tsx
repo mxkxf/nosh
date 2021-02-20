@@ -12,12 +12,19 @@ import Shimmer from './Shimmer';
 const DropdownToggle = () => (
   <span className="inline-block px-3 py-1">
     <svg
+      className="w-3"
       aria-label="Settings"
-      className="w-3 fill-current"
-      viewBox="0 0 1792 1792"
       xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
     >
-      <path d="M1152 896q0-106-75-181t-181-75-181 75-75 181 75 181 181 75 181-75 75-181zm512-109v222q0 12-8 23t-20 13l-185 28q-19 54-39 91 35 50 107 138 10 12 10 25t-9 23q-27 37-99 108t-94 71q-12 0-26-9l-138-108q-44 23-91 38-16 136-29 186-7 28-36 28h-222q-14 0-24.5-8.5t-11.5-21.5l-28-184q-49-16-90-37l-141 107q-10 9-25 9-14 0-25-11-126-114-165-168-7-10-7-23 0-12 8-23 15-21 51-66.5t54-70.5q-27-50-41-99l-183-27q-13-2-21-12.5t-8-23.5v-222q0-12 8-23t19-13l186-28q14-46 39-92-40-57-107-138-10-12-10-24 0-10 9-23 26-36 98.5-107.5t94.5-71.5q13 0 26 10l138 107q44-23 91-38 16-136 29-186 7-28 36-28h222q14 0 24.5 8.5t11.5 21.5l28 184q49 16 90 37l142-107q9-9 24-9 13 0 25 10 129 119 165 170 7 8 7 22 0 12-8 23-15 21-51 66.5t-54 70.5q26 50 41 98l183 28q13 2 21 12.5t8 23.5z" />
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+      />
     </svg>
   </span>
 );
@@ -33,6 +40,7 @@ const ItemList: React.FC<
   selectedFeed,
   selectedItem,
   viewItem,
+  deSelectItem,
 }) => {
   if (selectedFeed === null) {
     return null;
@@ -87,23 +95,46 @@ const ItemList: React.FC<
                 </h1>
                 <Dropdown direction="down" toggle={<DropdownToggle />}>
                   <a
-                    className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+                    className="flex items-center text-left w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
                     href={feed.link}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
-                    <span className="pr-3" role="img" aria-label="Link">
-                      🔗
-                    </span>
+                    <svg
+                      className="w-4 mr-3"
+                      aria-label="Link"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
                     Permalink
                   </a>
                   <button
                     onClick={() => openUnsubscribeModal()}
-                    className="text-left block w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
+                    className="text-left flex items-center w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
                   >
-                    <span className="pr-3" role="img" aria-label="Filter">
-                      🗑
-                    </span>
+                    <svg
+                      className="w-4 mr-3"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                      />
+                    </svg>
                     Unsubscribe
                   </button>
                 </Dropdown>
@@ -116,7 +147,9 @@ const ItemList: React.FC<
 
                   return (
                     <article
-                      onClick={() => viewItem(i)}
+                      onClick={() =>
+                        isSelected ? deSelectItem() : viewItem(i)
+                      }
                       className={`transition ${
                         i > 0
                           ? 'border-t border-gray-300 dark:border-black'
@@ -182,6 +215,7 @@ const mapStateToProps = (state: InitialState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   viewItem: (i: number) => dispatch(selectItem(i)),
+  deSelectItem: () => dispatch(selectItem(null)),
   openUnsubscribeModal: () => dispatch(setModal('SUBSCRIBE')),
 });
 
