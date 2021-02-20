@@ -71,7 +71,7 @@ const Header: React.FC<
                   <HeaderLink isSelected={selectedFeed === i}>
                     {feed.icon ? (
                       <img
-                        className="w-4 rounded"
+                        className="w-4 rounded max-w-none"
                         src={feed.icon}
                         alt={`${feed.title} icon`}
                       />

@@ -26,7 +26,9 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
         </svg>
         nosh
       </h2>
-      <p className="text-sm text-gray-500">Version {version}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Version {version}
+      </p>
     </div>
     <div className="mb-10">
       <p className="mb-3">Hey there!</p>
@@ -55,7 +57,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
       </p>
     </div>
     <div className="flex text-sm">
-      <span className="flex-1 text-gray-500">
+      <span className="flex-1 text-gray-600 dark:text-gray-400">
         © Mike Francis {new Date().getFullYear()}
       </span>
       <a

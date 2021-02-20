@@ -167,7 +167,9 @@ const ItemList: React.FC<
                         </p>
                         <p
                           className={`pl-4 ${
-                            isSelected ? 'text-white' : 'text-gray-500'
+                            isSelected
+                              ? 'text-white'
+                              : 'text-gray-600 dark:text-gray-400'
                           }`}
                         >
                           {dayjs(item.pubDate).format('DD/MM/YYYY')}
@@ -178,7 +180,9 @@ const ItemList: React.FC<
                       </h2>
                       <p
                         className={`max-lines ${
-                          isSelected ? 'text-white' : 'text-gray-500'
+                          isSelected
+                            ? 'text-white'
+                            : 'text-gray-600 dark:text-gray-400'
                         }`}
                       >
                         {item.description}
@@ -216,7 +220,7 @@ const mapStateToProps = (state: InitialState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   viewItem: (i: number) => dispatch(selectItem(i)),
   deSelectItem: () => dispatch(selectItem(null)),
-  openUnsubscribeModal: () => dispatch(setModal('SUBSCRIBE')),
+  openUnsubscribeModal: () => dispatch(setModal('UNSUBSCRIBE')),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
