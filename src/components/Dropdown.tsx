@@ -19,7 +19,7 @@ const Dropdown: React.FC<Props> = ({ children, direction, toggle }) => {
       classes.push('right-0');
       break;
     case 'up':
-      classes.push('bottom-full', 'right-0');
+      classes.push('bottom-full', 'md:left-0', 'right-0');
       break;
     default:
     //
