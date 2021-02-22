@@ -40,7 +40,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
         That's why I made <strong>nosh</strong>, here's hoping you find this
         useful.
       </p>
-      <p className="mb-10">
+      <p className="mb-3">
         <em>
           Why{' '}
           <a
@@ -54,6 +54,16 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
           ?
         </em>{' '}
         It's a slang word for eating/food.
+      </p>
+      <p className="mb-10">
+        <a
+          className="text-indigo-500 hover:text-indigo-700 underline"
+          href="https://github.com/mikefrancis/nosh"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          View this project on GitHub
+        </a>
       </p>
     </div>
     <div className="flex text-sm">
