@@ -51,7 +51,7 @@ const ItemList: React.FC<
   return (
     <>
       <div
-        className={`md:sticky md:top-0 w-full md:w-2/5 md:max-h-screen md:overflow-scroll ${
+        className={`md:sticky md:top-0 w-full md:w-2/5 md:max-h-screen md:overflow-scroll dark:bg-gray-900 ${
           selectedItem !== null ? 'hidden md:block' : ''
         }`}
       >
@@ -62,7 +62,7 @@ const ItemList: React.FC<
                 <Shimmer />
               </span>
             </div>
-            {new Array(10).fill({}).map((_, i) => (
+            {new Array(12).fill({}).map((_, i) => (
               <div
                 className={`transition ${
                   i > 0 ? 'border-t border-gray-300 dark:border-black' : ''
