@@ -102,7 +102,7 @@ const ItemView: React.FC<Props> = ({ item, unselectItem }) => (
           )}
         </ul>
         <div
-          className={`wysiwyg mb-10 wysiwyg-${item.title}`}
+          className="wysiwyg mb-10"
           dangerouslySetInnerHTML={{ __html: item.content }}
         />
       </div>
