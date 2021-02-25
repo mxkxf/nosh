@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Parser from 'rss-parser';
 
+import { version } from '../../../package.json';
 import { client } from '../../utils/client';
 
 function isValidUrl(str: string) {
@@ -30,7 +31,11 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
   }
 
   try {
-    const feedResponse = await client.get(url);
+    const feedResponse = await client.get(url, {
+      headers: {
+        'User-Agent': `nosh/${version}`,
+      },
+    });
     const feed = await parser.parseString(feedResponse.data);
     const urlParts = new URL(url);
 
