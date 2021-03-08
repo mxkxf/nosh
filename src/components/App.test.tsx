@@ -66,7 +66,7 @@ describe('App', () => {
     fireEvent.change(getByLabelText('Feed URL'), {
       target: { value: 'http://some-feed-url' },
     });
-    fireEvent.click(getByText('Add'));
+    fireEvent.click(getByLabelText('Subscribe'));
 
     await waitFor(() => getByText('Some Article Title'));
   });
@@ -89,7 +89,7 @@ describe('App', () => {
     fireEvent.change(getByLabelText('Feed URL'), {
       target: { value: 'http://some-feed-url' },
     });
-    fireEvent.click(getByText('Add'));
+    fireEvent.click(getByLabelText('Subscribe'));
 
     await waitFor(() => queryByText('Oh no'));
   });
