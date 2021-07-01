@@ -37,8 +37,8 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
         keep up to date with various news.
       </p>
       <p className="mb-3">
-        That's why I made <strong>nosh</strong>, here's hoping you find this
-        useful.
+        That&apos;s why I made <strong>nosh</strong>, here&apos;s hoping you
+        find this useful.
       </p>
       <p className="mb-3">
         <em>
@@ -53,7 +53,7 @@ const AboutModal: React.FC<ReturnType<typeof mapDispatchToProps>> = ({
           </a>
           ?
         </em>{' '}
-        It's a slang word for eating/food.
+        It&apos;s a slang word for eating/food.
       </p>
       <p className="mb-10">
         <a

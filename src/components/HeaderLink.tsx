@@ -6,6 +6,7 @@ interface HeaderLinkProps {
 
 const HeaderLink: React.FC<HeaderLinkProps> = ({ children, isSelected }) => {
   const classes = [
+    'relative',
     'flex',
     'items-center',
     'justify-start',

@@ -196,7 +196,7 @@ const ItemList: React.FC<
                 <span role="img" aria-label="Thinking face">
                   🤔
                 </span>{' '}
-                There doesn't seem to be any items in this feed.
+                There doesn&apos;t seem to be any items in this feed.
               </div>
             )}
           </>
