@@ -9,36 +9,35 @@ import {
 } from './actions';
 import { InitialState, initialState } from './reducers';
 
-export const persistToLocalStorage: Middleware<{}, InitialState> = (store) => (
-  next,
-) => (action) => {
-  const result = next(action);
+export const persistToLocalStorage: Middleware<{}, InitialState> =
+  (store) => (next) => (action) => {
+    const result = next(action);
 
-  try {
-    if (action.type === SET_HEADER_COLLAPSE || action.type === SET_THEME) {
-      const uiState = {
-        isHeaderCollapsed: store.getState().ui.isHeaderCollapsed,
-        theme: store.getState().ui.theme,
-      };
+    try {
+      if (action.type === SET_HEADER_COLLAPSE || action.type === SET_THEME) {
+        const uiState = {
+          isHeaderCollapsed: store.getState().ui.isHeaderCollapsed,
+          theme: store.getState().ui.theme,
+        };
 
-      window.localStorage.setItem('ui', JSON.stringify(uiState));
+        window.localStorage.setItem('ui', JSON.stringify(uiState));
+      }
+
+      if (
+        action.type === ADD_FEED ||
+        action.type === UNSUBSCRIBE_FEED ||
+        action.type === UPDATE_FEED
+      ) {
+        const feeds = store.getState().feeds;
+
+        window.localStorage.setItem('feeds', JSON.stringify(feeds));
+      }
+
+      return result;
+    } catch (e) {
+      return result;
     }
-
-    if (
-      action.type === ADD_FEED ||
-      action.type === UNSUBSCRIBE_FEED ||
-      action.type === UPDATE_FEED
-    ) {
-      const feeds = store.getState().feeds;
-
-      window.localStorage.setItem('feeds', JSON.stringify(feeds));
-    }
-
-    return result;
-  } catch (e) {
-    return result;
-  }
-};
+  };
 
 export const loadFromLocalStorage = () => {
   try {

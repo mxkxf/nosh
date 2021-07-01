@@ -12,34 +12,33 @@ export const setFeeds = (feeds: { [key: string]: Feed }) => ({
 });
 
 export const SELECT_FEED = 'SELECT_FEED';
-export const selectFeed = (key: string): any => async (
-  dispatch: Dispatch,
-  getState: () => InitialState,
-) => {
-  batchActions([dispatch(selectItem(null)), dispatch(setFeed(key))]);
+export const selectFeed =
+  (key: string): any =>
+  async (dispatch: Dispatch, getState: () => InitialState) => {
+    batchActions([dispatch(selectItem(null)), dispatch(setFeed(key))]);
 
-  if (!window.navigator?.onLine) {
-    dispatch(setNetworkStatus('OFFLINE'));
+    if (!window.navigator?.onLine) {
+      dispatch(setNetworkStatus('OFFLINE'));
 
-    return;
-  }
+      return;
+    }
 
-  try {
-    dispatch(setNetworkStatus('FETCHING'));
+    try {
+      dispatch(setNetworkStatus('FETCHING'));
 
-    const feedUrl = getState().feeds[key].url;
-    const feed = await getFeed(feedUrl);
+      const feedUrl = getState().feeds[key].url;
+      const feed = await getFeed(feedUrl);
 
-    batchActions([
-      dispatch(setNetworkStatus('IDLE')),
-      dispatch(updateFeed(key, feed)),
-      dispatch(setFeed(key)),
-    ]);
-  } catch (error) {
-    dispatch(setNetworkStatus('IDLE'));
-    dispatch(setError(error));
-  }
-};
+      batchActions([
+        dispatch(setNetworkStatus('IDLE')),
+        dispatch(updateFeed(key, feed)),
+        dispatch(setFeed(key)),
+      ]);
+    } catch (error) {
+      dispatch(setNetworkStatus('IDLE'));
+      dispatch(setError(error));
+    }
+  };
 
 export const UPDATE_FEED = 'UPDATE_FEED';
 export const updateFeed = (key: string, feed: Feed) => ({
@@ -55,43 +54,42 @@ export const setFeed = (key: string | null) => ({
 });
 
 export const SUBSCRIBE_FEED = 'SUBSCRIBE_FEED';
-export const subscribeFeed = (url: string): any => async (
-  dispatch: Dispatch,
-  getState: () => InitialState,
-) => {
-  dispatch(setNetworkStatus('FETCHING'));
+export const subscribeFeed =
+  (url: string): any =>
+  async (dispatch: Dispatch, getState: () => InitialState) => {
+    dispatch(setNetworkStatus('FETCHING'));
 
-  const currentFeeds = getState().feeds;
-  const alreadySubscribed = Object.keys(currentFeeds).some(
-    (f) => currentFeeds[f].url === url,
-  );
+    const currentFeeds = getState().feeds;
+    const alreadySubscribed = Object.keys(currentFeeds).some(
+      (f) => currentFeeds[f].url === url,
+    );
 
-  try {
-    if (alreadySubscribed) {
-      throw new Error(`Already subscribed to ${url}`);
-    }
+    try {
+      if (alreadySubscribed) {
+        throw new Error(`Already subscribed to ${url}`);
+      }
 
-    const feed = await getFeed(url);
+      const feed = await getFeed(url);
 
-    batchActions([
-      dispatch(setNetworkStatus('IDLE')),
-      dispatch(addFeed(feed)),
-      dispatch(
-        setFeed(
-          Object.keys(getState().feeds)[
-            Object.keys(getState().feeds).length - 1
-          ],
+      batchActions([
+        dispatch(setNetworkStatus('IDLE')),
+        dispatch(addFeed(feed)),
+        dispatch(
+          setFeed(
+            Object.keys(getState().feeds)[
+              Object.keys(getState().feeds).length - 1
+            ],
+          ),
         ),
-      ),
-      dispatch(setModal(null)),
-    ]);
-  } catch (error) {
-    batchActions([
-      dispatch(setNetworkStatus('IDLE')),
-      dispatch(setError(error)),
-    ]);
-  }
-};
+        dispatch(setModal(null)),
+      ]);
+    } catch (error) {
+      batchActions([
+        dispatch(setNetworkStatus('IDLE')),
+        dispatch(setError(error)),
+      ]);
+    }
+  };
 
 export const SET_MODAL = 'SET_MODAL';
 export const setModal = (modal: Modal | null) => ({

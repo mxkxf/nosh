@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import Image from 'next/image';
 
 import { InitialState, Themes } from '../state/reducers';
 import {
@@ -70,9 +71,9 @@ const Header: React.FC<
                 >
                   <HeaderLink isSelected={selectedFeed === i}>
                     {feed.icon ? (
-                      <img
+                      <Image
                         className="w-4 rounded max-w-none"
-                        src={feed.icon}
+                        src={feed.icon as any}
                         alt={`${feed.title} icon`}
                       />
                     ) : (

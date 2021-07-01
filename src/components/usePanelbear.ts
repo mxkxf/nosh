@@ -18,5 +18,5 @@ export const usePanelbear = (site: string, config = {}) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, []);
+  }, [config, router, site]);
 };
