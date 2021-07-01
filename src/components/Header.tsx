@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import Image from 'next/image';
 
 import { InitialState, Themes } from '../state/reducers';
 import {
@@ -50,6 +49,7 @@ const Header: React.FC<
     }
   });
 
+  /* eslint-disable @next/next/no-img-element */
   return (
     <header
       className={`border-t md:border-t-0 md:border-r ${
@@ -71,12 +71,10 @@ const Header: React.FC<
                 >
                   <HeaderLink isSelected={selectedFeed === i}>
                     {feed.icon ? (
-                      <Image
+                      <img
                         className="w-4 rounded max-w-none"
                         src={feed.icon}
                         alt={`${feed.title} icon`}
-                        layout="fill"
-                        unoptimized={true}
                       />
                     ) : (
                       <span className="flex-none min-w-4 flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
@@ -256,6 +254,7 @@ const Header: React.FC<
       </div>
     </header>
   );
+  /* eslint-enable @next/next/no-img-element */
 };
 
 const mapStateToProps = (state: InitialState) => ({
