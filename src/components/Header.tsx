@@ -73,8 +73,10 @@ const Header: React.FC<
                     {feed.icon ? (
                       <Image
                         className="w-4 rounded max-w-none"
-                        src={feed.icon as any}
+                        src={feed.icon}
                         alt={`${feed.title} icon`}
+                        layout="fill"
+                        unoptimized={true}
                       />
                     ) : (
                       <span className="flex-none min-w-4 flex items-center justify-center rounded w-4 h-4 text-center text-xs bg-black text-white dark:bg-white dark:text-black">
