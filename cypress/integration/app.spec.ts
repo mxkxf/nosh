@@ -24,3 +24,5 @@ describe('App', () => {
     cy.checkA11y();
   });
 });
+
+export {};

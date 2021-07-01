@@ -2,13 +2,14 @@ import { AppPropsType } from 'next/dist/next-server/lib/utils';
 import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';
+
 import { usePanelbear } from '../components/usePanelbear';
 
 import store from '../state/store';
 import '../styles/index.css';
 
 const WrappedApp: React.FC<AppPropsType> = ({ Component, pageProps }) => {
-  usePanelbear(process.env.NEXT_PUBLIC_PANELBEAR_SITE_ID);
+  usePanelbear(process.env.NEXT_PUBLIC_PANELBEAR_SITE_ID as string);
 
   return (
     <>
