@@ -9,7 +9,7 @@ import store from '../state/store';
 import '../styles/index.css';
 
 const WrappedApp: React.FC<AppPropsType> = ({ Component, pageProps }) => {
-  usePanelbear(process.env.NEXT_PUBLIC_PANELBEAR_SITE_ID as string);
+  usePanelbear();
 
   return (
     <>

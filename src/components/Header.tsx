@@ -12,6 +12,7 @@ import {
 import useKeyPress from './useKeyPress';
 import HeaderLink from './HeaderLink';
 import Dropdown from './Dropdown';
+import { track } from './tracker';
 
 const KEY_CODE_N = 78;
 const KEY_CODE_S = 83;
@@ -67,7 +68,10 @@ const Header: React.FC<
                 <button
                   className="md:w-full mx-1 md:mb-1 md:mx-0"
                   key={`select-feed-${i}`}
-                  onClick={() => selectFeed(i)}
+                  onClick={() => {
+                    track('FeedViewed');
+                    selectFeed(i);
+                  }}
                 >
                   <HeaderLink isSelected={selectedFeed === i}>
                     {feed.icon ? (

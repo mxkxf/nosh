@@ -8,6 +8,7 @@ import UnsubscribeFeedModal from './modals/UnsubscribeFeedModal';
 import { InitialState } from '../state/reducers';
 import Dropdown from './Dropdown';
 import Shimmer from './Shimmer';
+import { track } from './tracker';
 
 const DropdownToggle = () => (
   <span className="inline-block px-3 py-1">
@@ -147,9 +148,14 @@ const ItemList: React.FC<
 
                   return (
                     <article
-                      onClick={() =>
-                        isSelected ? deSelectItem() : viewItem(i)
-                      }
+                      onClick={() => {
+                        if (isSelected) {
+                          deSelectItem();
+                        } else {
+                          track('FeedItemViewed');
+                          viewItem(i);
+                        }
+                      }}
                       className={`transition ${
                         i > 0
                           ? 'border-t border-gray-300 dark:border-black'
