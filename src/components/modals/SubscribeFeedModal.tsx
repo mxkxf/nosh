@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { subscribeFeed, setModal } from '../../state/actions';
 import Modal from './Modal';
@@ -17,21 +16,28 @@ const examples = [
   },
 ];
 
-const SubscribeFeedModal: React.FC<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({ closeModal, error, feeds, networkStatus, subscribeFeed }) => {
+const SubscribeFeedModal = () => {
   const [url, setUrl] = React.useState('');
+  const dispatch = useDispatch();
+  const { error, feeds, networkStatus } = useSelector(
+    (state: InitialState) => ({
+      error: state.ui.error,
+      feeds: state.feeds,
+      networkStatus: state.ui.networkStatus,
+    }),
+  );
 
-  const handleSubmit = (event?: FormEvent) => {
-    if (event) {
-      event.preventDefault();
-    }
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
 
-    subscribeFeed(url);
+    dispatch(subscribeFeed(url));
   };
 
   return (
-    <Modal closeModalFunc={closeModal} title="Subscribe to a new feed">
+    <Modal
+      closeModalFunc={() => dispatch(setModal(null))}
+      title="Subscribe to a new feed"
+    >
       <div className="text-center text-2xl mb-8">
         <h1>Subscribe to a new feed</h1>
       </div>
@@ -130,15 +136,4 @@ const SubscribeFeedModal: React.FC<
   );
 };
 
-const mapStateToProps = (state: InitialState) => ({
-  error: state.ui.error,
-  feeds: state.feeds,
-  networkStatus: state.ui.networkStatus,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  subscribeFeed: (url: string) => dispatch(subscribeFeed(url)),
-  closeModal: () => dispatch(setModal(null)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SubscribeFeedModal);
+export default SubscribeFeedModal;

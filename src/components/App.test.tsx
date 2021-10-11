@@ -60,7 +60,7 @@ describe('App', () => {
       }),
     );
 
-    const { getByText, getByLabelText, debug } = render(<App />);
+    const { getByText, getByLabelText } = render(<App />);
 
     fireEvent.click(getByText('subscribe'));
     fireEvent.change(getByLabelText('Feed URL'), {
