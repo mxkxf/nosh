@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { selectItem, setModal } from '../state/actions';
 import UnsubscribeFeedModal from './modals/UnsubscribeFeedModal';
@@ -30,19 +29,21 @@ const DropdownToggle = () => (
   </span>
 );
 
-const ItemList: React.FC<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({
-  feeds,
-  items,
-  networkStatus,
-  modal,
-  openUnsubscribeModal,
-  selectedFeed,
-  selectedItem,
-  viewItem,
-  deSelectItem,
-}) => {
+const ItemList = () => {
+  const { feeds, items, networkStatus, modal, selectedFeed, selectedItem } =
+    useSelector((state: InitialState) => ({
+      networkStatus: state.ui.networkStatus,
+      modal: state.ui.modal,
+      selectedItem: state.selectedItem,
+      selectedFeed: state.selectedFeed,
+      feeds: state.feeds,
+      items:
+        state.selectedFeed !== null
+          ? state.feeds[state.selectedFeed].items
+          : [],
+    }));
+  const dispatch = useDispatch();
+
   if (selectedFeed === null) {
     return null;
   }
@@ -119,7 +120,7 @@ const ItemList: React.FC<
                     Permalink
                   </a>
                   <button
-                    onClick={() => openUnsubscribeModal()}
+                    onClick={() => dispatch(setModal('UNSUBSCRIBE'))}
                     className="text-left flex items-center w-full px-3 py-2 pr-10 transition hover:bg-gray-200 dark:hover:bg-gray-700"
                   >
                     <svg
@@ -150,10 +151,10 @@ const ItemList: React.FC<
                     <article
                       onClick={() => {
                         if (isSelected) {
-                          deSelectItem();
+                          dispatch(selectItem(null));
                         } else {
                           track('FeedItemViewed');
-                          viewItem(i);
+                          dispatch(selectItem(i));
                         }
                       }}
                       className={`transition ${
@@ -213,20 +214,4 @@ const ItemList: React.FC<
   );
 };
 
-const mapStateToProps = (state: InitialState) => ({
-  networkStatus: state.ui.networkStatus,
-  modal: state.ui.modal,
-  selectedItem: state.selectedItem,
-  selectedFeed: state.selectedFeed,
-  feeds: state.feeds,
-  items:
-    state.selectedFeed !== null ? state.feeds[state.selectedFeed].items : [],
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  viewItem: (i: number) => dispatch(selectItem(i)),
-  deSelectItem: () => dispatch(selectItem(null)),
-  openUnsubscribeModal: () => dispatch(setModal('UNSUBSCRIBE')),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ItemList);
+export default ItemList;
