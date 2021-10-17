@@ -1,9 +1,10 @@
 import React, { FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { subscribeFeed, setModal } from '../../state/actions';
+import { subscribeFeed, setModal, setError } from '../../state/actions';
 import Modal from './Modal';
 import { InitialState } from '../../state/reducers';
+import { batchActions } from 'redux-batched-actions';
 
 const examples = [
   {
@@ -35,7 +36,9 @@ const SubscribeFeedModal = () => {
 
   return (
     <Modal
-      closeModalFunc={() => dispatch(setModal(null))}
+      closeModalFunc={() => {
+        batchActions([dispatch(setError(null)), dispatch(setModal(null))]);
+      }}
       title="Subscribe to a new feed"
     >
       <div className="text-center text-2xl mb-8">
@@ -56,7 +59,7 @@ const SubscribeFeedModal = () => {
                   className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-200 underline"
                   onClick={() => {
                     setUrl(example.url);
-                    subscribeFeed(example.url);
+                    dispatch(subscribeFeed(example.url));
                   }}
                 >
                   {example.text}
