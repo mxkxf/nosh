@@ -8,7 +8,7 @@ const KEY_CODE_ESCAPE = 27;
 
 interface Props {
   children: React.ReactNode;
-  closeModalFunc: () => {};
+  closeModalFunc: () => void;
   title: string;
 }
 

@@ -128,7 +128,7 @@ export const selectItem = (index: number | null) => ({
 });
 
 export const SET_ERROR = 'SET_ERROR';
-export const setError = (error: Error) => ({
+export const setError = (error: Error | null) => ({
   type: SET_ERROR,
   error,
 });
