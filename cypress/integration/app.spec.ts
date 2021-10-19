@@ -21,9 +21,10 @@ describe('App', () => {
     cy.checkA11y();
   });
 
-  it.skip('can toggle dark mode', () => {
+  it('can toggle dark mode', () => {
     cy.get('svg[aria-label="Settings"]').click();
     cy.get('button').contains('Dark theme').click();
+    cy.wait(1000);
     cy.checkA11y();
   });
 });
