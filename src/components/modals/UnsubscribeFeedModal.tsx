@@ -1,23 +1,29 @@
 import React, { FormEvent } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Modal from './Modal';
 import { setModal, unSubscribeFeed, setFeed } from '../../state/actions';
 import { InitialState } from '../../state/reducers';
 
-const UnsubscribeFeedModal: React.FC<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({ closeModal, selectedFeed, unselectFeed, unsubscribeFeed }) => {
+const UnsubscribeFeedModal = () => {
+  const { selectedFeed } = useSelector((state: InitialState) => ({
+    selectedFeed: state.selectedFeed,
+  }));
+  const dispatch = useDispatch();
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
 
-    unselectFeed();
-    unsubscribeFeed(selectedFeed as string);
+    dispatch(setFeed(null));
+    dispatch(setModal(null));
+    dispatch(unSubscribeFeed(selectedFeed as string));
   };
 
   return (
-    <Modal closeModalFunc={() => closeModal()} title="Unsubscribe from a feed">
+    <Modal
+      closeModalFunc={() => dispatch(setModal(null))}
+      title="Unsubscribe from a feed"
+    >
       <div className="text-center">
         <h2 className="font-light text-2xl mb-8">Are you sure?</h2>
         <form method="POST" onSubmit={handleSubmit}>
@@ -35,20 +41,4 @@ const UnsubscribeFeedModal: React.FC<
   );
 };
 
-const mapStateToProps = (state: InitialState) => ({
-  selectedFeed: state.selectedFeed,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeModal: () => dispatch(setModal(null)),
-  unselectFeed: () => dispatch(setFeed(null)),
-  unsubscribeFeed: (key: string) => {
-    dispatch(setModal(null));
-    return dispatch(unSubscribeFeed(key));
-  },
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(UnsubscribeFeedModal);
+export default UnsubscribeFeedModal;

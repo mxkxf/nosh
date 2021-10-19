@@ -1,4 +1,4 @@
-import { AppPropsType } from 'next/dist/next-server/lib/utils';
+import { AppPropsType } from 'next/dist/shared/lib/utils';
 import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';

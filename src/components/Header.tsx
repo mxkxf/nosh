@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { InitialState, Themes } from '../state/reducers';
 import {
@@ -18,21 +17,25 @@ const KEY_CODE_N = 78;
 const KEY_CODE_S = 83;
 const KEY_CODE_T = 84;
 
-const Header: React.FC<
-  ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>
-> = ({
-  feeds,
-  isCollapsed,
-  modal,
-  networkStatus,
-  openAboutModal,
-  openSubscribeModal,
-  selectedFeed,
-  selectFeed,
-  theme,
-  toggleHeaderCollapse,
-  toggleTheme,
-}) => {
+const Header = () => {
+  const { feeds, isCollapsed, modal, networkStatus, selectedFeed, theme } =
+    useSelector((state: InitialState) => ({
+      feeds: state.feeds,
+      selectedFeed: state.selectedFeed,
+      modal: state.ui.modal,
+      isCollapsed: state.ui.isHeaderCollapsed,
+      theme: state.ui.theme,
+      networkStatus: state.ui.networkStatus,
+    }));
+  const dispatch = useDispatch();
+
+  const openAboutModal = () => dispatch(setModal('ABOUT'));
+  const openSubscribeModal = () => dispatch(setModal('SUBSCRIBE'));
+  const toggleHeaderCollapse = (isCollapsed: boolean) =>
+    dispatch(setHeaderCollapse(isCollapsed));
+  const toggleTheme = (theme: Themes) =>
+    dispatch(setTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT));
+
   useKeyPress(KEY_CODE_N, () => {
     if (modal !== 'SUBSCRIBE') {
       openSubscribeModal();
@@ -71,7 +74,7 @@ const Header: React.FC<
                   key={`select-feed-${i}`}
                   onClick={() => {
                     track('FeedViewed');
-                    selectFeed(i);
+                    dispatch(selectFeed(i));
                   }}
                 >
                   <HeaderLink isSelected={selectedFeed === i}>
@@ -284,23 +287,4 @@ const Header: React.FC<
   /* eslint-enable @next/next/no-img-element */
 };
 
-const mapStateToProps = (state: InitialState) => ({
-  feeds: state.feeds,
-  selectedFeed: state.selectedFeed,
-  modal: state.ui.modal,
-  isCollapsed: state.ui.isHeaderCollapsed,
-  theme: state.ui.theme,
-  networkStatus: state.ui.networkStatus,
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openAboutModal: () => dispatch(setModal('ABOUT')),
-  openSubscribeModal: () => dispatch(setModal('SUBSCRIBE')),
-  toggleHeaderCollapse: (isCollapsed: boolean) =>
-    dispatch(setHeaderCollapse(isCollapsed)),
-  selectFeed: (key: string) => dispatch(selectFeed(key)),
-  toggleTheme: (theme: Themes) =>
-    dispatch(setTheme(theme === Themes.LIGHT ? Themes.DARK : Themes.LIGHT)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default Header;
