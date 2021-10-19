@@ -42,11 +42,3 @@ jobs:
       
       - name: Test
         run: yarn test
-
-      - name: Regression
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          IFS=/ read -a REPOSITORY_PARTS <<< "$GITHUB_REPOSITORY"
-          DEPLOYMENT_URL=$(curl -H "Content-type: application/json" -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/deployments?meta-githubRepo=${REPOSITORY_PARTS[1]}&meta-githubCommitRef=$GITHUB_HEAD_REF" | jq -r '.deployments[0].url')
-          yarn cypress run --config baseUrl="https://$DEPLOYMENT_URL"
