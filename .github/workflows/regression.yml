@@ -6,6 +6,6 @@ jobs:
   regression:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/vercel-cypress@v0.1.0
+      - uses: mikefrancis/vercel-cypress@v0.1.0
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
