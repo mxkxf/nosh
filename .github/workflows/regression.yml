@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: mikefrancis/vercel-cypress@v0.1.0
+      - uses: mikefrancis/vercel-cypress@4f7b20c1d9048052b189eb0e8cc17dce44126ad2
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          repo: nosh
