@@ -7,6 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Cache Node dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache
+            **/node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
       - uses: mikefrancis/vercel-cypress@4f7b20c1d9048052b189eb0e8cc17dce44126ad2
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
