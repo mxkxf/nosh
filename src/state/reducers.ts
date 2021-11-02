@@ -19,7 +19,7 @@ export interface InitialState {
     [key: string]: Feed;
   };
   ui: {
-    error: Error | null;
+    error: string | null;
     networkStatus: NetworkStatus;
     modal: Modal | null;
     isHeaderCollapsed: boolean;

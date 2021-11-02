@@ -35,8 +35,14 @@ export const selectFeed =
         dispatch(setFeed(key)),
       ]);
     } catch (error) {
+      let message = 'Error unknown';
+
+      if (error instanceof Error) {
+        message = error.message;
+      }
+
       dispatch(setNetworkStatus('IDLE'));
-      dispatch(setError(error));
+      dispatch(setError(message));
     }
   };
 
@@ -84,9 +90,15 @@ export const subscribeFeed =
         dispatch(setModal(null)),
       ]);
     } catch (error) {
+      let message = 'Error unknown';
+
+      if (error instanceof Error) {
+        message = error.message;
+      }
+
       batchActions([
         dispatch(setNetworkStatus('IDLE')),
-        dispatch(setError(error)),
+        dispatch(setError(message)),
       ]);
     }
   };
@@ -128,7 +140,7 @@ export const selectItem = (index: number | null) => ({
 });
 
 export const SET_ERROR = 'SET_ERROR';
-export const setError = (error: Error | null) => ({
+export const setError = (error: string | null) => ({
   type: SET_ERROR,
   error,
 });

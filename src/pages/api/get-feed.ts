@@ -69,9 +69,15 @@ const handler = async (request: NextApiRequest, response: NextApiResponse) => {
         : [],
     });
   } catch (error) {
+    let message = 'Error unknown';
+
+    if (error instanceof Error) {
+      message = error.message;
+    }
+
     response.status(500);
     response.send({
-      message: error.message,
+      message,
     });
   }
 };
