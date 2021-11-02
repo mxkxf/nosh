@@ -1,32 +1,13 @@
-# This is a basic workflow to help you get started with Actions
+name: Regression
 
-name: CI
-
-# Controls when the action will run. 
-on:
-  deployment
+on: deployment
 
 jobs:
   regression:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Cache Node dependencies
-        uses: actions/cache@v2
+      - uses: mikefrancis/vercel-cypress@v1
         with:
-          path: |
-            ~/.cache
-            **/node_modules
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Regression
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          IFS=/ read -a REPOSITORY_PARTS <<< "$GITHUB_REPOSITORY"
-          DEPLOYMENT_URL=$(curl -H "Content-type: application/json" -H "Authorization: Bearer $VERCEL_TOKEN" "https://api.vercel.com/v5/deployments?meta-githubRepo=${REPOSITORY_PARTS[1]}&meta-githubCommitRef=$GITHUB_HEAD_REF" | jq -r '.deployments[0].url')
-          yarn cypress run --config baseUrl="https://$DEPLOYMENT_URL"
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          repo: nosh
