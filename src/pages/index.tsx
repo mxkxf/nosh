@@ -1,10 +1,12 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 
-const NoSSRComponent = dynamic(() => import('../components/App'), {
-  ssr: false,
-});
+import App from '../components/App';
 
-const Page = () => <NoSSRComponent />;
+const Page = () => <App />;
+
+// Force disable SSR
+Page.getInitialProps = async () => {
+  return {};
+};
 
 export default Page;
