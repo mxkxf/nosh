@@ -6,7 +6,7 @@ const Page = () => <App />;
 
 // Force disable SSR
 Page.getInitialProps = async () => {
-    return {};
-  }
+  return {};
+};
 
 export default Page;
