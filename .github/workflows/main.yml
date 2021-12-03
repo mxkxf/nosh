@@ -21,6 +21,9 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Persist workspace
         uses: actions/upload-artifact@v2
+        with:
+          name: wrkspc
+          path: /home/runner/work/nosh/nosh
   lint:
     name: Lint
     runs-on: ubuntu-latest
