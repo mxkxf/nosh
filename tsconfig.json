@@ -18,7 +18,8 @@
     "noEmit": true,
     "jsx": "preserve",
     "noUnusedLocals": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "incremental": true
   },
   "include": [
     "src",
