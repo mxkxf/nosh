@@ -41,7 +41,7 @@
     "husky": "7.0.4",
     "jest": "27.4.5",
     "lint-staged": "11.2.6",
-    "msw": "0.35.0",
+    "msw": "0.36.3",
     "postcss": "8.3.11",
     "postcss-nested": "5.0.6",
     "prettier": "2.4.1",
