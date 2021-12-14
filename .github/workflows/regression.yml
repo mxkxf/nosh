@@ -1,13 +1,28 @@
 name: Regression
 
-on: deployment
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-  regression:
+  run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: mikefrancis/vercel-cypress@v1
+      - uses: actions/checkout@master
+      - name: Cache Node dependencies
+        uses: actions/cache@v2
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          repo: nosh
+          path: |
+            ~/.cache
+            **/node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      - name: Runs Test
+        run: |
+          npm run dev & npx wait-on http://127.0.0.1:3000
+          npx cypress run
