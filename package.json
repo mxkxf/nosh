@@ -7,7 +7,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next dev",
-    "format": "prettier --list-different",
+    "format": "prettier --write src",
     "lint": "next lint",
     "prepare": "husky install",
     "test": "jest",

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 
-import { version } from '../../../package.json';
 import Modal from './Modal';
 import { setModal } from '../../state/actions';
 
@@ -27,7 +26,7 @@ const AboutModal = () => {
           nosh
         </h2>
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Version {version}
+          Version 0.1.0
         </p>
       </div>
       <div className="mb-10">
