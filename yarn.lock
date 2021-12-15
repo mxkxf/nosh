@@ -973,9 +973,9 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cypress/request@^2.88.6":
+"@cypress/request@^2.88.10":
   version "2.88.10"
-  resolved "https://registry.npmjs.org/@cypress/request/-/request-2.88.10.tgz"
+  resolved "https://registry.yarnpkg.com/@cypress/request/-/request-2.88.10.tgz#b66d76b07f860d3a4b8d7a0604d020c662752cce"
   integrity sha512-Zp7F+R93N0yZyG34GutyTNr+okam7s/Fzc1+i3kcqOP8vk6OuajuE9qZJ6Rs+10/1JFtXFYMdyarnU1rZuJesg==
   dependencies:
     aws-sign2 "~0.7.0"
@@ -2249,9 +2249,9 @@ blob-util@^2.0.2:
   resolved "https://registry.npmjs.org/blob-util/-/blob-util-2.0.2.tgz"
   integrity sha512-T7JQa+zsXXEa6/8ZhHcQEW1UFfVM49Ts65uBkFL6fz2QmrElqmbajIDJvuA0tEhRe5eIjpV9ZF+0RfZR9voJFQ==
 
-bluebird@^3.7.2:
+bluebird@3.7.2:
   version "3.7.2"
-  resolved "https://registry.npmjs.org/bluebird/-/bluebird-3.7.2.tgz"
+  resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.9:
@@ -2897,19 +2897,19 @@ cypress-axe@0.13.0:
   resolved "https://registry.npmjs.org/cypress-axe/-/cypress-axe-0.13.0.tgz"
   integrity sha512-fCIy7RiDCm7t30U3C99gGwQrUO307EYE1QqXNaf9ToK4DVqW8y5on+0a/kUHMrHdlls2rENF6TN9ZPpPpwLrnw==
 
-cypress@8.7.0:
-  version "8.7.0"
-  resolved "https://registry.npmjs.org/cypress/-/cypress-8.7.0.tgz"
-  integrity sha512-b1bMC3VQydC6sXzBMFnSqcvwc9dTZMgcaOzT0vpSD+Gq1yFc+72JDWi55sfUK5eIeNLAtWOGy1NNb6UlhMvB+Q==
+cypress@9.1.1:
+  version "9.1.1"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-9.1.1.tgz#26720ca5a22077cd85f49745616b7a08152a298f"
+  integrity sha512-yWcYD8SEQ8F3okFbRPqSDj5V0xhrZBT5QRIH+P1J2vYvtEmZ4KGciHE7LCcZZLILOrs7pg4WNCqkj/XRvReQlQ==
   dependencies:
-    "@cypress/request" "^2.88.6"
+    "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
     "@types/node" "^14.14.31"
     "@types/sinonjs__fake-timers" "^6.0.2"
     "@types/sizzle" "^2.3.2"
     arch "^2.2.0"
     blob-util "^2.0.2"
-    bluebird "^3.7.2"
+    bluebird "3.7.2"
     cachedir "^2.3.0"
     chalk "^4.1.0"
     check-more-types "^2.24.0"
@@ -2937,7 +2937,6 @@ cypress@8.7.0:
     ospath "^1.2.2"
     pretty-bytes "^5.6.0"
     proxy-from-env "1.0.0"
-    ramda "~0.27.1"
     request-progress "^3.0.0"
     supports-color "^8.1.1"
     tmp "~0.2.1"
@@ -6184,11 +6183,6 @@ quick-lru@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
-
-ramda@~0.27.1:
-  version "0.27.1"
-  resolved "https://registry.npmjs.org/ramda/-/ramda-0.27.1.tgz"
-  integrity sha512-PgIdVpn5y5Yns8vqb8FzBUEYn98V3xcPgawAkkgj0YJ0qDsnHCiNmZYfOGMgOvoB0eWFLpYbhxUR3mxfDIMvpw==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
