@@ -45,7 +45,7 @@
     "msw": "0.36.3",
     "postcss": "8.4.5",
     "postcss-nested": "5.0.6",
-    "prettier": "2.4.1",
+    "prettier": "2.5.1",
     "redux-logger": "3.0.6",
     "tailwindcss": "2.2.19",
     "ts-jest": "^27.1.1",
