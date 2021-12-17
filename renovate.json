@@ -2,15 +2,24 @@
   "extends": [
     "config:base"
   ],
+  "timezone": "Europe/London",
+  "schedule": [
+    "before 3am on sunday"
+  ],
   "packageRules": [
     {
+      "matchPackagePatterns": [
+        "*"
+      ],
       "matchUpdateTypes": [
         "minor",
         "patch",
         "pin",
         "digest"
       ],
-      "automerge": true
+      "automerge": true,
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
     },
     {
       "matchDepTypes": [
