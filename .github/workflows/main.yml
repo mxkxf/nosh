@@ -30,15 +30,15 @@ jobs:
           path: |
             ~/.cache
             **/node_modules
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Lint
         run: |
-          yarn format
-          yarn lint
+          npm run format
+          npm run lint
 
       - name: Test
-        run: yarn test
+        run: npm test
