@@ -11,8 +11,8 @@ const Onboarding = () => {
       <div className="m-auto p-10 text-center max-w-md">
         <h1 className="text-2xl mb-4">
           Welcome{' '}
-          <span role="img" aria-label="Wave">
-            👋
+          <span role="img" aria-label="Rocket">
+            🚀
           </span>
         </h1>
         <p className="mb-4">
