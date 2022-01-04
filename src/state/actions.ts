@@ -17,12 +17,6 @@ export const selectFeed =
   async (dispatch: Dispatch, getState: () => InitialState) => {
     batchActions([dispatch(selectItem(null)), dispatch(setFeed(key))]);
 
-    if (!window.navigator?.onLine) {
-      dispatch(setNetworkStatus('OFFLINE'));
-
-      return;
-    }
-
     try {
       dispatch(setNetworkStatus('FETCHING'));
 
