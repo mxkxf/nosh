@@ -39,7 +39,7 @@
     "cypress-axe": "0.14.0",
     "eslint": "8.20.0",
     "eslint-config-next": "12.2.2",
-    "husky": "7.0.4",
+    "husky": "8.0.1",
     "jest": "27.5.1",
     "lint-staged": "12.5.0",
     "msw": "0.44.2",
