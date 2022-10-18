@@ -44,7 +44,7 @@
     "lint-staged": "13.0.3",
     "msw": "0.44.2",
     "postcss": "8.4.14",
-    "postcss-nested": "5.0.6",
+    "postcss-nested": "6.0.0",
     "prettier": "2.7.1",
     "redux-logger": "3.0.6",
     "tailwindcss": "3.1.6",
