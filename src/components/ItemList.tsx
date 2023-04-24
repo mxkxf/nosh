@@ -7,7 +7,6 @@ import UnsubscribeFeedModal from './modals/UnsubscribeFeedModal';
 import { InitialState } from '../state/reducers';
 import Dropdown from './Dropdown';
 import Shimmer from './Shimmer';
-import { track } from './tracker';
 
 const DropdownToggle = () => (
   <span className="inline-block px-3 py-1">
@@ -153,7 +152,6 @@ const ItemList = () => {
                         if (isSelected) {
                           dispatch(selectItem(null));
                         } else {
-                          track('FeedItemViewed');
                           dispatch(selectItem(i));
                         }
                       }}
