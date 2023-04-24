@@ -3,14 +3,10 @@ import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';
 
-import { usePanelbear } from '../components/usePanelbear';
-
 import store from '../state/store';
 import '../styles/index.css';
 
 const WrappedApp: React.FC<AppPropsType> = ({ Component, pageProps }) => {
-  usePanelbear();
-
   return (
     <>
       <Head>
