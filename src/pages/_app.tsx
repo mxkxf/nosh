@@ -1,4 +1,5 @@
 import { AppPropsType } from 'next/dist/shared/lib/utils';
+import { Analytics } from '@vercel/analytics/react';
 import Head from 'next/head';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -28,6 +29,7 @@ const WrappedApp: React.FC<AppPropsType> = ({ Component, pageProps }) => {
       <Provider store={store}>
         <Component {...pageProps} />
       </Provider>
+      <Analytics />
     </>
   );
 };
