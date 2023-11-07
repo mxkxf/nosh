@@ -11,17 +11,13 @@ jobs:
   regression:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: Cache Node dependencies
-        uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
-          path: |
-            ~/.cache
-            **/node_modules
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          node-version: 18
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
       - name: Runs Test
         run: |
           npm run dev & npx wait-on http://127.0.0.1:3000

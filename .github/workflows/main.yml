@@ -22,23 +22,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Cache Node dependencies
-        uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
         with:
-          path: |
-            ~/.cache
-            **/node_modules
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+          node-version: 18
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Lint
         run: |
-          yarn format
-          yarn lint
+          npm run format
+          npm run lint
 
       - name: Test
-        run: yarn test
+        run: npm run test

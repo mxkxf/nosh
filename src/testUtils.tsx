@@ -1,5 +1,5 @@
 import { render as rtlRender } from '@testing-library/react';
-import React from 'react';
+import React, { PropsWithChildren, ReactElement } from 'react';
 import { createStore, Store, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -15,14 +15,14 @@ type RenderProps = {
 };
 
 function render(
-  ui: React.ReactElement,
+  ui: ReactElement,
   {
     initialState = reducerInitialState,
     store = createStore(reducers, initialState, applyMiddleware(thunk)),
     ...renderOptions
   }: RenderProps = {},
 ) {
-  const Wrapper: React.FC = ({ children }) => {
+  const Wrapper = ({ children }: PropsWithChildren) => {
     return <Provider store={store}>{children}</Provider>;
   };
 
