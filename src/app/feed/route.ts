@@ -73,6 +73,7 @@ export async function GET(request: NextRequest) {
             author: item.author,
             pubDate: item.pubDate,
             content: item.content,
+            read: false,
           }))
         : [],
     });

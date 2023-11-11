@@ -1,5 +1,7 @@
 {
-  "name": "noshy",
+  "name": "@mikefrancis/nosh",
+  "license": "MIT",
+  "description": "Modern RSS reader",
   "version": "0.1.0",
   "private": true,
   "scripts": {

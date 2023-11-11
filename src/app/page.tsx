@@ -6,7 +6,7 @@ import { Navigation } from "@/components/Navigation";
 
 const Page = () => {
   return (
-    <div className="flex h-screen text-black dark:text-white">
+    <div className="flex h-screen">
       <Navigation />
       <FeedItems />
       <ItemDisplay />
