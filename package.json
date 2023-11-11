@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.0.0",
-    "axios": "0.27.2",
+    "axios": "1.6.0",
     "dayjs": "1.11.4",
     "next": "12.2.4",
     "next-pwa": "5.5.4",
