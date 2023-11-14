@@ -4,8 +4,7 @@ import { useToast } from "./ui/use-toast";
 import { ExternalLink, Mail, MailOpen, Share } from "lucide-react";
 
 export const ItemDisplay = () => {
-  const { feeds, selectedFeedIndex, selectedItemIndex, readItem, unreadItem } =
-    useFeeds();
+  const { feeds, selectedFeedIndex, selectedItemIndex, readItem } = useFeeds();
   const { toast } = useToast();
   const selectedItem =
     typeof selectedFeedIndex !== "undefined" &&
@@ -28,7 +27,7 @@ export const ItemDisplay = () => {
   };
 
   return (
-    <div className="border-l dark:border-zinc-700 bg-white dark:bg-zinc-800 w-2/4 overflow-auto relative">
+    <article className="border-l dark:border-zinc-700 bg-white dark:bg-zinc-800 w-2/4 overflow-auto relative">
       {selectedItem ? (
         <>
           <ul className="sticky top-0 bg-white dark:bg-zinc-800 px-5 py-2 flex items-center justify-end space-x-5 border-b dark:border-zinc-700">
@@ -36,16 +35,16 @@ export const ItemDisplay = () => {
               {selectedItem.read ? (
                 <button
                   className="block hover:opacity-75"
-                  onClick={() => unreadItem(selectedItemIndex as number)}
+                  onClick={() => readItem(selectedItemIndex as number, false)}
                 >
-                  <MailOpen className="w-5 h-5" />
+                  <MailOpen className="w-5 h-5" aria-label="Mark as unread" />
                 </button>
               ) : (
                 <button
                   className="block hover:opacity-75"
-                  onClick={() => readItem(selectedItemIndex as number)}
+                  onClick={() => readItem(selectedItemIndex as number, true)}
                 >
-                  <Mail className="w-5 h-5" />
+                  <Mail className="w-5 h-5" aria-label="Mark as read" />
                 </button>
               )}
             </li>
@@ -56,12 +55,15 @@ export const ItemDisplay = () => {
                 target="_blank"
                 rel="noopener"
               >
-                <ExternalLink className="w-5 h-5" />
+                <ExternalLink
+                  className="w-5 h-5"
+                  aria-label="Visit external link"
+                />
               </a>
             </li>
             <li>
               <button className="block hover:opacity-75" onClick={handleShare}>
-                <Share className="w-5 h-5" />
+                <Share className="w-5 h-5" aria-label="Share article" />
               </button>
             </li>
           </ul>
@@ -89,6 +91,6 @@ export const ItemDisplay = () => {
           ) : null}
         </div>
       )}
-    </div>
+    </article>
   );
 };

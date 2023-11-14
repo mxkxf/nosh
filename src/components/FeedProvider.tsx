@@ -28,8 +28,8 @@ const FeedContext = createContext<
     selectFeed: (index: number) => void;
     deleteFeed: (index: number) => void;
     selectItem: (index: number) => void;
-    readItem: (index: number) => void;
-    unreadItem: (index: number) => void;
+    readItem: (index: number, read: boolean) => void;
+    readAllItems: (index: number, read: boolean) => void;
     addFeed: (feed: Feed) => void;
     updateFeed: (index: number, feed: Feed) => void;
   }
@@ -41,7 +41,7 @@ const FeedContext = createContext<
   selectedItemIndex: undefined,
   selectItem: (_index) => {},
   readItem: (_index) => {},
-  unreadItem: (_index) => {},
+  readAllItems: (_index, _read) => {},
   addFeed: (_feed) => {},
   updateFeed: (_index, _feed) => {},
 });
@@ -72,16 +72,22 @@ type Action =
       type: "TOGGLE_READ_ITEM";
       index: number;
       read: boolean;
+    }
+  | {
+      type: "TOGGLE_READ_ALL_ITEMS";
+      index: number;
+      read: boolean;
     };
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
-    case "SELECT_FEED":
+    case "SELECT_FEED": {
       return {
         ...state,
         selectedFeedIndex: action.index,
       };
-    case "SELECT_ITEM":
+    }
+    case "SELECT_ITEM": {
       if (typeof state.selectedFeedIndex === "undefined") {
         throw new Error("Selected feed is not set");
       }
@@ -90,42 +96,51 @@ function reducer(state: State, action: Action) {
         ...state,
         selectedItemIndex: action.index,
       };
-
-    case "ADD_FEED":
-      const merged = [...state.feeds, action.feed];
-      const index = merged.length - 1;
+    }
+    case "ADD_FEED": {
+      const newFeeds = [...state.feeds, action.feed];
+      const index = newFeeds.length - 1;
 
       return {
         ...state,
-        feeds: merged,
+        feeds: newFeeds,
         selectedFeedIndex: index,
       };
+    }
+    case "UPDATE_FEED": {
+      let newFeeds = [...state.feeds];
 
-    case "UPDATE_FEED":
-      return {
-        ...state,
-        feeds: state.feeds.map((feed, i) => {
-          if (i !== action.index) {
-            return feed;
-          }
+      newFeeds[action.index] = {
+        ...newFeeds[action.index],
+        items: action.feed.items.map((newItem) => {
+          const existingRead = newFeeds[action.index].items.find(
+            (item) => item.link === newItem.link
+          )?.read;
 
-          return action.feed;
+          return {
+            ...newItem,
+            read: existingRead || false,
+          };
         }),
-        selectedFeedIndex: action.index,
       };
 
-    case "DELETE_FEED":
-      const spliced = [...state.feeds];
+      return {
+        ...state,
+        feeds: newFeeds,
+      };
+    }
+    case "DELETE_FEED": {
+      const newFeeds = [...state.feeds];
 
-      spliced.splice(action.index, 1);
+      newFeeds.splice(action.index, 1);
 
       return {
         ...state,
-        feeds: spliced,
+        feeds: newFeeds,
         selectedFeedIndex: undefined,
       };
-
-    case "TOGGLE_READ_ITEM":
+    }
+    case "TOGGLE_READ_ITEM": {
       if (
         typeof state.selectedFeedIndex === "undefined" ||
         typeof state.selectedItemIndex === "undefined"
@@ -133,28 +148,38 @@ function reducer(state: State, action: Action) {
         throw new Error("Selected feed is not set");
       }
 
+      let newFeeds = [...state.feeds];
+      let newItems = newFeeds[state.selectedFeedIndex].items;
+      newItems[action.index] = {
+        ...newItems[action.index],
+        read: action.read,
+      };
+      newFeeds[state.selectedFeedIndex] = {
+        ...newFeeds[state.selectedFeedIndex],
+        items: newItems,
+      };
+
       return {
         ...state,
-        feeds: state.feeds.map((feed, f) => {
-          if (state.selectedFeedIndex !== f) {
-            return feed;
-          }
-
-          return {
-            ...feed,
-            items: feed.items.map((item, i) => {
-              if (action.index !== i) {
-                return item;
-              }
-
-              return {
-                ...item,
-                read: action.read,
-              };
-            }),
-          };
-        }),
+        feeds: newFeeds,
       };
+    }
+    case "TOGGLE_READ_ALL_ITEMS": {
+      let newFeeds = [...state.feeds];
+
+      newFeeds[action.index] = {
+        ...newFeeds[action.index],
+        items: newFeeds[action.index].items.map((item) => ({
+          ...item,
+          read: action.read,
+        })),
+      };
+
+      return {
+        ...state,
+        feeds: newFeeds,
+      };
+    }
     default:
       return state;
   }
@@ -180,6 +205,7 @@ function initialiser(initialState: State) {
 function useReducerWithMiddleware(
   reducer: (state: State, action: Action) => State,
   initialState: State,
+  initialiser: (initialState: State) => State,
   middlewareFns: Array<{ (action: Action, state: State): void }> = [],
   afterwareFns: Array<{ (action: Action, state: State): void }> = []
 ): [State, Dispatch<Action>] {
@@ -222,6 +248,7 @@ export const FeedProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducerWithMiddleware(
     reducer,
     initialState,
+    initialiser,
     [],
     [persistLocalStorage]
   );
@@ -240,10 +267,11 @@ export const FeedProvider = ({ children }: PropsWithChildren) => {
   const updateFeed = (index: number, feed: Feed) =>
     dispatch({ type: "UPDATE_FEED", index, feed });
 
-  const readItem = (index: number) =>
-    dispatch({ type: "TOGGLE_READ_ITEM", index, read: true });
-  const unreadItem = (index: number) =>
-    dispatch({ type: "TOGGLE_READ_ITEM", index, read: false });
+  const readItem = (index: number, read: boolean) =>
+    dispatch({ type: "TOGGLE_READ_ITEM", index, read });
+
+  const readAllItems = (index: number, read: boolean) =>
+    dispatch({ type: "TOGGLE_READ_ALL_ITEMS", index, read });
 
   return (
     <FeedContext.Provider
@@ -255,7 +283,7 @@ export const FeedProvider = ({ children }: PropsWithChildren) => {
         updateFeed,
         deleteFeed,
         readItem,
-        unreadItem,
+        readAllItems,
       }}
     >
       {children}

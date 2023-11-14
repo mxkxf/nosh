@@ -15,9 +15,10 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Loader, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react";
+import { Loader, Mail, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react";
 
 export const FeedItems = () => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -28,6 +29,7 @@ export const FeedItems = () => {
     deleteFeed,
     updateFeed,
     readItem,
+    readAllItems,
   } = useFeeds();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -87,6 +89,13 @@ export const FeedItems = () => {
                 <RefreshCw className="mr-2 h-4 w-4" />
                 Refresh
               </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => readAllItems(selectedFeedIndex, true)}
+              >
+                <Mail className="mr-2 h-4 w-4" />
+                Mark all as read
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
                 <DialogTrigger>
                   <Trash2 className="mr-2 h-4 w-4" />
@@ -116,7 +125,7 @@ export const FeedItems = () => {
             className="relative group hover:bg-zinc-50 dark:hover:bg-zinc-900 border-b dark:border-zinc-700 p-4 pl-10"
             onClick={() => {
               selectItem(i);
-              readItem(i);
+              readItem(i, true);
             }}
           >
             {!item.read ? (
