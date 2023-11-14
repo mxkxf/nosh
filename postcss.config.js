@@ -1,3 +1,6 @@
 module.exports = {
-  plugins: ['tailwindcss/nesting', 'tailwindcss'],
-};
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
