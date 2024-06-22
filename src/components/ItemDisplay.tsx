@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import { useFeeds } from "./FeedProvider";
 import { useToast } from "./ui/use-toast";
 import { ExternalLink, Mail, MailOpen, Share } from "lucide-react";
+import { Button } from "./ui/button";
 
 export const ItemDisplay = () => {
   const { feeds, selectedFeedIndex, selectedItemIndex, readItem } = useFeeds();
@@ -26,71 +27,60 @@ export const ItemDisplay = () => {
     }
   };
 
-  return (
-    <article className="border-l dark:border-zinc-700 bg-white dark:bg-zinc-800 w-2/4 overflow-auto relative">
-      {selectedItem ? (
-        <>
-          <ul className="sticky top-0 bg-white dark:bg-zinc-800 px-5 py-2 flex items-center justify-end space-x-5 border-b dark:border-zinc-700">
-            <li>
-              {selectedItem.read ? (
-                <button
-                  className="block hover:opacity-75"
-                  onClick={() => readItem(selectedItemIndex as number, false)}
-                >
-                  <MailOpen className="w-5 h-5" aria-label="Mark as unread" />
-                </button>
-              ) : (
-                <button
-                  className="block hover:opacity-75"
-                  onClick={() => readItem(selectedItemIndex as number, true)}
-                >
-                  <Mail className="w-5 h-5" aria-label="Mark as read" />
-                </button>
-              )}
-            </li>
-            <li>
-              <a
-                className="block hover:opacity-75"
-                href={selectedItem.link}
-                target="_blank"
-                rel="noopener"
-              >
-                <ExternalLink
-                  className="w-5 h-5"
-                  aria-label="Visit external link"
-                />
-              </a>
-            </li>
-            <li>
-              <button className="block hover:opacity-75" onClick={handleShare}>
-                <Share className="w-5 h-5" aria-label="Share article" />
-              </button>
-            </li>
-          </ul>
-          <header className="border-b dark:border-zinc-700 p-5 space-y-3">
-            <h1 className="text-4xl leading-normal">{selectedItem.title}</h1>
-            <span className="text-zinc-500 dark:text-zinc-400 block">
-              {selectedItem.author}
-            </span>
-            <span className="text-xs text-zinc-500 dark:text-zinc-400 block">
-              {dayjs(selectedItem.pubDate).format("D MMM, YYYY")}
-            </span>
-          </header>
-          <main className="p-5 prose lg:prose-xl text-black dark:text-white">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: selectedItem.content,
-              }}
-            ></div>
-          </main>
-        </>
-      ) : (
-        <div className="flex items-center justify-center w-full h-full">
-          {selectedFeedIndex ? (
-            <span className="text-2xl opacity-25">Pick an item</span>
-          ) : null}
-        </div>
-      )}
+  return selectedItem ? (
+    <article className="h-screen overflow-auto">
+      <ul className="sticky top-0 px-5 py-2 flex items-center justify-end border-b dark:border-slate-800">
+        <li>
+          {selectedItem.read ? (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => readItem(selectedItemIndex as number, false)}
+            >
+              <MailOpen className="w-4 h-4" aria-label="Mark as unread" />
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => readItem(selectedItemIndex as number, true)}
+            >
+              <Mail className="w-4 h-4" aria-label="Mark as read" />
+            </Button>
+          )}
+        </li>
+        <li>
+          <Button asChild variant="ghost" size="icon">
+            <a href={selectedItem.link} target="_blank" rel="noopener">
+              <ExternalLink
+                className="w-4 h-4"
+                aria-label="Visit external link"
+              />
+            </a>
+          </Button>
+        </li>
+        <li>
+          <Button variant="ghost" size="icon" onClick={handleShare}>
+            <Share className="w-4 h-4" aria-label="Share article" />
+          </Button>
+        </li>
+      </ul>
+      <header className="border-b dark:border-slate-800 p-5 space-y-3">
+        <h1 className="text-4xl leading-normal">{selectedItem.title}</h1>
+        <span className="block text-slate-600 dark:text-slate-400">
+          {selectedItem.author}
+        </span>
+        <span className="text-xs block text-slate-600 dark:text-slate-400">
+          {dayjs(selectedItem.pubDate).format("D MMM, YYYY")}
+        </span>
+      </header>
+      <main className="p-5 prose lg:prose-xl text-black dark:text-white">
+        <div
+          dangerouslySetInnerHTML={{
+            __html: selectedItem.content,
+          }}
+        ></div>
+      </main>
     </article>
-  );
+  ) : null;
 };

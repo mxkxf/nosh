@@ -1,11 +1,9 @@
-import { Inter } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import { FeedProvider } from "@/components/FeedProvider";
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
 import { PropsWithChildren } from "react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nosh",
@@ -14,7 +12,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
-      <body className={`${inter.className} text-black dark:text-white`}>
+      <body
+        className={`${GeistSans.className} text-black dark:text-white antialiased`}
+      >
         <FeedProvider>{children}</FeedProvider>
         <Toaster />
       </body>
