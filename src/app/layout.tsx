@@ -1,12 +1,15 @@
 import { GeistSans } from "geist/font/sans";
+import { PropsWithChildren } from "react";
+import { Metadata } from "next";
+
 import "./globals.css";
+
 import { FeedProvider } from "@/components/FeedProvider";
 import { Toaster } from "@/components/ui/toaster";
-import { Metadata } from "next";
-import { PropsWithChildren } from "react";
 
 export const metadata: Metadata = {
   title: "Nosh",
+  description: "Modern RSS reader",
 };
 
 export default function RootLayout({ children }: PropsWithChildren) {

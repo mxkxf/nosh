@@ -52,11 +52,15 @@ export async function GET(request: NextRequest) {
     const iconUrl = `https://${urlParts.hostname}/favicon.ico`;
 
     try {
-      await fetch(iconUrl);
+      const response = await fetch(iconUrl);
+
+      if (response.status !== 200) {
+        throw new Error("Could not get icon");
+      }
 
       icon = iconUrl;
     } catch (error) {
-      //
+      console.log("Error getting icon", error);
     }
 
     return NextResponse.json({

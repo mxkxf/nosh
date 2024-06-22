@@ -1,14 +1,14 @@
 import dayjs from "dayjs";
-import { useFeeds } from "./FeedProvider";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "./ui/dialog";
+  Loader2,
+  Mail,
+  MoreHorizontal,
+  RefreshCw,
+  Rss,
+  Trash2,
+} from "lucide-react";
+
+import { useFeeds } from "./FeedProvider";
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
@@ -19,7 +19,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Loader, Mail, MoreHorizontal, RefreshCw, Trash2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 export const FeedItems = () => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -77,19 +87,22 @@ export const FeedItems = () => {
 
   return (
     <div className="h-screen overflow-auto">
-      <div className="sticky top-0 z-10 pl-10 pr-2 py-2 space-x-5 flex items-center bg-white dark:bg-gray-700 border-b dark:border-slate-800">
-        <div className="flex-1">
-          {loading ? (
-            <Loader className="absolute left-4 top-5 animate-spin h-4 w-4" />
-          ) : null}
-          <h2 className="line-clamp-1 font-bold">
-            {feeds[selectedFeedIndex].title}
-          </h2>
-        </div>
-        <Dialog open={isDeleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+      <div className="sticky top-0 z-10 pl-3 pr-2 py-2 space-x-3 flex items-center justify-between bg-white dark:bg-gray-700 border-b dark:border-slate-800">
+        {loading ? (
+          <Loader2 className="animate-spin h-4 w-4" />
+        ) : (
+          <Rss className="h-4 w-4" />
+        )}
+        <h2 className="flex-1 line-clamp-1 font-bold">
+          {feeds[selectedFeedIndex].title}
+        </h2>
+        <AlertDialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setDeleteDialogOpen}
+        >
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="h-8 w-8">
                 <MoreHorizontal className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -106,25 +119,28 @@ export const FeedItems = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <DialogTrigger className="w-full">
+                <AlertDialogTrigger className="w-full">
                   <Trash2 className="mr-2 h-4 w-4" />
                   <span>Unsubscribe</span>
-                </DialogTrigger>
+                </AlertDialogTrigger>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Unsubscribe from feed</DialogTitle>
-            </DialogHeader>
-            <p>This action cannot be undone.</p>
-            <DialogFooter>
-              <Button variant="destructive" onClick={handleDelete}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Unsubscribe from feed</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleDelete}>
                 Confirm
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
       <ul>
         {feeds[selectedFeedIndex].items.map((item, i) => (

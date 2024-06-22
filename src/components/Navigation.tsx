@@ -10,10 +10,9 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Input } from "./ui/input";
-import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { FormEvent, useState } from "react";
-import { Loader, PlusCircle } from "lucide-react";
+import { Loader2, PlusCircle } from "lucide-react";
 
 const randomFeeds = [
   "https://smashingmagazine.com/feed",
@@ -30,7 +29,9 @@ const randomFeeds = [
 export const Navigation = () => {
   const { toast } = useToast();
   const { feeds, selectFeed, selectedFeedIndex, addFeed } = useFeeds();
-  const [isAddFeedDialogOpen, setAddFeedDialogOpen] = useState(false);
+  const [isAddFeedDialogOpen, setAddFeedDialogOpen] = useState(
+    feeds.length === 0
+  );
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
 
@@ -106,13 +107,19 @@ export const Navigation = () => {
                     : "ghost"
                 }
               >
-                <Image
-                  className="rounded w-4 h-4"
-                  src={feed.icon}
-                  alt={feed.title}
-                  width={24}
-                  height={24}
-                />
+                {feed.icon ? (
+                  <Image
+                    className="rounded w-4 h-4"
+                    src={feed.icon}
+                    alt={feed.title}
+                    width={24}
+                    height={24}
+                  />
+                ) : (
+                  <span className="bg-slate-500 flex items-center justify-center text-xs rounded w-4 h-4">
+                    {feed.title[0]}
+                  </span>
+                )}
                 <span className="flex-1 text-left line-clamp-1">
                   {feed.title}
                 </span>
@@ -148,9 +155,9 @@ export const Navigation = () => {
                 />
               </fieldset>
               <DialogFooter>
-                <Button disabled={loading || url.trim() === ""} type="submit">
+                <Button disabled={loading} type="submit">
                   {loading ? (
-                    <Loader className="animate-spin mr-2 h-4 w-4" />
+                    <Loader2 className="animate-spin mr-2 h-4 w-4" />
                   ) : null}
                   Subscribe
                 </Button>

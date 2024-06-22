@@ -33,6 +33,7 @@ export const ItemDisplay = () => {
         <li>
           {selectedItem.read ? (
             <Button
+              className="h-8 w-8"
               variant="ghost"
               size="icon"
               onClick={() => readItem(selectedItemIndex as number, false)}
@@ -41,6 +42,7 @@ export const ItemDisplay = () => {
             </Button>
           ) : (
             <Button
+              className="h-8 w-8"
               variant="ghost"
               size="icon"
               onClick={() => readItem(selectedItemIndex as number, true)}
@@ -50,7 +52,7 @@ export const ItemDisplay = () => {
           )}
         </li>
         <li>
-          <Button asChild variant="ghost" size="icon">
+          <Button asChild className="h-8 w-8" variant="ghost" size="icon">
             <a href={selectedItem.link} target="_blank" rel="noopener">
               <ExternalLink
                 className="w-4 h-4"
@@ -60,7 +62,12 @@ export const ItemDisplay = () => {
           </Button>
         </li>
         <li>
-          <Button variant="ghost" size="icon" onClick={handleShare}>
+          <Button
+            className="h-8 w-8"
+            variant="ghost"
+            size="icon"
+            onClick={handleShare}
+          >
             <Share className="w-4 h-4" aria-label="Share article" />
           </Button>
         </li>
