@@ -4,6 +4,7 @@ import { useToast } from "./ui/use-toast";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -85,7 +86,7 @@ export const Navigation = () => {
   };
 
   return (
-    <nav className="w-1/4 bg-zinc-100 dark:bg-zinc-700 p-2 overflow-auto">
+    <nav className="p-2 h-screen overflow-auto">
       <ul className="space-y-1">
         {feeds.map((feed, i) => {
           const unreadCount = feed.items.reduce(
@@ -94,33 +95,31 @@ export const Navigation = () => {
           );
 
           return (
-            <li key={`feed-${i}`} className="flex justify-between items-center">
-              <button
-                className={`py-3 px-4 rounded w-full flex items-center ${
+            <li key={`feed-${i}`}>
+              <Button
+                className="w-full"
+                onClick={() => selectFeed(i)}
+                variant={
                   typeof selectedFeedIndex !== "undefined" &&
                   feeds[selectedFeedIndex]?.url === feed.url
-                    ? "bg-zinc-200 dark:bg-zinc-800"
-                    : "hover:bg-zinc-200/25 dark:hover:bg-zinc-900/25"
-                }`}
-                type="button"
-                onClick={() => selectFeed(i)}
+                    ? "default"
+                    : "ghost"
+                }
               >
                 <Image
-                  className="shrink-0 rounded w-5 h-5"
+                  className="rounded mr-2 w-4 h-4"
                   src={feed.icon}
                   alt={feed.title}
                   width={24}
                   height={24}
                 />
-                <span className="flex-1 text-left mx-3 line-clamp-1">
+                <span className="flex-1 text-left line-clamp-1">
                   {feed.title}
                 </span>
                 {unreadCount > 0 ? (
-                  <span className="ml-auto bg-zinc-200 dark:bg-zinc-900 rounded-full p-2 py-1 text-xs">
-                    {unreadCount}
-                  </span>
+                  <span className="">{unreadCount}</span>
                 ) : null}
-              </button>
+              </Button>
             </li>
           );
         })}
@@ -130,14 +129,10 @@ export const Navigation = () => {
             onOpenChange={setAddFeedDialogOpen}
           >
             <DialogTrigger asChild>
-              <button
-                className="py-3 px-4 rounded w-full flex items-center hover:bg-zinc-200/25 dark:hover:bg-zinc-900/25"
-                type="button"
-              >
-                <PlusCircle className="shrink-0 w-5 h-5" />
-
-                <span className="mx-3 line-clamp-1">New feed</span>
-              </button>
+              <Button className="w-full" variant="ghost">
+                <PlusCircle className="mr-2 w-4 h-4" />
+                <span className="flex-1 text-left">New feed</span>
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -145,28 +140,30 @@ export const Navigation = () => {
               </DialogHeader>
               <form className="grid gap-5" onSubmit={handleSubmit}>
                 <fieldset>
-                  <Label htmlFor="url">URL</Label>
                   <Input
                     required
                     disabled={loading}
                     id="url"
                     name="url"
                     onChange={(e) => setUrl(e.target.value)}
+                    placeholder="URL"
                   />
                 </fieldset>
-                <Button disabled={loading || url.trim() === ""} type="submit">
-                  {loading ? (
-                    <Loader className="animate-spin-slow mr-2 h-5 w-5" />
-                  ) : null}
-                  Subscribe
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={handleRandom}
-                  type="button"
-                >
-                  I&apos;m feeling lucky!
-                </Button>
+                <DialogFooter>
+                  <Button disabled={loading || url.trim() === ""} type="submit">
+                    {loading ? (
+                      <Loader className="animate-spin mr-2 h-4 w-4" />
+                    ) : null}
+                    Subscribe
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={handleRandom}
+                    type="button"
+                  >
+                    Add random feed
+                  </Button>
+                </DialogFooter>
               </form>
             </DialogContent>
           </Dialog>
