@@ -86,8 +86,8 @@ export const Navigation = () => {
   };
 
   return (
-    <nav className="p-2 h-screen overflow-auto">
-      <ul className="space-y-1">
+    <nav className="h-screen overflow-auto flex flex-col">
+      <ul className="p-2 space-y-1 flex-1">
         {feeds.map((feed, i) => {
           const unreadCount = feed.items.reduce(
             (prev, current) => prev + (current.read ? 0 : 1),
@@ -97,7 +97,7 @@ export const Navigation = () => {
           return (
             <li key={`feed-${i}`}>
               <Button
-                className="w-full"
+                className="w-full space-x-2"
                 onClick={() => selectFeed(i)}
                 variant={
                   typeof selectedFeedIndex !== "undefined" &&
@@ -107,7 +107,7 @@ export const Navigation = () => {
                 }
               >
                 <Image
-                  className="rounded mr-2 w-4 h-4"
+                  className="rounded w-4 h-4"
                   src={feed.icon}
                   alt={feed.title}
                   width={24}
@@ -117,58 +117,55 @@ export const Navigation = () => {
                   {feed.title}
                 </span>
                 {unreadCount > 0 ? (
-                  <span className="">{unreadCount}</span>
+                  <span className="text-xs">{unreadCount}</span>
                 ) : null}
               </Button>
             </li>
           );
         })}
-        <li>
-          <Dialog
-            open={isAddFeedDialogOpen}
-            onOpenChange={setAddFeedDialogOpen}
-          >
-            <DialogTrigger asChild>
-              <Button className="w-full" variant="ghost">
-                <PlusCircle className="mr-2 w-4 h-4" />
-                <span className="flex-1 text-left">New feed</span>
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Subscribe to new feed</DialogTitle>
-              </DialogHeader>
-              <form className="grid gap-5" onSubmit={handleSubmit}>
-                <fieldset>
-                  <Input
-                    required
-                    disabled={loading}
-                    id="url"
-                    name="url"
-                    onChange={(e) => setUrl(e.target.value)}
-                    placeholder="URL"
-                  />
-                </fieldset>
-                <DialogFooter>
-                  <Button disabled={loading || url.trim() === ""} type="submit">
-                    {loading ? (
-                      <Loader className="animate-spin mr-2 h-4 w-4" />
-                    ) : null}
-                    Subscribe
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={handleRandom}
-                    type="button"
-                  >
-                    Add random feed
-                  </Button>
-                </DialogFooter>
-              </form>
-            </DialogContent>
-          </Dialog>
-        </li>
       </ul>
+      <div className="border-t dark:border-slate-800 p-2">
+        <Dialog open={isAddFeedDialogOpen} onOpenChange={setAddFeedDialogOpen}>
+          <DialogTrigger asChild>
+            <Button className="w-full" variant="ghost">
+              <PlusCircle className="mr-2 w-4 h-4" />
+              <span className="flex-1 text-left">New feed</span>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Subscribe to new feed</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit}>
+              <fieldset className="mb-5">
+                <Input
+                  required
+                  disabled={loading}
+                  id="url"
+                  name="url"
+                  onChange={(e) => setUrl(e.target.value)}
+                  placeholder="URL"
+                />
+              </fieldset>
+              <DialogFooter>
+                <Button disabled={loading || url.trim() === ""} type="submit">
+                  {loading ? (
+                    <Loader className="animate-spin mr-2 h-4 w-4" />
+                  ) : null}
+                  Subscribe
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={handleRandom}
+                  type="button"
+                >
+                  Add random feed
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
     </nav>
   );
 };

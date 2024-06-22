@@ -29,7 +29,7 @@ export const ItemDisplay = () => {
 
   return selectedItem ? (
     <article className="h-screen overflow-auto">
-      <ul className="sticky top-0 px-5 py-2 flex items-center justify-end border-b dark:border-slate-800">
+      <ul className="sticky top-0 p-2 flex bg-white dark:bg-gray-700 items-center justify-end border-b dark:border-slate-800">
         <li>
           {selectedItem.read ? (
             <Button
@@ -66,7 +66,9 @@ export const ItemDisplay = () => {
         </li>
       </ul>
       <header className="border-b dark:border-slate-800 p-5 space-y-3">
-        <h1 className="text-4xl leading-normal">{selectedItem.title}</h1>
+        <h1 className="text-4xl leading-normal text-balance">
+          {selectedItem.title}
+        </h1>
         <span className="block text-slate-600 dark:text-slate-400">
           {selectedItem.author}
         </span>
@@ -74,7 +76,7 @@ export const ItemDisplay = () => {
           {dayjs(selectedItem.pubDate).format("D MMM, YYYY")}
         </span>
       </header>
-      <main className="p-5 prose lg:prose-xl text-black dark:text-white">
+      <main className="p-5 prose prose-slate dark:prose-invert text-black dark:text-white">
         <div
           dangerouslySetInnerHTML={{
             __html: selectedItem.content,

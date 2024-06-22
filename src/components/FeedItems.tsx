@@ -27,6 +27,7 @@ export const FeedItems = () => {
     feeds,
     selectItem,
     selectedFeedIndex,
+    selectedItemIndex,
     deleteFeed,
     updateFeed,
     readItem,
@@ -76,9 +77,14 @@ export const FeedItems = () => {
 
   return (
     <div className="h-screen overflow-auto">
-      <div className="sticky top-0 z-10 pl-10 pr-2 py-2 flex items-center bg-white dark:bg-gray-700 border-b dark:border-slate-800">
+      <div className="sticky top-0 z-10 pl-10 pr-2 py-2 space-x-5 flex items-center bg-white dark:bg-gray-700 border-b dark:border-slate-800">
         <div className="flex-1">
-          {loading ? <Loader className="animate-spin h-4 w-4" /> : null}
+          {loading ? (
+            <Loader className="absolute left-4 top-5 animate-spin h-4 w-4" />
+          ) : null}
+          <h2 className="line-clamp-1 font-bold">
+            {feeds[selectedFeedIndex].title}
+          </h2>
         </div>
         <Dialog open={isDeleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
           <DropdownMenu>
@@ -125,7 +131,9 @@ export const FeedItems = () => {
           <li
             key={`feed-item-${i}`}
             role="button"
-            className="relative group border-b dark:border-slate-800 p-4 pl-10"
+            className={`relative group border-b dark:border-slate-800 p-4 pl-10 ${
+              selectedItemIndex === i ? "bg-gray-100 dark:bg-gray-800" : ""
+            }`}
             onClick={() => {
               selectItem(i);
               readItem(i, true);
@@ -134,7 +142,9 @@ export const FeedItems = () => {
             {!item.read ? (
               <span className="animate-pulse absolute w-2 h-2 bg-blue-500 rounded-full left-4 top-6"></span>
             ) : null}
-            <h3 className="font-bold line-clamp-1 mb-1">{item.title}</h3>
+            <h3 className="text-sm font-bold line-clamp-1 mb-1">
+              {item.title}
+            </h3>
             <p className="text-sm line-clamp-1 mb-1">{item.description}</p>
             <div className="flex items-center justify-between space-x-5 text-slate-600 dark:text-slate-400">
               <span className="text-xs line-clamp-1">{item.author}</span>
