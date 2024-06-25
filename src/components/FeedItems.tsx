@@ -142,7 +142,7 @@ export const FeedItems = () => {
           </AlertDialogContent>
         </AlertDialog>
       </div>
-      <ul>
+      <ul id="feed-items">
         {feeds[selectedFeedIndex].items.map((item, i) => (
           <li
             key={`feed-item-${i}`}

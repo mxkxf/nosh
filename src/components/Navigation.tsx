@@ -23,15 +23,12 @@ const randomFeeds = [
   "http://feeds.feedburner.com/Techcrunch",
   "http://feeds.wired.com/wired/index",
   "https://www.polygon.com/rss/index.xml",
-  "http://feeds.reuters.com/Reuters/PoliticsNews",
 ];
 
 export const Navigation = () => {
   const { toast } = useToast();
   const { feeds, selectFeed, selectedFeedIndex, addFeed } = useFeeds();
-  const [isAddFeedDialogOpen, setAddFeedDialogOpen] = useState(
-    feeds.length === 0
-  );
+  const [isAddFeedDialogOpen, setAddFeedDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [url, setUrl] = useState("");
 
