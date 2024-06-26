@@ -21,7 +21,7 @@ export const ItemDisplay = () => {
       });
     } catch (error) {
       toast({
-        title: "Sorry, this feature is not supported by your browser.",
+        title: "Sorry, the sharing feature is not supported by your browser.",
         variant: "destructive",
       });
     }
