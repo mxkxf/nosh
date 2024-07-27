@@ -1,4 +1,5 @@
 import RssParser from "rss-parser";
+import { z, ZodError } from "zod";
 
 import { NextRequest, NextResponse } from "next/server";
 
@@ -29,22 +30,16 @@ function parse(url: string): Promise<RssParser.Output<any>> {
   });
 }
 
+const schema = z.object({
+  url: z.string().url(),
+});
+
 export async function GET(request: NextRequest) {
-  const params = request.nextUrl.searchParams;
-  const url = params.get("url");
-
-  if (!url || url.trim() === "" || !isValidUrl(url)) {
-    return NextResponse.json(
-      {
-        message: "URL is missing/invalid",
-      },
-      {
-        status: 400,
-      }
-    );
-  }
-
   try {
+    const { url } = schema.parse(
+      Object.fromEntries(request.nextUrl.searchParams)
+    );
+
     const feed = await parse(url);
     const urlParts = new URL(url);
 
@@ -82,6 +77,17 @@ export async function GET(request: NextRequest) {
         : [],
     });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json(
+        {
+          message: error.errors[0].message,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
     return NextResponse.json(
       {
         message:

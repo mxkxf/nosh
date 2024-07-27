@@ -29,7 +29,8 @@
     "react-resizable-panels": "^2.0.22",
     "rss-parser": "^3.13.0",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
