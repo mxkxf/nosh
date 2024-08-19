@@ -1,34 +1,14 @@
-import RssParser from "rss-parser";
+import Parser from "rss-parser";
 import { z, ZodError } from "zod";
 
 import { NextRequest, NextResponse } from "next/server";
+import { Feed, FeedItem } from "@/types";
 
-function isValidUrl(str: string) {
-  const pattern = new RegExp(
-    "^(https?:\\/\\/)?" + // protocol
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
-      "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
-      "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
-      "(\\#[-a-z\\d_]*)?$",
-    "i"
-  ); // fragment locator
-  return !!pattern.test(str);
-}
-
-const rssParser = new RssParser();
-
-function parse(url: string): Promise<RssParser.Output<any>> {
-  return new Promise((resolve, reject) => {
-    rssParser.parseURL(url, (error, feed) => {
-      if (error) {
-        reject(error);
-      }
-
-      resolve(feed);
-    });
-  });
-}
+const parser: Parser<Feed, FeedItem> = new Parser({
+  customFields: {
+    item: ["contentSnippet"],
+  },
+});
 
 const schema = z.object({
   url: z.string().url(),
@@ -40,7 +20,7 @@ export async function GET(request: NextRequest) {
       Object.fromEntries(request.nextUrl.searchParams)
     );
 
-    const feed = await parse(url);
+    const feed = await parser.parseURL(url);
     const urlParts = new URL(url);
 
     let icon = null;

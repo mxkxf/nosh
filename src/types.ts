@@ -6,6 +6,7 @@ export type FeedItem = {
   pubDate: string;
   content: string;
   read: boolean;
+  contentSnippet: string;
 };
 
 export type Feed = {
