@@ -7,9 +7,9 @@ import {
   Rss,
   Trash2,
 } from "lucide-react";
+import { useState } from "react";
 
 import { useFeeds } from "./FeedProvider";
-import { useState } from "react";
 import { Button } from "./ui/button";
 import { useToast } from "./ui/use-toast";
 import {
@@ -86,8 +86,8 @@ export const FeedItems = () => {
   };
 
   return (
-    <div className="h-screen overflow-auto">
-      <div className="sticky top-0 z-10 pl-3 pr-2 py-2 space-x-3 flex items-center justify-between bg-white dark:bg-gray-700 border-b dark:border-slate-800">
+    <div className="h-screen overflow-auto w-2/5 shrink-0">
+      <div className="sticky top-0 z-10 pl-3 pr-2 py-2 space-x-3 flex items-center justify-between bg-white dark:bg-stone-700 border-b dark:border-stone-800">
         {loading ? (
           <Loader2 className="animate-spin h-4 w-4" />
         ) : (
@@ -147,8 +147,8 @@ export const FeedItems = () => {
           <li
             key={`feed-item-${i}`}
             role="button"
-            className={`relative group border-b dark:border-slate-800 p-4 pl-10 ${
-              selectedItemIndex === i ? "bg-gray-100 dark:bg-gray-800" : ""
+            className={`relative group border-b dark:border-stone-800 p-4 pl-10 ${
+              selectedItemIndex === i ? "bg-stone-100 dark:bg-stone-800" : ""
             }`}
             onClick={() => {
               selectItem(i);
@@ -162,7 +162,7 @@ export const FeedItems = () => {
               {item.title}
             </h3>
             <p className="text-sm line-clamp-1 mb-1">{item.description}</p>
-            <div className="flex items-center justify-between space-x-5 text-slate-600 dark:text-slate-400">
+            <div className="flex items-center justify-between space-x-5 text-stone-600 dark:text-stone-400">
               <span className="text-xs line-clamp-1">{item.author}</span>
               <span className="text-xs shrink-0">
                 {dayjs(item.pubDate).format("D MMM, YYYY")}
