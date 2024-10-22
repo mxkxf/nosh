@@ -24,27 +24,17 @@ const initialState: State = {
 };
 
 const FeedContext = createContext<
-  State & {
-    selectFeed: (index: number) => void;
-    deleteFeed: (index: number) => void;
-    selectItem: (index: number) => void;
-    readItem: (index: number, read: boolean) => void;
-    readAllItems: (index: number, read: boolean) => void;
-    addFeed: (feed: Feed) => void;
-    updateFeed: (index: number, feed: Feed) => void;
-  }
->({
-  feeds: [],
-  selectedFeedIndex: undefined,
-  selectFeed: (_index) => {},
-  deleteFeed: (_index) => {},
-  selectedItemIndex: undefined,
-  selectItem: (_index) => {},
-  readItem: (_index) => {},
-  readAllItems: (_index, _read) => {},
-  addFeed: (_feed) => {},
-  updateFeed: (_index, _feed) => {},
-});
+  | (State & {
+      selectFeed: (index: number) => void;
+      deleteFeed: (index: number) => void;
+      selectItem: (index: number) => void;
+      readItem: (index: number, read: boolean) => void;
+      readAllItems: (index: number, read: boolean) => void;
+      addFeed: (feed: Feed) => void;
+      updateFeed: (index: number, feed: Feed) => void;
+    })
+  | undefined
+>(undefined);
 
 type Action =
   | {
@@ -108,7 +98,7 @@ function reducer(state: State, action: Action) {
       };
     }
     case "UPDATE_FEED": {
-      let newFeeds = [...state.feeds];
+      const newFeeds = [...state.feeds];
 
       newFeeds[action.index] = {
         ...newFeeds[action.index],
@@ -148,8 +138,8 @@ function reducer(state: State, action: Action) {
         throw new Error("Selected feed is not set");
       }
 
-      let newFeeds = [...state.feeds];
-      let newItems = newFeeds[state.selectedFeedIndex].items;
+      const newFeeds = [...state.feeds];
+      const newItems = newFeeds[state.selectedFeedIndex].items;
       newItems[action.index] = {
         ...newItems[action.index],
         read: action.read,
@@ -165,7 +155,7 @@ function reducer(state: State, action: Action) {
       };
     }
     case "TOGGLE_READ_ALL_ITEMS": {
-      let newFeeds = [...state.feeds];
+      const newFeeds = [...state.feeds];
 
       newFeeds[action.index] = {
         ...newFeeds[action.index],
@@ -192,7 +182,7 @@ function initialiser(initialState: State) {
     if (typeof window !== "undefined") {
       feeds = JSON.parse(window.localStorage.getItem("feeds") || "[]");
     }
-  } catch (error) {
+  } catch {
     // Something went wrong with the JSON parsing
   }
 

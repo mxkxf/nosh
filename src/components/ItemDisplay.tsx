@@ -19,7 +19,7 @@ export const ItemDisplay = () => {
         url: selectedItem?.link,
         title: selectedItem?.title,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Sorry, the sharing feature is not supported by your browser.",
         variant: "destructive",
