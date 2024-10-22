@@ -23,18 +23,17 @@ const initialState: State = {
   selectedItemIndex: undefined,
 };
 
-const FeedContext = createContext<
-  | (State & {
-      selectFeed: (index: number) => void;
-      deleteFeed: (index: number) => void;
-      selectItem: (index: number) => void;
-      readItem: (index: number, read: boolean) => void;
-      readAllItems: (index: number, read: boolean) => void;
-      addFeed: (feed: Feed) => void;
-      updateFeed: (index: number, feed: Feed) => void;
-    })
-  | undefined
->(undefined);
+const FeedContext = createContext(
+  {} as State & {
+    selectFeed: (index: number) => void;
+    deleteFeed: (index: number) => void;
+    selectItem: (index: number) => void;
+    readItem: (index: number, read: boolean) => void;
+    readAllItems: (index: number, read: boolean) => void;
+    addFeed: (feed: Feed) => void;
+    updateFeed: (index: number, feed: Feed) => void;
+  }
+);
 
 type Action =
   | {
