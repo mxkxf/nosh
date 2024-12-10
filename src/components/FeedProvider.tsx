@@ -66,7 +66,8 @@ type Action =
       type: "TOGGLE_READ_ALL_ITEMS";
       index: number;
       read: boolean;
-    };
+    }
+  | { type: "NOOP" };
 
 function reducer(state: State, action: Action) {
   switch (action.type) {
@@ -200,7 +201,7 @@ function useReducerWithMiddleware(
 ): [State, Dispatch<Action>] {
   const [state, dispatch] = useReducer(reducer, initialState, initialiser);
 
-  const aRef = useRef<Action>();
+  const aRef = useRef<Action>({ type: "NOOP" });
 
   const dispatchWithMiddleware = (action: Action) => {
     middlewareFns.forEach((middlewareFn) => middlewareFn(action, state));
@@ -211,15 +212,11 @@ function useReducerWithMiddleware(
   };
 
   useEffect(() => {
-    if (typeof aRef.current === "undefined") {
-      return;
-    }
-
     afterwareFns.forEach((afterwareFn) =>
       afterwareFn(aRef.current as Action, state)
     );
 
-    aRef.current = undefined;
+    aRef.current = { type: "NOOP" };
   }, [afterwareFns, state]);
 
   return [state, dispatchWithMiddleware];
