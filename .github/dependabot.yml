@@ -4,6 +4,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+      day: "saturday"
     groups:
       all-dependencies:
         patterns:
@@ -12,7 +13,7 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "tuesday"
+      day: "saturday"
     groups:
       all-dependencies:
         patterns:
