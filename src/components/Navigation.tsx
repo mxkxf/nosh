@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useFeeds } from "@/components/FeedProvider";
-import { useToast } from "./ui/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +12,7 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { FormEvent, useState } from "react";
 import { Loader2, PlusCircle } from "lucide-react";
+import { toast } from "sonner";
 
 const randomFeeds = [
   "https://smashingmagazine.com/feed",
@@ -26,7 +26,6 @@ const randomFeeds = [
 ];
 
 export const Navigation = () => {
-  const { toast } = useToast();
   const { feeds, selectFeed, selectedFeedIndex, addFeed } = useFeeds();
   const [isAddFeedDialogOpen, setAddFeedDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -34,10 +33,7 @@ export const Navigation = () => {
 
   const subscribe = async (url: string) => {
     if (feeds.find((feed) => feed.url === url)) {
-      toast({
-        title: "Already subscribed to this feed",
-        description: url,
-      });
+      toast("Already subscribed to this feed", { description: url });
       return;
     }
 
@@ -52,19 +48,15 @@ export const Navigation = () => {
 
       addFeed(data);
 
-      toast({
-        title: "Feed added",
-      });
+      toast("Feed added");
 
       setAddFeedDialogOpen(false);
     } catch (error) {
-      toast({
-        title: "Sorry, we couldn't add that feed",
+      toast.warning("Sorry, we couldn't add that feed", {
         description:
           error instanceof Error
             ? error.message
             : "Something went wrong, please try again later",
-        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -128,7 +120,7 @@ export const Navigation = () => {
           );
         })}
       </ul>
-      <div className="border-t dark:border-slate-800 p-2">
+      <div className="border-t border-slate-200 dark:border-slate-800 p-2">
         <Dialog open={isAddFeedDialogOpen} onOpenChange={setAddFeedDialogOpen}>
           <DialogTrigger asChild>
             <Button className="w-full" variant="ghost">
