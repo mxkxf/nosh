@@ -11,7 +11,6 @@ import {
 import { useFeeds } from "./FeedProvider";
 import { useState } from "react";
 import { Button } from "./ui/button";
-import { useToast } from "./ui/use-toast";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +29,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
+import { toast } from "sonner";
 
 export const FeedItems = () => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -43,7 +43,6 @@ export const FeedItems = () => {
     readItem,
     readAllItems,
   } = useFeeds();
-  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
   if (typeof selectedFeedIndex === "undefined") {
@@ -54,9 +53,7 @@ export const FeedItems = () => {
     deleteFeed(selectedFeedIndex as number);
     setDeleteDialogOpen(false);
 
-    toast({
-      title: "Unsubscribed from feed",
-    });
+    toast("Unsubscribed from feed");
   };
 
   const handleRefresh = async () => {
@@ -68,17 +65,13 @@ export const FeedItems = () => {
 
       updateFeed(selectedFeedIndex, data);
 
-      toast({
-        title: "Feed refreshed",
-      });
+      toast("Feed refreshed");
     } catch (error) {
-      toast({
-        title: "Error refreshing feed",
+      toast.warning("Error refreshing feed", {
         description:
           error instanceof Error
             ? error.message
             : "Something went wrong, please try again later",
-        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -87,7 +80,7 @@ export const FeedItems = () => {
 
   return (
     <div className="h-screen overflow-auto">
-      <div className="sticky top-0 z-10 pl-3 pr-2 py-2 space-x-3 flex items-center justify-between bg-white dark:bg-gray-700 border-b dark:border-slate-800">
+      <div className="sticky top-0 z-10 pl-3 pr-2 py-2 space-x-3 flex items-center justify-between bg-white dark:bg-gray-700 border-b border-slate-200 dark:border-slate-800">
         {loading ? (
           <Loader2 className="animate-spin h-4 w-4" />
         ) : (
@@ -147,7 +140,7 @@ export const FeedItems = () => {
           <li
             key={`feed-item-${i}`}
             role="button"
-            className={`relative group border-b dark:border-slate-800 p-4 pl-10 ${
+            className={`relative group border-b border-slate-200 dark:border-slate-800 p-4 pl-10 ${
               selectedItemIndex === i ? "bg-gray-100 dark:bg-gray-800" : ""
             }`}
             onClick={() => {

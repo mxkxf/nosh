@@ -1,12 +1,11 @@
 import dayjs from "dayjs";
 import { useFeeds } from "./FeedProvider";
-import { useToast } from "./ui/use-toast";
 import { ExternalLink, Mail, MailOpen, Share } from "lucide-react";
 import { Button } from "./ui/button";
+import { toast } from "sonner";
 
 export const ItemDisplay = () => {
   const { feeds, selectedFeedIndex, selectedItemIndex, readItem } = useFeeds();
-  const { toast } = useToast();
   const selectedItem =
     typeof selectedFeedIndex !== "undefined" &&
     typeof selectedItemIndex !== "undefined"
@@ -20,16 +19,15 @@ export const ItemDisplay = () => {
         title: selectedItem?.title,
       });
     } catch {
-      toast({
-        title: "Sorry, the sharing feature is not supported by your browser.",
-        variant: "destructive",
-      });
+      toast.warning(
+        "Sorry, the sharing feature is not supported by your browser."
+      );
     }
   };
 
   return selectedItem ? (
     <article className="h-screen overflow-auto">
-      <ul className="sticky top-0 p-2 flex bg-white dark:bg-gray-700 items-center justify-end border-b dark:border-slate-800">
+      <ul className="sticky top-0 p-2 flex bg-white dark:bg-gray-700 items-center justify-end border-b border-slate-200 dark:border-slate-800">
         <li>
           {selectedItem.read ? (
             <Button
@@ -72,7 +70,7 @@ export const ItemDisplay = () => {
           </Button>
         </li>
       </ul>
-      <header className="border-b dark:border-slate-800 p-5 space-y-3">
+      <header className="border-b border-slate-200 dark:border-slate-800 p-5 space-y-3">
         <h1 className="text-4xl leading-normal text-balance">
           {selectedItem.title}
         </h1>
