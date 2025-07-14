@@ -1,5 +1,5 @@
 import Parser from "rss-parser";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 
 import { NextRequest, NextResponse } from "next/server";
 import { Feed, FeedItem } from "@/types";
@@ -11,15 +11,28 @@ const parser: Parser<Feed, FeedItem> = new Parser({
 });
 
 const schema = z.object({
-  url: z.string().url(),
+  url: z.url(),
 });
 
 export async function GET(request: NextRequest) {
-  try {
-    const { url } = schema.parse(
-      Object.fromEntries(request.nextUrl.searchParams)
-    );
+  const result = schema.safeParse(
+    Object.fromEntries(request.nextUrl.searchParams)
+  );
 
+  if (!result.success) {
+    return NextResponse.json(
+      {
+        message: result.error.message,
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+
+  const url = result.data.url;
+
+  try {
     const feed = await parser.parseURL(url);
     const urlParts = new URL(url);
 
@@ -57,17 +70,6 @@ export async function GET(request: NextRequest) {
         : [],
     });
   } catch (error) {
-    if (error instanceof ZodError) {
-      return NextResponse.json(
-        {
-          message: error.errors[0].message,
-        },
-        {
-          status: 400,
-        }
-      );
-    }
-
     return NextResponse.json(
       {
         message:
